@@ -2,6 +2,16 @@ from copy import deepcopy
 
 # ============================================================ #
 class PartialLockedDict:
+    """PartialLockedDict consists one built-in dict and one outer dict.
+    The built-in dict is considered constant and user are not suggested to change it.
+    The outer dict is defined by the user and is sujected to all kinds of changes.
+    
+    Methods
+    ===========
+    _error_change_builtin(cls, key):
+        Throws KeyError based on the input key.
+        Call this function when built-in dict is going to get changed.
+    """
     @classmethod
     def _error_change_builtin(cls, key):
         raise KeyError

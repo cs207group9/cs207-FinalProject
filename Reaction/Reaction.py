@@ -5,6 +5,28 @@ import numpy as np
 class Reaction:
     
     class _CoeffLaws(PartialLockedDict):
+        """
+        _CoeffLaws keeps and manages the built-in functions which computes the reaction 
+        rate coefficients. At the same time it also allow user to add their self-defined
+        functions with similar usage. _CoeffLaws inherits PartialLockedDict class.
+        
+        ATTRIBUTES
+        ===========
+        _BuiltIn: inner class
+            wraps the built-in functions, including:
+                `const`  for constant coeffs
+                `arr`    for Arrhenius coeffs
+                `modarr` for Modified Arrhenius Coeffs
+        _dict_builtin: dict
+            mapping relation from names to the associated built-in functions,
+            such as: ` 'const':_BuiltIn.const `
+        _dict_all: dict
+            mapping relation from names to all the associated functions,
+            including user-defined ones
+        
+        METHODS
+        ========
+        """
         
         class _BuiltIn: 
             def const(**kwargs):
@@ -58,6 +80,7 @@ class Reaction:
             'modarr':_BuiltIn.modarr
         }
         _dict_all = deepcopy(_dict_builtin) 
+        
         @classmethod
         def _error_change_builtin(cls, name):
             raise KeyError(' '.join([
