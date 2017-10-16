@@ -40,6 +40,11 @@ This module is currently composed of one main file, chemkin.py, that can be down
 
 To run the test suite, download and run chemkin_tests.py. This file must be located in the same folder as your chemkin.py file.
 
+```
+import chemkin
+import chemkin_tests
+```
+
 ## Basic Usage and Examples
 
 To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and a concentration value for each specie in the array. Let's first create some Reactions and an array of concentrations:
