@@ -304,6 +304,9 @@ class Reaction:
     def getProducts(self):
         return self._params['products']
     
+    def get_species(self):
+        return self.getReactants()+self.getProducts()
+    
     def _check_params(self):
         if self._params['reversible']:
             raise NotImplementedError(

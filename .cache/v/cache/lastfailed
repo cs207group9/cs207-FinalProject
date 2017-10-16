@@ -1,1 +1,8 @@
-{}
+{
+  "reaction system/test_ReactionSystem.py::test_rs_not_enough_concentrations": true,
+  "reaction system/test_ReactionSystem.py::test_rs_not_enough_params": true,
+  "reaction system/test_ReactionSystem.py::test_rs_nu_matrix_creation": true,
+  "reaction system/test_ReactionSystem.py::test_rs_progress_rate": true,
+  "reaction system/test_ReactionSystem.py::test_rs_reaction_rate": true,
+  "reaction system/test_ReactionSystem.py::test_rs_too_many_concentrations": true
+}
