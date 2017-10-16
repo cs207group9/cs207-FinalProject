@@ -19,9 +19,9 @@ def test_info():
 
 @ListTest
 def test_rateCeff():
-    r1 = Reaction(coeffLaw='const', coeffParams=dict(k=3.14))
-    r2 = Reaction(coeffLaw='arr', coeffParams=dict(E=8.314))
-    r3 = Reaction(coeffLaw='modarr', coeffParams=dict(b=3,E=2*8.314))
+    r1 = Reaction(coeffLaw='Constant', coeffParams=dict(k=3.14))
+    r2 = Reaction(coeffLaw='Arrhenius', coeffParams=dict(E=8.314))
+    r3 = Reaction(coeffLaw='modArrhenius', coeffParams=dict(b=3,E=2*8.314))
     return [
         r1.rateCoeff() == 3.14,
         r2.rateCoeff(T=1.0) == 1/np.e,
@@ -30,7 +30,7 @@ def test_rateCeff():
 @ListTest
 def test_CoeffLaws_get():
     return [
-        Reaction._CoeffLaws.getcopy('arr') == Reaction._CoeffLaws.arr,
+        Reaction._CoeffLaws.getcopy('Arrhenius') == Reaction._CoeffLaws.arr,
         Reaction._CoeffLaws.getcopy_all() == Reaction._CoeffLaws._dict_all,
         Reaction._CoeffLaws.getcopy_builtin() == Reaction._CoeffLaws._dict_builtin]
 
@@ -63,7 +63,7 @@ def test_init_notimplemented():
     except NotImplementedError as err:
         assert(type(err) == NotImplementedError)
     try:
-        Reaction(**{'type':'duplicate'})
+        Reaction(**{'TYPE':'duplicate'})
     except NotImplementedError as err:
         assert(type(err) == NotImplementedError)
     try:
@@ -76,7 +76,7 @@ def test_CoeffLaws_changebuiltin():
     def _law2(**kwargs): return 0.0
     Reaction._CoeffLaws.reset()
     try:
-        Reaction._CoeffLaws.update('arr',_law1)
+        Reaction._CoeffLaws.update('Arrhenius',_law1)
     except KeyError as err:
         assert(type(err) == KeyError)
     try:
@@ -84,37 +84,37 @@ def test_CoeffLaws_changebuiltin():
     except KeyError as err:
         assert(type(err) == KeyError)
     try:
-        Reaction._CoeffLaws.remove('arr')
+        Reaction._CoeffLaws.remove('Arrhenius')
     except KeyError as err:
         assert(type(err) == KeyError)
     Reaction._CoeffLaws.reset()
         
 def test_CoeffLaws_input():
     try:
-        Reaction(coeffLaw='const', coeffParams=dict(k=-1.0)).rateCoeff()
+        Reaction(coeffLaw='Constant', coeffParams=dict(k=-1.0)).rateCoeff()
     except ValueError as err:
         assert (type(err) == ValueError)
     try:
-        Reaction(coeffLaw='arr').rateCoeff(T=-1.0)
+        Reaction(coeffLaw='Arrhenius').rateCoeff(T=-1.0)
     except ValueError as err:
         assert (type(err) == ValueError)
     try:
-        Reaction(coeffLaw='arr', coeffParams=dict(A=-1.0)).rateCoeff(T=1.0)
+        Reaction(coeffLaw='Arrhenius', coeffParams=dict(A=-1.0)).rateCoeff(T=1.0)
     except ValueError as err:
         assert (type(err) == ValueError)
     try:
-        Reaction(coeffLaw='arr', coeffParams=dict(R=-1.0)).rateCoeff(T=1.0)
+        Reaction(coeffLaw='Arrhenius', coeffParams=dict(R=-1.0)).rateCoeff(T=1.0)
     except ValueError as err:
         assert (type(err) == ValueError)
     try:
-        Reaction(coeffLaw='modarr').rateCoeff(T=-1.0)
+        Reaction(coeffLaw='modArrhenius').rateCoeff(T=-1.0)
     except ValueError as err:
         assert (type(err) == ValueError)
     try:
-        Reaction(coeffLaw='modarr', coeffParams=dict(A=-1.0)).rateCoeff(T=1.0)
+        Reaction(coeffLaw='modArrhenius', coeffParams=dict(A=-1.0)).rateCoeff(T=1.0)
     except ValueError as err:
         assert (type(err) == ValueError)
     try:
-        Reaction(coeffLaw='modarr', coeffParams=dict(R=-1.0)).rateCoeff(T=1.0)
+        Reaction(coeffLaw='modArrhenius', coeffParams=dict(R=-1.0)).rateCoeff(T=1.0)
     except ValueError as err:
         assert (type(err) == ValueError)
