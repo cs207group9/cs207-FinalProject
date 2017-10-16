@@ -3,81 +3,100 @@ from copy import deepcopy
 import numpy as np
 
 class Reaction:
+    """
+    Reaction keeps all the infomation from one given reaction. It also helps to select 
+    the right function to compute the reaction rate coefficient based on the classification 
+    of the given reaction. In the inner class _CoeffLaws several funtions including constant
+    coeffs, Arrhenius coeffs and Modified Arrhenius coeffs have been implemented, and 
+    _CoeffLaws forms up a dict-like structure to manage them.
+    
+    INPUTS
+    =======
+    
+    
+    ATTRIBUTES
+    ===========
+    _CoeffLaws: inner class, dict-like structure
+        _CoeffLaws Keeps and manages the functions that might be used to compute the 
+        reaction rate coefficients. Each function is associated with a key - mostly their 
+        name, in a string. It also provides several dict-like methods. 
+    
+    METHODS
+    ========
+    __init__()
+    
+    """
     
     class _CoeffLaws(PartialLockedDict):
         """
-        _CoeffLaws keeps and manages the built-in functions which computes the reaction 
+        _CoeffLaws keeps and manages the built-in methods that compute the reaction 
         rate coefficients. At the same time it also allow user to add their self-defined
-        functions with similar usage. _CoeffLaws inherits PartialLockedDict class.
+        methods with similar usage. _CoeffLaws inherits the PartialLockedDict class.
         
         ATTRIBUTES
         ===========
-        _BuiltIn: inner class
-            wraps the built-in functions, including:
-                `const`  for constant coeffs
-                `arr`    for Arrhenius coeffs
-                `modarr` for Modified Arrhenius Coeffs
+        The built-in functions includes:
+            `const`  for constant coeffs
+            `arr`    for Arrhenius coeffs
+            `modarr` for Modified Arrhenius coeffs
         _dict_builtin: dict
-            mapping relation from names to the associated built-in functions,
+            the built-in dict which is not supposed to be changed.
+            records mapping relation from names to the associated built-in functions,
             such as: ` 'const':_BuiltIn.const `
         _dict_all: dict
-            mapping relation from names to all the associated functions,
-            including user-defined ones
-        
-        METHODS
-        ========
+            a dict that contains what's in the built-in dict as well as user defined mappings.
+            all searches and updates would be made on this dict.
         """
         
-        class _BuiltIn: 
-            def const(**kwargs):
-                k = kwargs['k'] if 'k' in kwargs else 1.0
-                if k <= 0.0:
-                    raise ValueError(' '.join([
-                        'k = {0:18.16e}:'.format(k), 
-                        'Non-positive reaction rate coefficient is prohibited.']))
-                return k
-            def arr(**kwargs):
-                T = kwargs['T']
-                R = kwargs['R'] if 'R' in kwargs else 8.314
-                A = kwargs['A'] if 'A' in kwargs else 1.0
-                E = kwargs['E'] if 'E' in kwargs else 0.0
-                if T <= 0.0:
-                    raise ValueError(' '.join([
-                        'T = {0:18.16e}:'.format(T),
-                        'Non-positive temperature is prohibited.']))
-                if A <= 0.0:
-                    raise ValueError(' '.join([
-                        'A = {0:18.16e}:'.format(A),
-                        'Non-positive Arrhenius prefactor is prohibited.']))
-                if R <= 0.0:
-                    raise ValueError(' '.join([
-                        'R = {0:18.16e}:'.format(R),
-                        'Non-positive ideal gas constant is prohibited.']))
-                return A * np.exp(-E / (R * T))
-            def modarr(**kwargs):
-                T = kwargs['T']
-                R = kwargs['R'] if 'R' in kwargs else 8.314
-                A = kwargs['A'] if 'A' in kwargs else 1.0
-                b = kwargs['b'] if 'b' in kwargs else 0.0
-                E = kwargs['E'] if 'E' in kwargs else 0.0
-                if T <= 0.0:
-                    raise ValueError(' '.join([
-                        'T = {0:18.16e}:'.format(T),
-                        'Non-positive temperature is prohibited.']))
-                if A <= 0.0:
-                    raise ValueError(' '.join([
-                        'A = {0:18.16e}:'.format(A),
-                        'Non-positive Arrhenius prefactor is prohibited.']))
-                if R <= 0.0:
-                    raise ValueError(' '.join([
-                        'R = {0:18.16e}:'.format(R),
-                        'Non-positive ideal gas constant is prohibited.']))
-                return A * (T ** b) * np.exp(-E / (R * T))
+        def const(**kwargs):
+            k = kwargs['k'] if 'k' in kwargs else 1.0
+            if k <= 0.0:
+                raise ValueError(' '.join([
+                    'k = {0:18.16e}:'.format(k), 
+                    'Non-positive reaction rate coefficient is prohibited.']))
+            return k
+        def arr(**kwargs):
+            T = kwargs['T']
+            R = kwargs['R'] if 'R' in kwargs else 8.314
+            A = kwargs['A'] if 'A' in kwargs else 1.0
+            E = kwargs['E'] if 'E' in kwargs else 0.0
+            if T <= 0.0:
+                raise ValueError(' '.join([
+                    'T = {0:18.16e}:'.format(T),
+                    'Non-positive temperature is prohibited.']))
+            if A <= 0.0:
+                raise ValueError(' '.join([
+                    'A = {0:18.16e}:'.format(A),
+                    'Non-positive Arrhenius prefactor is prohibited.']))
+            if R <= 0.0:
+                raise ValueError(' '.join([
+                    'R = {0:18.16e}:'.format(R),
+                    'Non-positive ideal gas constant is prohibited.']))
+            return A * np.exp(-E / (R * T))
+        def modarr(**kwargs):
+            T = kwargs['T']
+            R = kwargs['R'] if 'R' in kwargs else 8.314
+            A = kwargs['A'] if 'A' in kwargs else 1.0
+            b = kwargs['b'] if 'b' in kwargs else 0.0
+            E = kwargs['E'] if 'E' in kwargs else 0.0
+            if T <= 0.0:
+                raise ValueError(' '.join([
+                    'T = {0:18.16e}:'.format(T),
+                    'Non-positive temperature is prohibited.']))
+            if A <= 0.0:
+                raise ValueError(' '.join([
+                    'A = {0:18.16e}:'.format(A),
+                    'Non-positive Arrhenius prefactor is prohibited.']))
+            if R <= 0.0:
+                raise ValueError(' '.join([
+                    'R = {0:18.16e}:'.format(R),
+                    'Non-positive ideal gas constant is prohibited.']))
+            return A * (T ** b) * np.exp(-E / (R * T))
             
         _dict_builtin = {
-            'const' :_BuiltIn.const, 
-            'arr'   :_BuiltIn.arr, 
-            'modarr':_BuiltIn.modarr
+            'const' :const, 
+            'arr'   :arr, 
+            'modarr':modarr
         }
         _dict_all = deepcopy(_dict_builtin) 
         
@@ -119,8 +138,11 @@ class Reaction:
                 'LawName = {}.'.format(self._coeffLaw),
                 'Refered reaction rate coefficient law is not implemented.']))
     
-    def rateCoeff(self, **otherParams):
-        return self._CoeffLaws._dict_all[self._coeffLaw](**self._coeffParams, **otherParams)  
+    def rateCoeff(self):
+        def coeff_function(**conditionParams):
+            return self._CoeffLaws._dict_all[self._coeffLaw](
+                **self._coeffParams, **conditionParams)
+        return coeff_function
     def getReactants(self):
         return self._reactants  
     def getProducts(self):

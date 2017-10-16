@@ -30,7 +30,7 @@ def test_rateCeff():
 @ListTest
 def test_CoeffLaws_get():
     return [
-        Reaction._CoeffLaws.getcopy('arr') == Reaction._CoeffLaws._BuiltIn.arr,
+        Reaction._CoeffLaws.getcopy('arr') == Reaction._CoeffLaws.arr,
         Reaction._CoeffLaws.getcopy_all() == Reaction._CoeffLaws._dict_all,
         Reaction._CoeffLaws.getcopy_builtin() == Reaction._CoeffLaws._dict_builtin]
 
