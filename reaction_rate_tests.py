@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Oct 15 17:50:51 2017
-
 @author: Camilo
 """
 
@@ -45,9 +44,9 @@ def test_rs_reaction_rate():
     
     concentrations = [1,2,1]
     rs = ReactionSystem(reactions, concentrations)
-    prog_rate = rs.get_reac_rate()
+    reac_rate = rs.get_reac_rate()
             
-    assert(prog_rate==[-30, -60,  20])
+    assert(reac_rate==[-30, -60,  20])
     
 def test_rs_not_enough_concentrations():
     
