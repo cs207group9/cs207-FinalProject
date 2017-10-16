@@ -43,4 +43,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* David Sondak and the CS207 teaching staff
+* David Sondak and the CS207 teaching staff.
