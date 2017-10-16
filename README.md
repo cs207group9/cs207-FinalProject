@@ -3,12 +3,11 @@
 [![Coverage Status](https://coveralls.io/repos/github/cs207group9/cs207-FinalProject/badge.svg?branch=master)](https://coveralls.io/github/cs207group9/cs207-FinalProject?branch=master)
 
 
-# CS207 Final Project - Group 9
-Baptiste Lemaire, Yiqi Xie, Jiejun Lu
-
-# Chemical Kinetics Module
+# CS207 Final Project - Chemical Kinetics Module - Group 9
 
 This is the repository for the CS207 project for chemical kinetics.
+
+Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
 ## Getting Started
 
@@ -27,7 +26,14 @@ import chemkin_tests
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Camilo Fosco**
+[cfosco](https://github.com/cfosco)
+* **Baptiste Lemaire**
+[bjlemaire](https://github.com/bjlemaire)
+* **Jiejun Lu**
+[gwungwun](https://github.com/gwungwun)
+* **Yiqi Xie**
+[yiqixie94](https://github.com/yiqixie94)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -37,6 +43,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+* David Sondak and the CS207 teaching staff
