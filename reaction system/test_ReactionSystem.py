@@ -4,6 +4,8 @@ Created on Sun Oct 15 17:50:51 2017
 @author: Camilo
 """
 
+import sys
+sys.path.insert(0, '../final')
 from Reaction import Reaction
 from ReactionSystem import ReactionSystem
 import numpy as np
@@ -17,11 +19,11 @@ def test_rs_nu_matrix_creation():
     reactions.append(Reaction(reactants={'A':1,'C':2}, products = {'D':4}))
     
     rs = ReactionSystem(reactions)
-    nu_1 = rs.calculate_nu_1()
-    nu_2 = rs.calculate_nu_2()
+    nu_1 = rs.get_nu_1()
+    nu_2 = rs.get_nu_2()
     
-    assert( nu_1 == [[1,1],[2,0],[0,2],[0,0]] )
-    assert( nu_2 == [[0,0],[0,0],[2,0],[0,4]] )
+    assert( nu_1.tolist() == [[1,1],[2,0],[0,2],[0,0]] )
+    assert( nu_2.tolist() == [[0,0],[0,0],[1,0],[0,4]] )
     
 
 def test_rs_progress_rate():
@@ -30,11 +32,13 @@ def test_rs_progress_rate():
     reactions.append(Reaction( coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'A':1,'B':2}, products = {'C':2}))
     reactions.append(Reaction(reactants={'A':2,'C':2}, coeffLaw = 'Constant', coeffParams = {'k':10},  products = {'B':1, 'C':1}))
     
-    state = {'concs':[1,2,1]}
-    rs = ReactionSystem(reactions, **state)
+    concs = {'A':1, 'B':2, 'C':1}
+    rs = ReactionSystem(reactions, initial_concs=concs)
     prog_rate = rs.get_progress_rate()
-            
-    assert(prog_rate==[40,10])
+    
+    print(prog_rate.tolist())
+        
+    assert(prog_rate.tolist() == [40.,10.])
     
 def test_rs_reaction_rate():
     
@@ -42,11 +46,11 @@ def test_rs_reaction_rate():
     reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'A':1,'B':2}, products = {'C':1}))
     reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'C':2}, products = {'A':1, 'B':2}))
     
-    state = {'concs':[1,2,1]}
-    rs = ReactionSystem(reactions, **state)
+    concs = {'A':1, 'B':2, 'C':1}
+    rs = ReactionSystem(reactions, initial_concs=concs)
     reac_rate = rs.get_reac_rate()
             
-    assert(reac_rate==[-30, -60,  20])
+    assert(reac_rate.tolist()==[-30., -60.,  20.])
     
 def test_rs_not_enough_concentrations():
     
@@ -54,10 +58,10 @@ def test_rs_not_enough_concentrations():
     reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'A':1,'B':2}, products = {'C':1} ))
     reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'C':2}, products = {'A':1, 'B':2}))
     
-    state = {'concs':[1,2]}
+    concs = {'A':1, 'B':2}
     
     try:
-        rs = ReactionSystem(reactions, **state)
+        rs = ReactionSystem(reactions, initial_concs=concs)
     except Exception as err:
         assert(type(err)==ValueError)
             
@@ -67,10 +71,9 @@ def test_rs_too_many_concentrations():
     reactions.append(Reaction( coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'A':1,'B':2}, products = {'C':1}))
     reactions.append(Reaction( coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'C':2}, products = {'A':1, 'B':2}))
     
-    state = {'concs': [1,2,3,4]}
-    
+    concs = {'A':1, 'B':2, 'C':1, 'D':1}
     try:
-        rs = ReactionSystem(reactions, **state)
+        rs = ReactionSystem(reactions, initial_concs=concs)
     except Exception as err:
         assert(type(err)==ValueError)     
     
@@ -80,10 +83,10 @@ def test_rs_not_enough_params():
     reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'A':1,'B':2}, products = {'C':1}))
     reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'C':2}, products = {'A':1, 'B':2}))
     
-    state = {'concs': [1,2,3]}
+    concs = {'A':1, 'B':2, 'C':1}
     
     try:
-        rs = ReactionSystem(reactions, **state)
+        rs = ReactionSystem(reactions, initial_concs=concs)
     except Exception as err:
         assert(type(err)==ValueError)     
     

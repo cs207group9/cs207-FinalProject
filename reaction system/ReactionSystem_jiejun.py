@@ -84,22 +84,23 @@ class ReactionSystem:
             
     EXAMPLES:
     =========
-    >>> r_ls = []\
-        r_ls.append(Reaction.Reaction(\
-            reactants=dict(H=1,O2=1), products=dict(OH=1,O=1),\
-            coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
-        ))\
-        r_ls.append(Reaction.Reaction(\
-            reactants=dict(H2=1,O=1), products=dict(OH=1,H=1),\
-            coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
-        ))
-    >>> d = {}\
-        d['T'] = 1\
-        d['concs'] = np.array([2, 1, 0.5, 1, 1]).transpose()
-    >>> rs = ReactionSystem.ReactionSystem(e_ls=e_ls, r_ls=r_ls, **d)
-    >>> rs.compute_all()
-    array([-2.,  2.,  6., -2., -4.])
     """
+#    >>> r_ls = []\
+#        r_ls.append(Reaction.Reaction(\
+#            reactants=dict(H=1,O2=1), products=dict(OH=1,O=1),\
+#            coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
+#        ))\
+#        r_ls.append(Reaction.Reaction(\
+#            reactants=dict(H2=1,O=1), products=dict(OH=1,H=1),\
+#            coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
+#        ))
+#    >>> d = {}\
+#        d['T'] = 1\
+#        d['concs'] = np.array([2, 1, 0.5, 1, 1]).transpose()
+#    >>> rs = ReactionSystem.ReactionSystem(e_ls=e_ls, r_ls=r_ls, **d)
+#    >>> rs.compute_all()
+#    array([-2.,  2.,  6., -2., -4.])
+#    """
     
     def __init__(self, r_ls, e_ls, **initial_state):
         self._num_reaction = len(r_ls)

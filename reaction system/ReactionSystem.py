@@ -2,7 +2,7 @@
 import numpy as np
 
 import sys
-sys.path.insert(0, '../Reaction')
+sys.path.insert(0, '../final')
 from Reaction import Reaction
 
 from more_itertools import unique_everseen
@@ -105,27 +105,16 @@ class ReactionSystem:
             reactants=dict(H2=1,O=1), products=dict(OH=1,H=1),\
             coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
         ))
-    >>> d = {}
-    >>> d['T'] = 1
-    >>> d['concs'] = np.array([2, 1, 0.5, 1, 1])
-    >>> rs = ReactionSystem(r_ls,e_ls, **d)
-    >>> rs.compute_all()
-    array([-2.,  2.,  6., -2., -4.])
+    >>> concs = {'H':2, 'O2': 1, 'OH':0.5, 'O':1, 'H2':1}
+    >>> rs = ReactionSystem(r_ls, initial_concs = concs);
+    >>> rs.get_reac_rate()
+    array([-2., -4.,  6.,  2., -2.])
     """
     
-    # TODO: Change initial_state to initial_T and initial_concs
-    def __init__(self, reactions_ls, species_ls = [], **initial_state):
-        self._num_reactions = len(reactions_ls)
-        self._num_species = len(species_ls)
-        self._reactions_ls = reactions_ls
-        self._species_ls = species_ls
-        self.set_state(**initial_state)
+    def __init__(self, reactions_ls, species_ls = [], initial_T = 273, initial_concs = {}):
         
         if not reactions_ls:
             raise ValueError("Reaction array is empty or None.")
-            
-        if not species_ls:
-            self.update_species()
             
         for s in species_ls:
             if not isinstance(s, str): 
@@ -135,29 +124,41 @@ class ReactionSystem:
             if not isinstance(r, Reaction): 
                 raise ValueError("input reactions_ls array contains elements that are not instances of Reaction")
         
-    # TODO: Change this to set_temp and set_concs
-    def set_state(self, **kwargs):
-        if 'T' in kwargs:
-            if (kwargs['T'] <= 0):
-                raise ValueError("T = {0:18.16e}: Negative Temperature are prohibited!".format(kwargs['T']))
-                
-            self._T = kwargs['T']
-            
-        if 'concs' in kwargs:
-            for idx, xi in enumerate(kwargs['concs']):
-                if xi  < 0.0:
-                        raise ValueError("x{0} = {1:18.16e}:  Negative concentrations are prohibited!".format(idx, xi))
-            
-            if len(kwargs['concs']) != self._num_species:
-                raise ValueError("Length of concentrations ("+str(len(kwargs['concs']))+") and species arrays ("+str(self._num_species)+") do not match. Update your concentrations.")
-            
-            self._concs = kwargs['concs']
+        self._reactions_ls = reactions_ls
+        self._species_ls = species_ls
+        
+        if not self._species_ls:
+            self.update_species()
+        
+        self.set_temp(initial_T)
+        if initial_concs:
+            self.set_concs(initial_concs)            
+       
+    def set_temp(self, T):
+        if (T <= 0):
+            raise ValueError("T = {0:18.16e}: Negative Temperature is prohibited!".format(T))
+         
+        self._T = T    
+        
+    def get_temp(self):
+        return self._T
     
-    def get_state(self):
-        return dict(T=self._T, concs=self._concs)
+    def set_concs(self, concs):
+        
+        if len(concs.keys()) != len(self._species_ls):
+            raise ValueError("Length of concentrations ("+str(len(concs.keys()))+") and species arrays ("+str(len(self._species_ls))+") do not match. Update your concentrations.")
+            
+        for i, conc in enumerate(concs.values()):
+            if conc < 0:
+                raise ValueError("x{0} = {1:18.16e}:  Negative concentrations are prohibited!".format(i, conc))
+
+        self._concs = concs
+    
+    def get_concs(self):
+        return self._concs
     
     def __len__(self):
-        return self._num_reactions
+        return len(self._reactions_ls)
     
     def __repr__(self):
         repr_ls = ""
@@ -187,14 +188,14 @@ class ReactionSystem:
     def get_reac_rate_coefs(self):
         if not self._T:
             raise ValueError("Temperature not yet defined. Call set_state() before calling this function.")
-        k = np.zeros(self._num_reaction)
+        k = np.zeros(len(self._reactions_ls))
         for n, r in enumerate(self._reactions_ls):
             k[n] = r.rateCoeff(T = self._T)
             
         return k
     
     def get_nu_1(self):
-        nu_1 = np.zeros([self._num_species, self._num_reaction])
+        nu_1 = np.zeros([len(self._species_ls), len(self._reactions_ls)])
         
         for n, r in enumerate(self._reactions_ls):
             reactants = r.getReactants()
@@ -206,7 +207,7 @@ class ReactionSystem:
         return nu_1
     
     def get_nu_2(self):
-        nu_2= np.zeros([self._num_species, self._num_reaction])
+        nu_2= np.zeros([len(self._species_ls), len(self._reactions_ls)])
         
         for n, r in enumerate(self._reactions_ls):
             products = r.getProducts()
@@ -218,6 +219,7 @@ class ReactionSystem:
         return nu_2
     
     def get_progress_rate(self):
+        
         if not self._concs:
             raise ValueError("Concentrations not yet defined. Call set_state() before calling this function.")
             
@@ -229,7 +231,7 @@ class ReactionSystem:
         progress_rate = k # Initialize progress rates with reaction rate coefficients
         
         for j in range(len(progress_rate)):
-            for i, xi in enumerate(self._concs):
+            for i, xi in enumerate(self._concs.values()):
                 nu_ij = nu_react[i,j]
                 progress_rate[j] *= xi**nu_ij     
                 

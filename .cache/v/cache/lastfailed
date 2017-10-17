@@ -1,7 +1,3 @@
 {
-  "reaction system/ReactionSystem.py::ReactionSystem.ReactionSystem": true,
-  "reaction system/ReactionSystem_jiejun.py::ReactionSystem_jiejun.ReactionSystem": true,
-  "reaction system/test_ReactionSystem.py::test_rs_nu_matrix_creation": true,
-  "reaction system/test_ReactionSystem.py::test_rs_progress_rate": true,
-  "reaction system/test_ReactionSystem.py::test_rs_reaction_rate": true
+  "reaction system/ReactionSystem_jiejun.py::ReactionSystem_jiejun.ReactionSystem": true
 }
