@@ -42,7 +42,8 @@ class ReactionSystem:
     get_progress_rate(self):
         Calculates and returns the progress rate for each reaction as an array of floats.
     get_reac_rate(self):
-        Calculates and returns
+        Calculates and returns the reaction rate for each species as an array of floats.
+        The order corresponds to the internal order of the _species_ls array.
     
     '''
     
