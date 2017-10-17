@@ -5,6 +5,7 @@ before_install:
     - pip install pytest pytest-cov
     - pip install coveralls
     - pip install more-itertools
+    - git lfs pull
 env:
   global:
   - FILES="rxns.xml"
