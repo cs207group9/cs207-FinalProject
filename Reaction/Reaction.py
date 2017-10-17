@@ -7,7 +7,8 @@ import CoeffLaw
 
 class Reaction:
     """
-    Reaction keeps all the infomation from one given reaction. It also helps to select 
+    Class Reaction:
+    Reaction keeps all the information from one given reaction. It also helps to select 
     the right law function, as attribute rateCoeff, to compute the reaction rate coefficient 
     based on the classification of the given reaction. In the inner class _CoeffLawDict several 
     laws including constant coeffs, Arrhenius coeffs and Modified Arrhenius coeffs have been 
@@ -341,6 +342,9 @@ class Reaction:
     
     def getProducts(self):
         return self._params['products']
+    
+    def get_species(self):
+        return self.getReactants()+self.getProducts()
     
     def _check_params(self):
         if self._params['reversible']:

@@ -4,8 +4,8 @@ Created on Sun Oct 15 17:50:51 2017
 @author: Camilo
 """
 
-import Reaction
-import ReactionSystem
+from Reaction import Reaction
+from ReactionSystem_vFosco import ReactionSystem
 import numpy as np
 
 ### Tests for ReactionSystems (rs):

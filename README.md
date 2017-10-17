@@ -24,6 +24,32 @@ import chemkin
 import chemkin_tests
 ```
 
+### Basic Usage and Examples
+
+To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and a concentration value for each specie in the array. Let's first create some Reactions and an array of concentrations:
+```
+# Reactions involving species A, B and C
+reaction1 = Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'const', coeffParams = 10)
+reaction2 = Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'const', coeffParams = 10)
+reactions = [reaction1, reaction2]
+
+# One concentration value is needed for each species of our reactions
+concentrations = [1,2,1]
+```
+We can now create our ReactionSystem object:
+```
+rs = ReactionSystem(reactions, concentrations)
+```
+And call the get_reac_rate() function that returns the reaction rate value for each specie.
+```
+reac_rate = rs.get_reac_rate()
+```
+It is also possible to obtain the progress rate for each reaction:
+```
+progress_rate = rs.get_progress_rate()
+```
+This gives us a 1 dimensional list with one element per reaction.
+
 ## Authors
 
 * **Camilo Fosco**
