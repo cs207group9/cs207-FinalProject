@@ -1,6 +1,11 @@
 
 import numpy as np
-import Reaction
+
+import sys
+sys.path.insert(0, '../Reaction')
+from Reaction import Reaction
+
+from more_itertools import unique_everseen
 
 class ReactionSystem:
 
@@ -39,9 +44,9 @@ class ReactionSystem:
     
     _k: array of float, coefficient rates for every equation
     
-    _reactants: matrix of float, formatted reactant matrix
+    _nu_1: matrix of float, formatted reactant matrix
     
-    _products: matrix of float, formatted product matrix
+    _nu_2: matrix of float, formatted product matrix
     
     progress: array of float, progress rate
     
@@ -93,30 +98,44 @@ class ReactionSystem:
     =========
     >>> r_ls = []\
         r_ls.append(Reaction.Reaction(\
-            reactants=dict('H'=1,'O2'=1), products=dict('OH'=1,'O'=1),\
-            coeffLaw='Arrhenius', coeffParams=dict('A'=2.0)\
+            reactants=dict(H=1,O2=1), products=dict(OH=1,O=1),\
+            coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
         ))\
         r_ls.append(Reaction.Reaction(\
-            reactants=dict('H2'=1,'O'=1), products=dict('OH'=1,'H'=1),\
-            coeffLaw='Arrhenius', coeffParams=dict('A'=2.0)\
+            reactants=dict(H2=1,O=1), products=dict(OH=1,H=1),\
+            coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
         ))
     >>> d = {}\
         d['T'] = 1\
-        d['concs'] = np.array([2, 1, 0.5, 1, 1]).transpose()
-    >>> rs = ReactionSystem.ReactionSystem(reactions,species **d)
+        d['concs'] = np.array([2, 1, 0.5, 1, 1])
+    >>> rs = ReactionSystem.ReactionSystem(r_ls,e_ls, **d)
     >>> rs.compute_all()
     array([-2.,  2.,  6., -2., -4.])
     """
     
-    
+    # TODO: Change initial state to initial_T and initial_concs
     def __init__(self, reactions_ls, species_ls = [], **initial_state):
         self._num_reactions = len(reactions_ls)
         self._num_species = len(species_ls)
         self._reactions_ls = reactions_ls
         self._species_ls = species_ls
         self.set_state(**initial_state)
-
         
+        if not reactions_ls:
+            raise ValueError("Reaction array is empty or None.")
+            
+        if not species_ls:
+            raise ValueError("Species array is empty or None.")
+        
+        for s in species_ls:
+            if not isinstance(s, str): 
+                raise ValueError("input species_ls array contains elements that are not of type string")
+                
+        for r in reactions_ls:
+            if not isinstance(r, Reaction): 
+                raise ValueError("input reactions_ls array contains elements that are not instances of Reaction")
+        
+    # TODO: Change this to set_temp and set_concs
     def set_state(self, **kwargs):
         if 'T' in kwargs:
             if (kwargs['T'] <= 0):
@@ -138,71 +157,95 @@ class ReactionSystem:
         return dict(T=self._T, concs=self._concs)
     
     def __len__(self):
-        return self._num_reaction
+        return self._num_reactions
     
     def __repr__(self):
         repr_ls = ""
         for r in self._reactions_ls:
-            repr_ls += repr(r)
-
+            repr_ls += '\n'+repr(r)
         return repr_ls
     
-    def rateCoeff(self):
-        self._k = np.zeros(self._num_reaction)
-        
-        for n, r in enumerate(self._reactions_ls):
-            self._k[n] = r.rateCoeff(T = self._T)
+    def add_reaction(self, reaction):
+        if not isinstance(reaction, Reaction):
+            raise ValueError('Input parameter is not instance of Reaction')
             
-        return self._k
+        self._reactions_ls.append(reaction)
+        self.update_species()
+        
+    def update_species(self):
+        for r in self._reactions_ls:
+            species_list +=  r.get_species()
+        self._species_ls = list(unique_everseen(species_list))
+        
+    def get_react_rate_coefs(self):
+        if not self._T:
+            raise ValueError("Temperature not yet defined. Call set_state() before calling this function.")
+        k = np.zeros(self._num_reaction)
+        for n, r in enumerate(self._reactions_ls):
+            k[n] = r.rateCoeff(T = self._T)
+            
+        return k
     
-    def calculate_nu_1(self):
-        self._reactants = np.zeros([self._num_element, self._num_reaction])
+    def get_nu_1(self):
+        nu_1 = np.zeros([self._num_element, self._num_reaction])
         
         for n, r in enumerate(self._reactions_ls):
+            reactants = r.getReactants()
             for idx, e in enumerate(self._species_ls):
-                self._reactants[idx, n] = r.getReactants()[e] if e in r.getReactants() else 0
-                if self._reactants[idx, n] < 0:
-                    raise ValueError("nu_{0}1 = {1}:  Negative stoichiometric coefficients are prohibited!".format(idx, self._reactants[idx, n]))
+                nu_1[idx, n] = reactants[e] if e in reactants else 0
+                if nu_1[idx, n] < 0:
+                    raise ValueError("nu_{0}1 = {1}:  Negative stoichiometric coefficients are prohibited!".format(idx, nu_1[idx, n]))
 
-        return self._reactants
+        return nu_1
     
-    def calculate_nu_2(self):
-        self._products = np.zeros([self._num_element, self._num_reaction])
+    def get_nu_2(self):
+        nu_2= np.zeros([self._num_element, self._num_reaction])
         
-        for n, r in enumerate(self.reactions_ls):
+        for n, r in enumerate(self._reactions_ls):
+            products = r.getProducts()
             for idx, e in enumerate(self._species_ls):
-                self._products[idx, n] = r.getProducts()[e] if e in r.getProducts() else 0
-                if self._products[idx, n] < 0:
-                    raise ValueError("nu_{0}2 = {1}:  Negative stoichiometric coefficients are prohibited!".format(idx, self._products[idx, n]))
+                nu_2[idx, n] = products[e] if e in products else 0
+                if nu_2[idx, n] < 0:
+                    raise ValueError("nu_{0}2 = {1}:  Negative stoichiometric coefficients are prohibited!".format(idx, nu_2[idx, n]))
 
-        return self._products
+        return nu_2
     
-    def get_progress_rate(self):
-        self._k = self.rateCoeff()
-        nu_react = self.calculate_nu_1()
-        self.progress = self._k # Initialize progress rates with reaction rate coefficients
+    def get_progress_rate(self, reaction_idx = []):
+        if not self._concs:
+            raise ValueError("Concentrations not yet defined. Call set_state() before calling this function.")
+            
+        if len(self._concs) != len(self._species_ls):
+            raise ValueError("Dimensions of concentrations and species arrays do not match. Update your concentrations.")
+            
+        k = self.get_reac_rate_coefs()
+        nu_react = self.get_nu_1()
+        progress_rate = k # Initialize progress rates with reaction rate coefficients
         
-        for jdx, rj in enumerate(self.progress):
-            for idx, xi in enumerate(self._concs):
-                nu_ij = nu_react[idx,jdx]
-                self.progress[jdx] *= xi**nu_ij
+        for j in range(len(progress_rate)):
+            for i, xi in enumerate(self._concs):
+                nu_ij = nu_react[i,j]
+                progress_rate[j] *= xi**nu_ij     
                 
-        return self.progress
+        return progress_rate
     
-    def get_reac_rate(self):
-        self.progress = self.get_progress_rate()
-        nu_react = self.calculate_nu_1()
-        nu_prod = self.calculate_nu_2()
+    def get_reac_rate(self,species_idx = []):
+            
+        nu_react = self.get_nu_1()
+        nu_prod = self.get_nu_2()
         nu = nu_prod - nu_react
-        self.reac_rate = np.dot(nu, self.progress)
+        progress_rate = self.get_progress_rate()
+            
+        if not species_idx:
+            return np.dot(nu, progress_rate)
+        else:
+            return np.dot(nu[species_idx,:], progress_rate)
+     
         
-        return self.reac_rate
-    
-    def compute_all(self):
-        self.rateCoeff()
-        self.calculate_nu_1()
-        self.calculate_nu_2()
-        self.get_progress_rate()
-        self.get_reac_rate()
-        
-        return self.reac_rate
+#    def compute_all(self):
+#        self.rateCoeff()
+#        self.calculate_nu_1()
+#        self.calculate_nu_2()
+#        self.get_progress_rate()
+#        self.get_reac_rate()
+#        
+#        return self.reac_rate

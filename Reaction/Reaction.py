@@ -344,7 +344,9 @@ class Reaction:
         return self._params['products']
     
     def get_species(self):
-        return self.getReactants()+self.getProducts()
+        sp_dict = self.getReactants().copy()
+        sp_dict.update(self.getProducts())
+        return sp_dict.keys()
     
     def _check_params(self):
         if self._params['reversible']:
