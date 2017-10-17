@@ -32,7 +32,7 @@ class ReactionSystem:
     ===========
     _num_reaction: integer, number of reactions
     
-    _num_element: integer, number of elements
+    _num_species: integer, number of species
     
     _reactions_ls: list of class Reaction, reactions included in the system
     
@@ -97,23 +97,23 @@ class ReactionSystem:
     EXAMPLES:
     =========
     >>> r_ls = []
-    >>> r_ls.append(Reaction.Reaction(\
+    >>> r_ls.append(Reaction(\
             reactants=dict(H=1,O2=1), products=dict(OH=1,O=1),\
             coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
         ))
-    >>> r_ls.append(Reaction.Reaction(\
+    >>> r_ls.append(Reaction(\
             reactants=dict(H2=1,O=1), products=dict(OH=1,H=1),\
             coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
         ))
     >>> d = {}
     >>> d['T'] = 1
     >>> d['concs'] = np.array([2, 1, 0.5, 1, 1])
-    >>> rs = ReactionSystem.ReactionSystem(r_ls,e_ls, **d)
+    >>> rs = ReactionSystem(r_ls,e_ls, **d)
     >>> rs.compute_all()
     array([-2.,  2.,  6., -2., -4.])
     """
     
-    # TODO: Change initial state to initial_T and initial_concs
+    # TODO: Change initial_state to initial_T and initial_concs
     def __init__(self, reactions_ls, species_ls = [], **initial_state):
         self._num_reactions = len(reactions_ls)
         self._num_species = len(species_ls)
@@ -125,8 +125,8 @@ class ReactionSystem:
             raise ValueError("Reaction array is empty or None.")
             
         if not species_ls:
-            raise ValueError("Species array is empty or None.")
-        
+            self.update_species()
+            
         for s in species_ls:
             if not isinstance(s, str): 
                 raise ValueError("input species_ls array contains elements that are not of type string")
@@ -148,8 +148,8 @@ class ReactionSystem:
                 if xi  < 0.0:
                         raise ValueError("x{0} = {1:18.16e}:  Negative concentrations are prohibited!".format(idx, xi))
             
-            if len(kwargs['concs']) != self._num_element:
-                raise ValueError("The dimension of concentration and element list are not the same!")
+            if len(kwargs['concs']) != self._num_species:
+                raise ValueError("Length of concentrations ("+str(len(kwargs['concs']))+") and species arrays ("+str(self._num_species)+") do not match. Update your concentrations.")
             
             self._concs = kwargs['concs']
     
@@ -178,7 +178,13 @@ class ReactionSystem:
             species_list+=r.get_species()
         self._species_ls = list(unique_everseen(species_list))
         
-    def get_react_rate_coefs(self):
+    def get_species(self, update = True):
+        if update:
+            self.update_species()
+            
+        return self._species_ls
+        
+    def get_reac_rate_coefs(self):
         if not self._T:
             raise ValueError("Temperature not yet defined. Call set_state() before calling this function.")
         k = np.zeros(self._num_reaction)
@@ -188,7 +194,7 @@ class ReactionSystem:
         return k
     
     def get_nu_1(self):
-        nu_1 = np.zeros([self._num_element, self._num_reaction])
+        nu_1 = np.zeros([self._num_species, self._num_reaction])
         
         for n, r in enumerate(self._reactions_ls):
             reactants = r.getReactants()
@@ -200,7 +206,7 @@ class ReactionSystem:
         return nu_1
     
     def get_nu_2(self):
-        nu_2= np.zeros([self._num_element, self._num_reaction])
+        nu_2= np.zeros([self._num_species, self._num_reaction])
         
         for n, r in enumerate(self._reactions_ls):
             products = r.getProducts()
@@ -211,7 +217,7 @@ class ReactionSystem:
 
         return nu_2
     
-    def get_progress_rate(self, reaction_idx = []):
+    def get_progress_rate(self):
         if not self._concs:
             raise ValueError("Concentrations not yet defined. Call set_state() before calling this function.")
             
