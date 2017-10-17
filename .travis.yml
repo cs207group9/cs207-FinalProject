@@ -7,7 +7,6 @@ before_install:
     - pip install more-itertools
     - git lfs pull
 env:
-  global:
   - FILES="rxns.xml"
 script:
     - py.test
