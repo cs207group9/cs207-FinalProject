@@ -147,7 +147,7 @@ class Reaction:
         kwargs:      some non-positional arguments that are currently not helpful
         
         
-    NOTES:
+    NOTE:
     ---------------------
         attributes _params and rateCoeff will get initialized.
         inner class _CoeffLawDict does not require instantiation.
