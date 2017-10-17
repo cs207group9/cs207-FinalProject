@@ -6,8 +6,8 @@ before_install:
     - pip install coveralls
     - pip install more-itertools
 env:
-   global:
-      - FILES="rxns.xml"
+  global:
+  - FILES="rxns.xml"
 script:
     - py.test
 after_success:
