@@ -47,6 +47,10 @@ import chemkin_tests
 
 ## Basic Usage and Examples
 
+First of all, we need to turn an input file (XML file) into dictionaries and data readable by Python. Therefore we first implemented a class xml2dict.
+This class has the method "parse" that takes the input file as an argument, that reads the XML file and store all the data into arrays and dictionaries of strings and number. The class xml2dict has another method, get_info(). This method returns two object: an array of all the species involved in the reaction system, and a list of dictionaries. There is one dictionary for every single reaction written in the system of reactions (XML file). A given dictionary includes all the information about the reaction it refers to, such as the products, the reactants, the law followed by the reaction rate (Arrhenius, Constant, Modified Arrhenius), the value of the coefficients included in this law, and so forth.
+   
+
 To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and a concentration value for each specie in the array. Let's first create some Reactions and an array of concentrations:
 ```
 # Reactions involving species A, B and C
