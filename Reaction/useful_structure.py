@@ -1,13 +1,13 @@
 from copy import deepcopy
 
-# ============================================================ #
+
 class PartialLockedDict:
     """
     THIS IS A BASECLASS
     
     PartialLockedDict conceptually consists one built-in dict and one outer dict.
-    The built-in dict is considered constant and user are not suggested to change it.
-    The outer dict is defined by the user and is sujected to all kinds of changes.
+    The built-in dict is considered constant and users are not suggested to change it.
+    The outer dict is defined by the user and is subjected to all kinds of changes.
     PartialLockedDict provides methods accessing data with high security.
     
     
