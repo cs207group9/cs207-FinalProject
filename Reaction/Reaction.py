@@ -184,7 +184,7 @@ class Reaction:
     >>> print(str(r))
     ========================================
     Reaction Equation:
-    1H + 1O2 [=] 1OH + 1H
+    1H + 1O2 =] 1OH + 1H
     ----------------------------------------
     Reaction Info:
     reversible: False
@@ -320,6 +320,10 @@ class Reaction:
             'reactants'   : reactants,
             'products'    : products
         }
+        if params['reversible'] == 'yes':
+            params['reversible'] = True
+        elif params['reversible'] == 'no':
+            params['reversible'] = False
         self._params = deepcopy(self._check_params(params))
         self.rateCoeff, self._params['coeffParams'] = \
             self._specify_CoeffLaw(params['coeffLaw'], params['coeffParams'])
@@ -353,7 +357,7 @@ class Reaction:
     
     @staticmethod
     def _check_params(params):
-        if 'reversible' in params and params['reversible']:
+        if 'reversible' in params and params['reversible'] == True:
             raise NotImplementedError(
                 'Reversible reaction is not implemented.')
         if 'TYPE' in params and params['TYPE'] != 'Elementary':
@@ -395,7 +399,7 @@ class Reaction:
             ['{}{}'.format(v,k) for k,v in self._params['reactants'].items()])
         streq_righthand = ' + '.join(
             ['{}{}'.format(v,k) for k,v in self._params['products'].items()])
-        streq_full = ' [=] '.join([streq_lefthand, streq_righthand])
+        streq_full = ' =] '.join([streq_lefthand, streq_righthand])
         strparams = '\n'.join(
             [': '.join([str(k), str(v)]) for k,v in self._params.items()])
         return '\n'.join([
