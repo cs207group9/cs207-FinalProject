@@ -96,18 +96,18 @@ class ReactionSystem:
             
     EXAMPLES:
     =========
-    >>> r_ls = []\
-        r_ls.append(Reaction.Reaction(\
+    >>> r_ls = []
+    >>> r_ls.append(Reaction.Reaction(\
             reactants=dict(H=1,O2=1), products=dict(OH=1,O=1),\
             coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
-        ))\
-        r_ls.append(Reaction.Reaction(\
+        ))
+    >>> r_ls.append(Reaction.Reaction(\
             reactants=dict(H2=1,O=1), products=dict(OH=1,H=1),\
             coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
         ))
-    >>> d = {}\
-        d['T'] = 1\
-        d['concs'] = np.array([2, 1, 0.5, 1, 1])
+    >>> d = {}
+    >>> d['T'] = 1
+    >>> d['concs'] = np.array([2, 1, 0.5, 1, 1])
     >>> rs = ReactionSystem.ReactionSystem(r_ls,e_ls, **d)
     >>> rs.compute_all()
     array([-2.,  2.,  6., -2., -4.])
@@ -173,8 +173,9 @@ class ReactionSystem:
         self.update_species()
         
     def update_species(self):
+        species_list = []
         for r in self._reactions_ls:
-            species_list +=  r.get_species()
+            species_list+=r.get_species()
         self._species_ls = list(unique_everseen(species_list))
         
     def get_react_rate_coefs(self):

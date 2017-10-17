@@ -27,8 +27,8 @@ def test_rs_nu_matrix_creation():
 def test_rs_progress_rate():
     
     reactions = []
-    reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':2}, coeffLaw = 'const', coeffParams = 10))
-    reactions.append(Reaction(reactants={'A':2,'C':2}, products = {'B':1, 'C':1}, coeffLaw = 'const', coeffParams = 10))
+    reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':2}, coeffLaw = 'Constant', coeffParams = 10))
+    reactions.append(Reaction(reactants={'A':2,'C':2}, products = {'B':1, 'C':1}, coeffLaw = 'Constant', coeffParams = 10))
     
     concentrations = [1,2,1]
     rs = ReactionSystem(reactions, concentrations)
@@ -39,8 +39,8 @@ def test_rs_progress_rate():
 def test_rs_reaction_rate():
     
     reactions = []
-    reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'const', coeffParams = 10))
-    reactions.append(Reaction(reactants={'C':2}, products = {'A':1, 'B':2}, coeffLaw = 'const', coeffParams = 10))
+    reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'Constant', coeffParams = 10))
+    reactions.append(Reaction(reactants={'C':2}, products = {'A':1, 'B':2}, coeffLaw = 'Constant', coeffParams = 10))
     
     concentrations = [1,2,1]
     rs = ReactionSystem(reactions, concentrations)
@@ -51,8 +51,8 @@ def test_rs_reaction_rate():
 def test_rs_not_enough_concentrations():
     
     reactions = []
-    reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'const', coeffParams = 10))
-    reactions.append(Reaction(reactants={'C':2}, products = {'A':1, 'B':2}, coeffLaw = 'const', coeffParams = 10))
+    reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'Constant', coeffParams = 10))
+    reactions.append(Reaction(reactants={'C':2}, products = {'A':1, 'B':2}, coeffLaw = 'Constant', coeffParams = 10))
     
     concentrations = [1,2]
     
@@ -64,8 +64,8 @@ def test_rs_not_enough_concentrations():
 def test_rs_too_many_concentrations():
     
     reactions = []
-    reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'const', coeffParams = 10))
-    reactions.append(Reaction(reactants={'C':2}, products = {'A':1, 'B':2}, coeffLaw = 'const', coeffParams = 10))
+    reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'Constant', coeffParams = 10))
+    reactions.append(Reaction(reactants={'C':2}, products = {'A':1, 'B':2}, coeffLaw = 'Constant', coeffParams = 10))
     
     concentrations = [1,2,3,4]
     
@@ -77,8 +77,8 @@ def test_rs_too_many_concentrations():
 def test_rs_not_enough_params():
     
     reactions = []
-    reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'arr', coeffParams = [10,10]))
-    reactions.append(Reaction(reactants={'C':2}, products = {'A':1, 'B':2}, coeffLaw = 'const', coeffParams = 10))
+    reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'Arrhenius', coeffParams = [10,10]))
+    reactions.append(Reaction(reactants={'C':2}, products = {'A':1, 'B':2}, coeffLaw = 'Constant', coeffParams = 10))
     
     concentrations = [1,2,3]
     
