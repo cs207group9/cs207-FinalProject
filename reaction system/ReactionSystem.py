@@ -1,48 +1,54 @@
 
 import numpy as np
-import Reaction
 
 class ReactionSystem:
     
-    def __init__(self, r_ls, e_ls):
-        self._num_reaction = len(r_ls)
-        self._num_element = len(e_ls)
-        self._r_ls = r_ls
-        self._e_ls = e_ls
+    def __init__(self, reaction_ls, element_ls):
+        self._num_reactions = len(reaction_ls)
+        self._num_elements = len(element_ls)
+        self._reaction_ls = reaction_ls
+        self._element_ls = element_ls
         
     def set_conditions(self, **kwargs):
+        # C: I believe that this should be changed to clearly indicate what are the possible inputs.
         if 'T' in kwargs:
             if (kwargs['T'] <= 0):
-                raise ValueError("T = {0:18.16e}: Negative Temperature are prohibited!".format(T))
+                raise ValueError("T = {0:18.16e}: Negative Temperature are prohibited.".format(T))
                 
             self._T = kwargs['T']
             
         if 'concs' in kwargs:
-            # check validity (concs>=0?)
-            self._concs = kwargs['concs']
+            if (kwargs['concs'] != len(self._reaction_ls)):
+                raise ValueError('The number of concentrations is different than the number of species')
+            for conc in kwargs['concs']:
+                if conc < 0:
+                    raise ValueError('Negative concentrations are prohibited.')
+                
+            self._concentration_ls = kwargs['concs']
     
     def get_conditions(self):
-        return dict(T=self._T, concs=self._concs)
+        # I believe the dictionary is not necessary in this case
+        return dict(T=self._T, concs=self._concentration_ls)
     
-    def rateCoeff(self):
+    def get_reaction_rate_coefs(self):
         self._k = np.zeros(self._num_reaction)
-        for n, r in enumerate(self._r_ls):
+        for n, r in enumerate(self._reaction_ls):
             self._k[n] = r.rateCoeff(T = self._T)
             
         return self._k
     
     def calculate_nu_1(self):
         self._reactants = np.zeros([self._num_element, self._num_reaction])
-        for n, r in enumerate(self._r_ls):
-            for idx, e in enumerate(self._e_ls):
+        for n, r in enumerate(self._reaction_ls):
+            for idx, e in enumerate(self._element_ls):
                 self._reactants[idx, n] = r.getReactants()[e] if e in r.getReactants() else 0
         
         return self._reactants
     
     def calculate_nu_2(self):
         self._products = np.zeros([self._num_element, self._num_reaction])
-        for n, r in enumerate(self._r_ls):
-            for idx, e in enumerate(self._e_ls):
+        for n, r in enumerate(self._reaction_ls):
+            for idx, e in enumerate(self._element_ls):
                 self._products[idx, n] = r.getProducats()[e] if e in r.getProducats() else 0
                 
         return self._products
@@ -54,7 +60,7 @@ class ReactionSystem:
         for jdx, rj in enumerate(self.progress):
             if rj < 0:
                 raise ValueError("k = {0:18.16e}:  Negative reaction rate coefficients are prohibited!".format(rj))
-            for idx, xi in enumerate(self._concs):
+            for idx, xi in enumerate(self._concentration_ls):
                 nu_ij = nu_react[idx,jdx]
                 if xi  < 0.0:
                     raise ValueError("x{0} = {1:18.16e}:  Negative concentrations are prohibited!".format(idx, xi))
