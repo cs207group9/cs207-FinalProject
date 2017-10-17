@@ -83,9 +83,9 @@ class xml2dict:
                 Law = name.tag
                 ListCoeffTag = []
                 ListCoeffValue = []
-                #for coeff in name:
-                #    ListCoeffTag.append(coeff.tag)
-                #    ListCoeffValue.append(float(coeff.text))
+                for coeff in name:
+                    ListCoeffTag.append(coeff.tag)
+                    ListCoeffValue.append(float(coeff.text))
                 #    if len(coeff.attrib) != 0:
                 #        ListCoeffUnits.append(coeff.attrib['units'])
                 #    else:
