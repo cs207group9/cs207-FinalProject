@@ -3,29 +3,109 @@
 import xml.etree.ElementTree as ET
 
 class xml2dict:
+"""
+    xml2dict turns an XML file into a array of all the species involved into the system of
+    reactions and a list of dictionaries. This latter contains a dictionary for every single 
+    reaction of the system of reactions. Each dictionary contains the information about the 
+    reactants, the products, the stoichiometric coefficients and the kinetic law for the 
+    reaction constant (Arrhenius Law, Modified Arrhenius Law, Constant Law, and so forth).
+    where list of dictionary Reaction keeps all the infomation from one given reaction. It also helps to select 
+    the right law function, as attribute rateCoeff, to compute the reaction rate coefficient 
+    based on the classification of the given reaction. In the inner class _CoeffLaws several 
+    laws including constant coeffs, Arrhenius coeffs and Modified Arrhenius coeffs have been 
+    implemented, and _CoeffLaws forms up a dict-like structure to manage them.
     
-    """Read the XML file of the reactions and returns a list of dictionaries with 
-       the features of every reaction, and an array of all the species involved.
-       
+    
     INPUTS
     ======
-    file : XML file. 
-           The format of the this input file must follow
-           the format given by Prof. David Sondak.
     
-    RETURNS
+    file: XML file.
+          The format of the this input file must follow
+          the format given by Prof. David Sondak.
+          
+    METHODS
     =======
-    Species: array of strings. 
     
-    ListDictionaries: list of dictionaries.
-                      Includes all the parameters of the reactions provided in XML files.
-             
-    EXAMPLES
+    parse(self, file): 
+        extract all the information contained into the XML file provided by
+        the user, namely the names of all the species involved in the system
+        of reactions, stored into the array self.Species, and all the information
+        about every reaction, stored into self.ListDictionaries
+        
+    get_info(self):
+        return the array self.Species containing the names of the species involved
+        and the list of dictionaries self.ListDictionaries
+        OUTPUTS: self.Species, self.ListDictionaries
+    
+    
+    METHODS
     ========
-    >>> xml2dict('rxns.xml')
-    (['H', 'O', 'OH', 'H2', 'O2'], [{'coeffParams': {'A': 35200000000.0, 'b': -0.7, 'E': 71400.0}, 'coeffUnits': {'A': 'm3/mol/s', 'b': 'dimensionless', 'E': 'J/mol'}, 'id': 'reaction01', 'reversible': 'yes', 'type': 'Elementary', 'reactants': {'H': 1, 'O2': 1}, 'products': {'OH': 1, 'O': 1}, 'coeffLaw': 'Arrhenius'}, {'coeffParams': {'A': 0.0506, 'b': 2.7, 'E': 26300.0}, 'coeffUnits': {'A': 'm3/mol/s', 'b': 'dimensionless', 'E': 'J/mol'}, 'id': 'reaction02', 'reversible': 'yes', 'type': 'Elementary', 'reactants': {'H2': 1, 'O': 1}, 'products': {'OH': 1, 'H': 1}, 'coeffLaw': 'Arrhenius'}])    
-    """
     
+    get_params(self): 
+        return a deepcopy of self._params
+        OUTPUTS: self._params, dict (deepcopy)
+        
+    set_params(self, **kwargs):
+        update self._params with kwargs.
+        only keys that are originally in _params would be updated.
+        will call self._check_params() to see if this update is valid.
+        if 'coeffLaw' is updated, will call self._specify_rateCoeff() to reset self.rateCoeff
+        INPUTS:  kwargs, non-positional, contains the updates 
+        OUTPUTS: self, Reaction instance
+        
+    getReactants(self): 
+        returns the reactants in a dict
+        OUTPUTS: self._params['reactants'], dict (deepcopy)
+            has the form of (reactant name):(stoich coeff)
+        
+    getProducts(self): 
+        returns the reactants in a dict
+        OUTPUTS: self._params['products'], dict (deepcopy)
+            has the form of (product name):(stoich coeff)
+        
+    _check_params(self):
+        check if self._params are valid.
+        it raises `NotImplementedError` if:
+            self._params['reversible'] == True
+            self._params['TYPE']       != 'Elementary'
+            self._params['coeffLaw'] not in self._CoeffLaws._dict_all
+            
+    _specify_rateCoeff(self):
+        select the right law to compute reaction rate coefficients, 
+        and initialize it with self._params['coeffParams']. 
+        self will get changed - attribute rateCoeff will be updated
+        OUTPUTS: self.rateCoeff, function
+            self.rateCoef(**conditions) will not need to take in 
+            self._params['coeffParams'] as inputs
+            
+    __repr__(self):
+        return a wrapped dict of all params, namely str(self._params)
+        OUTPUTS: representational str, valid input for eval()
+        
+    __str__(self):
+        return a str to show the contents of self. 
+        when printed out, there will be two parts:
+            the reaction equation, in a chemistry convention
+            the params list, in a 'param name: param value' fashion
+        OUTPUTS: descriptive str
+    
+    
+    EXAMPLES
+    =========
+    >>> r = Reaction( \
+            reactants=dict(H=1,O2=1), \
+            products=dict(OH=1,H=1), \
+            coeffLaw='Arrhenius', \
+            coeffParams=dict(A=np.e, E=8.314)\
+        )
+    >>> r.rateCoeff(T=1.0)
+    1.0
+    >>> r.getReactants()
+    {'H': 1, 'O2': 1}
+    >>> r.set_params(reactants=dict(H=2,O2=2)).getReactants()
+    {'H': 2, 'O2': 2}
+    
+    """
     def parse(self, file):
         self.file = file
         tree = ET.parse(file)
@@ -80,5 +160,8 @@ class xml2dict:
             Dict['coeffLaw'] = Law
             self.ListDictionaries.append(Dict)
     
-    def getParams(self):
+    def get_info(self):
         return self.Species, self.ListDictionaries
+    
+    def __repr__(self):
+        return str(self.Species)+str(self.ListDictionaries)
