@@ -112,7 +112,7 @@ class ReactionSystem:
     def __init__(self, reactions_ls, species_ls = [], **initial_state):
         self._num_reactions = len(reactions_ls)
         self._num_species = len(species_ls)
-        self._reactions_ls = _reactions_ls
+        self._reactions_ls = reactions_ls
         self._species_ls = species_ls
         self.set_state(**initial_state)
 
