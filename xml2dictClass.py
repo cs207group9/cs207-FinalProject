@@ -36,48 +36,7 @@ class xml2dict:
         return the array self.Species containing the names of the species involved
         and the list of dictionaries self.ListDictionaries
         OUTPUTS: self.Species, self.ListDictionaries
-    
-    
-    METHODS
-    ========
-    
-    get_params(self): 
-        return a deepcopy of self._params
-        OUTPUTS: self._params, dict (deepcopy)
-        
-    set_params(self, **kwargs):
-        update self._params with kwargs.
-        only keys that are originally in _params would be updated.
-        will call self._check_params() to see if this update is valid.
-        if 'coeffLaw' is updated, will call self._specify_rateCoeff() to reset self.rateCoeff
-        INPUTS:  kwargs, non-positional, contains the updates 
-        OUTPUTS: self, Reaction instance
-        
-    getReactants(self): 
-        returns the reactants in a dict
-        OUTPUTS: self._params['reactants'], dict (deepcopy)
-            has the form of (reactant name):(stoich coeff)
-        
-    getProducts(self): 
-        returns the reactants in a dict
-        OUTPUTS: self._params['products'], dict (deepcopy)
-            has the form of (product name):(stoich coeff)
-        
-    _check_params(self):
-        check if self._params are valid.
-        it raises `NotImplementedError` if:
-            self._params['reversible'] == True
-            self._params['TYPE']       != 'Elementary'
-            self._params['coeffLaw'] not in self._CoeffLaws._dict_all
-            
-    _specify_rateCoeff(self):
-        select the right law to compute reaction rate coefficients, 
-        and initialize it with self._params['coeffParams']. 
-        self will get changed - attribute rateCoeff will be updated
-        OUTPUTS: self.rateCoeff, function
-            self.rateCoef(**conditions) will not need to take in 
-            self._params['coeffParams'] as inputs
-            
+           
     __repr__(self):
         return a wrapped dict of all params, namely str(self._params)
         OUTPUTS: representational str, valid input for eval()
@@ -164,4 +123,4 @@ class xml2dict:
         return self.Species, self.ListDictionaries
     
     def __repr__(self):
-        return str(self.Species)+str(self.ListDictionaries)
+        return str(self.Species) + ' ' + str(self.ListDictionaries)
