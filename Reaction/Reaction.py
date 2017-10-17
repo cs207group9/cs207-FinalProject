@@ -69,32 +69,38 @@ class Reaction:
         OUTPUTS: self._params['products'], dict (deepcopy)
             has the form of (product name):(stoich coeff)
         
-    _check_params(self):
-        check if self._params are valid.
+    _check_params(params): STATICMETHOD
+        check if params are valid.
         will get called by the __init__ method.
         it raises `NotImplementedError` if:
-            self._params['reversible'] == True
-            self._params['TYPE']       != 'Elementary'
-            self._params['coeffLaw'] not in self._CoeffLawDict._dict_all
+            params['reversible'] == True
+            params['TYPE']       != 'Elementary'
+            params['coeffLaw'] not in self._CoeffLawDict._dict_all
         it raises `ValueError` if:
-            any stoich coeffs in self._params['reactants'] and self._params['products']
-            are either non-integer or negative integer
-        NOTE: _check_params does not check if self._params['coeffParams'] are valid.
-            if wanted, the check_coeffparams method of the referred MathModel type should be
-            called seperately from this _check_params. see _specify_rateCoeff below.
+            any stoich coeff is either non-integer or negative integer
+            params['coeffParams'] cannot pass the param check of the referred coeff law
+        NOTE: _check_params calls check_coeffparams method, of the referred MathModel type, 
+            to check if params['coeffParams'] are valid. see mathematical_science.py
             
-    _specify_rateCoeff(self):
-        select the right law (MathModel type) to compute reaction rate coefficients, 
-        and initialize it with self._params['coeffParams']. 
-        self will get changed - attribute rateCoeff will get updated.
-        will get called by the __init__ method.
-        OUTPUTS: self.rateCoeff, function
-            self.rateCoef(...) itself does not need self._params['coeffParams'] as inputs
-        NOTE: _specify_rateCoeff does not check the validity of self._params['coeffParams']
-            explicitly. However, it will call the __init__ method of a MathModel type, which 
-            is expected to call self.check_coeffparams(...) to check the inputing coeffParams 
-            by default. If the coeffParams are invalid, a ValueError is expected to get raised 
-            from inside that check_coeffparams method.
+    _specify_CoeffLaw(coeffLaw, coeffParams): STATICMETHOD
+        select the right law (MathModel type) to compute reaction rate coefficients, and 
+        initialize it with coeffParams. it will get called by the __init__ method.
+        INPUTS:  
+            coeffLaw:    str, law name, _specify_CoeffLaw will search for the associated
+                         MathModel type in the _CoeffLawDict.
+            coeffParams: dict, the provided coeff params to initialize the referred MathModel
+        OUTPUTS: 
+            rateCoeff:   the compute method of the MathModel object, whose type claimed by 
+                         coeffLaw, and params initialized by coeffParams
+            finalParams: the final version of coeff params. since coeffParams might not contain
+                         all the params required by the law model, the model will automatically
+                         add what is missing to coeffParams with default values, finalParams is 
+                         the result of this process
+        NOTE: 
+            _specify_CoeffLaw does not check the validity of coeffParams. when calling the 
+            __init__ method of the referred MathModel type, it passes in check=False, which 
+            avoids param check. see mathematical_science.py, one may want to first do param 
+            check, then apply this _specify_CoeffLaw method. 
             
     __repr__(self):
         return a wrapped dict of all params, namely str(self._params)
@@ -304,7 +310,7 @@ class Reaction:
         products    = {},
         **kwargs
     ):
-        self._params = {
+        params = {
             'reversible'  : reversible, 
             'TYPE'        : TYPE, 
             'ID'          : ID, 
@@ -314,9 +320,9 @@ class Reaction:
             'reactants'   : reactants,
             'products'    : products
         }
-        self._check_params()
-        self._specify_rateCoeff(coeffLaw, coeffParams)
-        # this brings up the attribute self.rateCoeff
+        self._params = deepcopy(self._check_params(params))
+        self.rateCoeff, self._params['coeffParams'] = \
+            self._specify_CoeffLaw(params['coeffLaw'], params['coeffParams'])
     
     def get_params(self):
         return deepcopy(self._params)
@@ -325,16 +331,13 @@ class Reaction:
         old_params = deepcopy(self._params)
         kwargs_eliminated = deepcopy(kwargs)
         for k in kwargs.keys():
-            if k not in self._params:
+            if k not in old_params:
                 kwargs_eliminated.pop(k)
-        self._params.update(**kwargs_eliminated)
-        if self._params != old_params:
-            self._check_params()
-            coeffLaw = self._params['coeffLaw']
-            coeffParams = self._params['coeffParams']
-            if (old_params['coeffLaw'] != coeffLaw \
-                or old_params['coeffParams'] != coeffParams):
-                self._specify_rateCoeff(coeffLaw, coeffParams)
+        new_params = deepcopy(old_params)
+        new_params.update(**kwargs_eliminated)
+        self._params = deepcopy(self._check_params(new_params))
+        self.rateCoeff, self._params['coeffParams'] = \
+            self._specify_CoeffLaw(new_params['coeffLaw'], new_params['coeffParams'])
         return self
     
     def getReactants(self):
@@ -348,36 +351,41 @@ class Reaction:
         sp_dict.update(self.getProducts())
         return sp_dict.keys()
     
-    def _check_params(self):
-        if self._params['reversible']:
+    @staticmethod
+    def _check_params(params):
+        if 'reversible' in params and params['reversible']:
             raise NotImplementedError(
                 'Reversible reaction is not implemented.')
-        if self._params['TYPE'] != 'Elementary':
+        if 'TYPE' in params and params['TYPE'] != 'Elementary':
             raise NotImplementedError(' '.join([
-                'TYPE = {}.'.format(self._params['TYPE']),
+                'TYPE = {}.'.format(params['TYPE']),
                 'Non-elementary reaction is not implemented.']))
-        if not self._params['coeffLaw'] in self._CoeffLawDict._dict_all:
-            raise NotImplementedError(' '.join([
-                'coeffLaw = {}.'.format(self._params['coeffLaw']),
-                'Refered reaction rate coefficient law is not implemented.']))
-        for ele,stoich in self._params['reactants'].items():
-            if type(stoich) != int or stoich < 0:
-                raise ValueError(' '.join([
-                    'Reactant {}:{}.'.format(ele, stoich),
-                    'Stoich. coeff must be a non-negative integer.']))
-        for ele,stoich in self._params['products'].items():
-            if type(stoich) != int or stoich < 0:
-                raise ValueError(' '.join([
-                    'Product {}:{}.'.format(ele, stoich),
-                    'Stoich. coeff must be a non-negative integer.']))
-                
-    def _specify_rateCoeff(self, coeffLaw, coeffParams):
-        selection = self._CoeffLawDict._dict_all[coeffLaw](**coeffParams)
-        self._params['coeffParams'] = selection.get_coeffparams()
-        def rateCoeff_specified(check=True, **stateparams):
-            return selection.compute(check, **stateparams)
-        self.rateCoeff = rateCoeff_specified
-        return self.rateCoeff
+        if 'coeffLaw' in params:
+            if params['coeffLaw'] not in Reaction._CoeffLawDict._dict_all:
+                raise NotImplementedError(' '.join([
+                    'coeffLaw = {}.'.format(params['coeffLaw']),
+                    'Referred reaction rate coefficient law is not implemented.']))
+            elif 'coeffParams' in params:
+                law_model = Reaction._CoeffLawDict._dict_all[params['coeffLaw']]
+                law_model(check=True, **params['coeffParams'])
+        if 'reactants' in params:
+            for ele,stoich in params['reactants'].items():
+                if type(stoich) != int or stoich < 0:
+                    raise ValueError(' '.join([
+                        'Reactant {}:{}.'.format(ele, stoich),
+                        'Stoich. coeff must be a non-negative integer.']))
+        if 'products' in params:
+            for ele,stoich in params['products'].items():
+                if type(stoich) != int or stoich < 0:
+                    raise ValueError(' '.join([
+                        'Product {}:{}.'.format(ele, stoich),
+                        'Stoich. coeff must be a non-negative integer.']))
+        return params
+    
+    @staticmethod         
+    def _specify_CoeffLaw(coeffLaw, coeffParams):
+        selection = Reaction._CoeffLawDict._dict_all[coeffLaw](check=False, **coeffParams)
+        return (selection.compute, selection.get_coeffparams())
     
     def __repr__(self):
         return str(self._params)
