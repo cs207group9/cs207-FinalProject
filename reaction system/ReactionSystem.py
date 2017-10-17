@@ -4,7 +4,6 @@ import numpy as np
 import sys
 sys.path.insert(0, '../final')
 from Reaction import Reaction
-
 from more_itertools import unique_everseen
 
 class ReactionSystem:
@@ -30,9 +29,6 @@ class ReactionSystem:
            
     ATTRIBUTES
     ===========
-    _num_reaction: integer, number of reactions
-    
-    _num_species: integer, number of species
     
     _reactions_ls: list of class Reaction, reactions included in the system
     
@@ -41,16 +37,6 @@ class ReactionSystem:
     _T: float, temperature
     
     _concs: array of float, concentration
-    
-    _k: array of float, coefficient rates for every equation
-    
-    _nu_1: matrix of float, formatted reactant matrix
-    
-    _nu_2: matrix of float, formatted product matrix
-    
-    progress: array of float, progress rate
-    
-    reac_rate: array of float, reaction rate
     
     METHODS:
     ========
@@ -118,11 +104,11 @@ class ReactionSystem:
             
         for s in species_ls:
             if not isinstance(s, str): 
-                raise ValueError("input species_ls array contains elements that are not of type string")
+                raise TypeError("input species_ls array contains elements that are not of type string")
                 
         for r in reactions_ls:
             if not isinstance(r, Reaction): 
-                raise ValueError("input reactions_ls array contains elements that are not instances of Reaction")
+                raise TypeError("input reactions_ls array contains elements that are not instances of Reaction")
         
         self._reactions_ls = reactions_ls
         self._species_ls = species_ls
@@ -132,7 +118,9 @@ class ReactionSystem:
         
         self.set_temp(initial_T)
         if initial_concs:
-            self.set_concs(initial_concs)            
+            self.set_concs(initial_concs)    
+        else:
+            self._concs = {}
        
     def set_temp(self, T):
         if (T <= 0):
@@ -161,9 +149,10 @@ class ReactionSystem:
         return len(self._reactions_ls)
     
     def __repr__(self):
-        repr_ls = ""
-        for r in self._reactions_ls:
-            repr_ls += '\n'+repr(r)
+        # TODO: add info about concentrations
+        repr_ls = "ReactionSystem object with following Reactions:"
+        for i,r in enumerate(self._reactions_ls):
+            repr_ls += "\nReaction "+str(i)+": "+repr(r)
         return repr_ls
     
     def add_reaction(self, reaction):
@@ -250,11 +239,3 @@ class ReactionSystem:
             return np.dot(nu[species_idx,:], progress_rate)
      
         
-#    def compute_all(self):
-#        self.rateCoeff()
-#        self.calculate_nu_1()
-#        self.calculate_nu_2()
-#        self.get_progress_rate()
-#        self.get_reac_rate()
-#        
-#        return self.reac_rate

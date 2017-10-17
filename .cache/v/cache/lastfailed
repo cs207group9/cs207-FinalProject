@@ -1,3 +1,4 @@
 {
-  "reaction system/ReactionSystem_jiejun.py::ReactionSystem_jiejun.ReactionSystem": true
+  "reaction system/ReactionSystem_jiejun.py::ReactionSystem_jiejun.ReactionSystem": true,
+  "reaction system/test_ReactionSystem.py::test_rs_wrong_input_types": true
 }
