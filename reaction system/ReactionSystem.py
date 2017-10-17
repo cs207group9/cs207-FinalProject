@@ -3,11 +3,35 @@ import numpy as np
 import Reaction
 
 class ReactionSystem:
+<<<<<<< HEAD
     """ReactionSystem formats and calculates information for a system of irreversible, elementary reactions, 
     including progress rate and reaction rate.
+=======
+    '''
+    Class ReactionSystem(reaction_ls, species_ls):
+    This class represents a set of reactions defined by the user. It stores an array
+    of reactions, and an array of species that interact in these reactions.
+    The role of ReactionSystem is to store reactions. An object of this class
+    can be queried for reaction rates of its species and progress rates of its reactions.
+    
+    INPUTS
+    ======
+    reaction_ls: list of Reaction objects.
+    species_ls: optional list of strings, with one specie per string. The list of species
+    must match the total set of species in the given Reactions. Order is important
+    and is maintained throughout the class.
+        
+    ATTRIBUTES
+    ==========
+    self._num_reactions: number of reactions.
+    self._num_species: number of species
+    self._reaction_ls: list of reactions
+    self._species_ls: list of species
+>>>>>>> a80223a7a6b56610c934cf12e77d5fa11b9526fb
     
     INPUTS:
     =======
+<<<<<<< HEAD
     r_ls: list of class Reaction, reactions included in the system
     
     e_ls: list of str, concentration element
@@ -107,6 +131,34 @@ class ReactionSystem:
         self._r_ls = r_ls
         self._e_ls = e_ls
         self.set_state(**initial_state)
+=======
+    set_conditions(self, **kwargs):
+        Sets the conditions for the reaction system. Currently: Temperature, Concentrations
+    get_conditions(self):
+        Returns the current conditions.
+    get_reaction_rate_coefs(self):
+        Returns an array of float with each element corresponding to the reaction
+        rate coefficient of each reaction. Queries the Reaction objects. Returns
+        outputs in the same order as the _reaction_ls order.
+    calculate_nu_1(self):
+        Calculates the matrix nu_1, corresponding to the stoichiometric coefs for
+        reactants in all reactions.
+    calculate_nu_2(self):
+        Calculates the matrix nu_2, corresponding to the stoichiometric coefs for
+        products in all reactions.
+    get_progress_rate(self):
+        Calculates and returns the progress rate for each reaction as an array of floats.
+    get_reac_rate(self):
+        Calculates and returns
+    
+    '''
+    
+    def __init__(self, reaction_ls, species_ls = []):
+        self._num_reactions = len(reaction_ls)
+        self._num_species = len(species_ls)
+        self._reaction_ls = reaction_ls
+        self._species_ls = species_ls
+>>>>>>> a80223a7a6b56610c934cf12e77d5fa11b9526fb
         
     def set_state(self, **kwargs):
         if 'T' in kwargs:
