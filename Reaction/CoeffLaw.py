@@ -17,7 +17,7 @@ class Constant(MathModel):
     _k:        float, constant reaction rate coefficient
     
     other attributes follow the MathModel pattern, 
-    including: _coeffparams
+    including: _coeffparams, _default_settings
     
     
     METHODS
@@ -31,7 +31,7 @@ class Constant(MathModel):
     _kernel(k, **other_params): mathematical relation, returns k itself.
     
     other methods follow the MathModel pattern, 
-    including: check_stateparams(...), get_coeffparams(...)
+    including: check_stateparams(...), get_coeffparams(...), get_defaults(...)
     
     
     
@@ -40,18 +40,24 @@ class Constant(MathModel):
     follows the MathModel pattern
     
     
-    
     EXAMPLE
     ========
-    >>> Constant(1.0).compute()
-    1.0
-    
+    >>> Constant(k=2.0).compute()
+    2.0
     
     """
-    
+
+    _default_settings = dict(
+        coeffparams=dict(k=1.0), 
+        stateparams=dict()
+    )
+
     _check_np = ValueCheck(lambda x:x<=0.0, 'non-positive')
     
-    def __init__(self, check=True, k=1.0, **other_params):
+    def __init__(self, check=True, 
+        k = _default_settings['coeffparams']['k'],
+        **other_params
+    ):
         if check:
             self.check_coeffparams(k)
         self._k = k
@@ -91,7 +97,7 @@ class Arrhenius(MathModel):
     _A, _E, _R: implicit params, as specified above
     
     other attributes follow the MathModel pattern, 
-    including: _coeffparams
+    including: _coeffparams, _default_settings
     
     
     METHODS
@@ -106,7 +112,7 @@ class Arrhenius(MathModel):
     _kernel(k, **other_params): mathematical relation.
     
     other methods follow the MathModel pattern, 
-    including: get_coeffparams(...)
+    including: get_coeffparams(...), get_defaults(...)
     
     
     INITIALIZATION
@@ -120,16 +126,29 @@ class Arrhenius(MathModel):
     1.0
     
     """
+
+    _default_settings = dict(
+        coeffparams=dict(A=1.0, E=0.0, R=8.314), 
+        stateparams=dict(T=1e-16)
+    )
     
     _check_np = ValueCheck(lambda x:x<=0.0, 'non-positive')
     
-    def __init__(self, check=True, A=1.0, E=0.0, R=8.314, **other_params):
+    def __init__(self, check=True,
+        A = _default_settings['coeffparams']['A'],
+        E = _default_settings['coeffparams']['E'],
+        R = _default_settings['coeffparams']['R'],
+        **other_params
+    ):
         if check:
             self.check_coeffparams(A, R)
         self._A, self._E, self._R = A, E, R
         self._coeffparams = dict(A=A, E=E, R=R)
         
-    def compute(self, check=True, T=1e-16, **other_params):
+    def compute(self, check=True, 
+        T = _default_settings['stateparams']['T'], 
+        **other_params
+    ):
         if check: 
             self.check_stateparams(T)
         return self._kernel(T, self._A, self._E, self._R)
@@ -163,10 +182,8 @@ class modArrhenius(MathModel):
         T, temperature,                  valid when positive, defaults 1e-16
         
     by default this model will behave like Constant
-    if only b follows the default value, this model will behave like Arrhenius
-    
-    other attributes follow the MathModel pattern, 
-    including: _coeffparams
+    if b is the only one that follows the default value, 
+    this model will behave just like the Arrhenius
     
     
     ATTRIBUTES
@@ -174,6 +191,9 @@ class modArrhenius(MathModel):
     _check_np:      ValueCheck type, will reponse to non-positive input
     _A, _b, _E, _R: implicit params, as specified above
     
+    other attributes follow the MathModel pattern, 
+    including: _coeffparams, _default_settings
+
     
     METHODS
     ========
@@ -186,8 +206,8 @@ class modArrhenius(MathModel):
         check if T is positive, raise ValueError if not
     _kernel(k, **other_params): mathematical relation.
     
-    other attributes follow the MathModel pattern, 
-    including: _coeffparams
+    other methods follow the MathModel pattern, 
+    including: get_coeffparams(...), get_defaults(...)
     
     
     INITIALIZATION
@@ -199,17 +219,32 @@ class modArrhenius(MathModel):
     ========
     >>> modArrhenius(A=np.e, b=-1.0, E=4.157).compute(T=0.5)
     2.0
+
     """
+
+    _default_settings = dict(
+        coeffparams=dict(A=1.0, b=0.0, E=0.0, R=8.314), 
+        stateparams=dict(T=1e-16)
+    )
     
     _check_np = ValueCheck(lambda x:x<=0.0, 'non-positive')
     
-    def __init__(self, check=True, A=1.0, b=0.0, E=0.0, R=8.314, **other_params):
+    def __init__(self, check=True, 
+        A = _default_settings['coeffparams']['A'],
+        b = _default_settings['coeffparams']['b'],
+        E = _default_settings['coeffparams']['E'],
+        R = _default_settings['coeffparams']['R'],
+        **other_params
+    ):
         if check:
             self.check_coeffparams(A, R)
         self._A, self._b, self._E, self._R = A, b, E, R
         self._coeffparams = dict(A=A, b=b, E=E, R=R)
         
-    def compute(self, check=True, T=1e-16, **other_params):
+    def compute(self, check=True, 
+        T = _default_settings['stateparams']['T'], 
+        **other_params
+    ):
         if check: 
             self.check_stateparams(T)
         return self._kernel(T, self._A, self._b, self._E, self._R)

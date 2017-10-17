@@ -1,6 +1,3 @@
-from copy import deepcopy
-
-
 class MathModel:
     """
     THIS IS A BASE CLASS
@@ -21,7 +18,9 @@ class MathModel:
     ATTRIBUTES
     ===========
     
-    _coeffparams: the implicit parameters of the model, initialized by the __init__ method.
+    _default_settings: dict, the default settings. usually this should contain:
+                       the name and the default values of the implicit params and model inputs
+    _coeffparams:      dict, the implicit parameters of the model, initialized by the __init__ method.
     
     
     METHODS
@@ -33,8 +32,10 @@ class MathModel:
         OUTPUTS: result, undefined, the output of the model.
         NOTE:    calls check_stateparams(...) to check inputs
                  calls _kernel(...) to do computation
-                 
-    get_coeffparams(self): return the implicit params, in a dict (deepcopy)
+    
+    get_defaults(cls): classmethod, returns the _default_settings dict
+
+    get_coeffparams(self): return the implicit params, in a dict
         
     check_stateparams(self, **stateparams): check validity of the model inputs.
         defaults doing nothing. user are expected to specify it in its inheritors.
@@ -87,6 +88,9 @@ class MathModel:
     0.5
     
     """
+
+    _default_settings = dict()
+
     def __init__(self, check=True, **coeffparams):
         if check:
             self.check_coeffparams(**coeffparams)
@@ -96,9 +100,13 @@ class MathModel:
         if check: 
             self.check_stateparams(**stateparams)
         return self._kernel(**self._coeffparams, **stateparams)
-    
+
+    @classmethod
+    def get_defaults(cls):
+        return cls._default_settings
+
     def get_coeffparams(self):
-        return deepcopy(self._coeffparams)
+        return self._coeffparams
     
     def check_stateparams(self, **stateparams):
         pass
