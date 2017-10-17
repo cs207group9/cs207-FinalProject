@@ -43,7 +43,7 @@ class xml2dict:
     >>> reader = xml2dict()
     >>> reader.parse('rxns.xml')
     >>> reader.get_info()
-    (['H', 'O', 'OH', 'H2', 'O2'], [{'coeffParams': {}, 'ID': 'reaction01', 'reversible': 'no', 'TYPE': 'Elementary', 'reactants': {'H': 1, 'O2': 1}, 'products': {'OH': 1, 'O': 1}, 'coeffLaw': 'Arrhenius'}, {'coeffParams': {}, 'ID': 'reaction02', 'reversible': 'no', 'TYPE': 'Elementary', 'reactants': {'H2': 1, 'O': 1}, 'products': {'OH': 1, 'H': 1}, 'coeffLaw': 'Arrhenius'}])
+    (['H', 'O', 'OH', 'H2', 'O2'], [{'coeffParams': {'A': 35200000000.0, 'b': -0.7, 'E': 71400.0}, 'ID': 'reaction01', 'reversible': 'no', 'TYPE': 'Elementary', 'reactants': {'H': 1, 'O2': 1}, 'products': {'OH': 1, 'O': 1}, 'coeffLaw': 'Arrhenius'}, {'coeffParams': {'A': 0.0506, 'b': 2.7, 'E': 26300.0}, 'ID': 'reaction02', 'reversible': 'no', 'TYPE': 'Elementary', 'reactants': {'H2': 1, 'O': 1}, 'products': {'OH': 1, 'H': 1}, 'coeffLaw': 'Arrhenius'}])
     """
 
     def parse(self, file):
