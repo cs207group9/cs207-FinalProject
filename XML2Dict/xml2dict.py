@@ -43,7 +43,7 @@ class xml2dict:
     >>> reader = xml2dict()
     >>> reader.parse('rxns.xml')
     >>> reader.get_info()
-    (['H', 'O', 'OH', 'H2', 'O2'], [{'coeffParams': {'A': 35200000000.0, 'b': -0.7, 'E': 71400.0}, 'coeffUnits': {'A': 'm3/mol/s', 'b': 'dimensionless', 'E': 'J/mol'}, 'ID': 'reaction01', 'reversible': 'yes', 'TYPE': 'Elementary', 'reactants': {'H': 1, 'O2': 1}, 'products': {'OH': 1, 'O': 1}, 'coeffLaw': 'Arrhenius'}, {'coeffParams': {'A': 0.0506, 'b': 2.7, 'E': 26300.0}, 'coeffUnits': {'A': 'm3/mol/s', 'b': 'dimensionless', 'E': 'J/mol'}, 'ID': 'reaction02', 'reversible': 'yes', 'TYPE': 'Elementary', 'reactants': {'H2': 1, 'O': 1}, 'products': {'OH': 1, 'H': 1}, 'coeffLaw': 'Arrhenius'}])
+    (['H', 'O', 'OH', 'H2', 'O2'], [{'coeffParams': {}, 'ID': 'reaction01', 'reversible': 'no', 'TYPE': 'Elementary', 'reactants': {'H': 1, 'O2': 1}, 'products': {'OH': 1, 'O': 1}, 'coeffLaw': 'Arrhenius'}, {'coeffParams': {}, 'ID': 'reaction02', 'reversible': 'no', 'TYPE': 'Elementary', 'reactants': {'H2': 1, 'O': 1}, 'products': {'OH': 1, 'H': 1}, 'coeffLaw': 'Arrhenius'}])
     """
 
     def parse(self, file):
@@ -83,15 +83,15 @@ class xml2dict:
                 Law = name.tag
                 ListCoeffTag = []
                 ListCoeffValue = []
-                for coeff in name:
-                    ListCoeffTag.append(coeff.tag)
-                    ListCoeffValue.append(float(coeff.text))
-                    if len(coeff.attrib) != 0:
-                        ListCoeffUnits.append(coeff.attrib['units'])
-                    else:
-                        ListCoeffUnits.append('dimensionless')
+                #for coeff in name:
+                #    ListCoeffTag.append(coeff.tag)
+                #    ListCoeffValue.append(float(coeff.text))
+                #    if len(coeff.attrib) != 0:
+                #        ListCoeffUnits.append(coeff.attrib['units'])
+                #    else:
+                #        ListCoeffUnits.append('dimensionless')
             Dict['coeffParams'] = dict(zip(ListCoeffTag, ListCoeffValue))
-            Dict['coeffUnits'] = dict(zip(ListCoeffTag,ListCoeffUnits))
+            #Dict['coeffUnits'] = dict(zip(ListCoeffTag,ListCoeffUnits))
             Dict['ID'] = reaction.attrib['id']
             Dict['reversible'] = reaction.attrib['reversible']
             Dict['TYPE'] = reaction.attrib['type']
