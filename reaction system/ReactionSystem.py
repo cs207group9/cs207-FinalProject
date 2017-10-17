@@ -18,29 +18,37 @@ class ReactionSystem:
         
     ATTRIBUTES
     ==========
-    self._num_reactions = len(reaction_ls)
-    self._num_elements = len(species_ls)
-    self._reaction_ls = reaction_ls
-    self._species_ls = species_ls
+    self._num_reactions: number of reactions.
+    self._num_species: number of species
+    self._reaction_ls: list of reactions
+    self._species_ls: list of species
     
     METHODS
     =======
-    set_conditions
-    get_conditions
-    get_reaction_rate_coefs
-    calculate_nu_1
-    calculate_nu_2
-    get_progress_rate
-    get_reac_rate
+    set_conditions(self, **kwargs):
+        Sets the conditions for the reaction system. Currently: Temperature, Concentrations
+    get_conditions(self):
+        Returns the current conditions.
+    get_reaction_rate_coefs(self):
+        Returns an array of float with each element corresponding to the reaction
+        rate coefficient of each reaction. Queries the Reaction objects. Returns
+        outputs in the same order as the _reaction_ls order.
+    calculate_nu_1(self):
+        Calculates the matrix nu_1, corresponding to the stoichiometric coefs for
+        reactants in all reactions.
+    calculate_nu_2(self):
+        Calculates the matrix nu_2, corresponding to the stoichiometric coefs for
+        products in all reactions.
+    get_progress_rate(self):
+        Calculates and returns the progress rate for each reaction as an array of floats.
+    get_reac_rate(self):
+        Calculates and returns
     
-    
-        
     '''
-    
     
     def __init__(self, reaction_ls, species_ls = []):
         self._num_reactions = len(reaction_ls)
-        self._num_elements = len(species_ls)
+        self._num_species = len(species_ls)
         self._reaction_ls = reaction_ls
         self._species_ls = species_ls
         
