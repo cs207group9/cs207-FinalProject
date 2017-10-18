@@ -196,10 +196,6 @@ class Reaction:
     ========================================
     >>> r.rateCoeff(T=1.0)
     1.0
-    >>> r.getReactants()
-    {'H': 1, 'O2': 1}
-    >>> r.set_params(reactants=dict(H=2,O2=2)).getReactants()
-    {'H': 2, 'O2': 2}
     
     """
     
