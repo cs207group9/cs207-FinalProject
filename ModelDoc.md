@@ -48,24 +48,30 @@ import chemkin_tests
 ## Basic Usage and Examples
 
 First of all, we need to turn an input file (XML file) into dictionaries and data readable by Python. Therefore we first implemented a class xml2dict.
-This class has the method "parse" that takes the input file as an argument, that reads the XML file and store all the data into arrays and dictionaries of strings and number. The class xml2dict has another method, get_info(). This method returns two object: an array of all the species involved in the reaction system, and a list of dictionaries. There is one dictionary for every single reaction written in the system of reactions (XML file). A given dictionary includes all the information about the reaction it refers to, such as the products, the reactants, the law followed by the reaction rate (Arrhenius, Constant, Modified Arrhenius), the value of the coefficients included in this law, and so forth.
+This class has the method `parse` that takes the input file as an argument, that reads the XML file and store all the data into arrays and dictionaries of strings and number. The class xml2dict has another method, `get_info`. This method returns two object: an array of all the species involved in the reaction system, and a list of dictionaries. There is one dictionary for every single reaction written in the system of reactions (XML file). A given dictionary includes all the information about the reaction it refers to, such as the products, the reactants, the law followed by the reaction rate (Arrhenius, Constant, Modified Arrhenius), the value of the coefficients included in this law, and so forth.
    
 
 To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and a concentration value for each specie in the array. Let's first create some Reactions and an array of concentrations:
 ```
 # Reactions involving species A, B and C
-reaction1 = Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'const', coeffParams = 10)
-reaction2 = Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'const', coeffParams = 10)
+reaction1 = Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'Constant', coeffParams = {'k':10})
+reaction2 = Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'Constant', coeffParams = {'k':10})
 reactions = [reaction1, reaction2]
 
 # One concentration value is needed for each species of our reactions
-concentrations = [1,2,1]
+concentrations = {'A':1,'B':2,'C':1}
 ```
 We can now create our ReactionSystem object:
 ```
-rs = ReactionSystem(reactions, concentrations)
+rs = ReactionSystem(reactions, initial_concentrations)
 ```
-And call the get_reac_rate() function that returns the reaction rate value for each specie.
+This is like collecting things up for a chemitry model. Now we have all the hypothesis, we would also like to input some state parameters to get the model running, with method `set_temp` and `set_concs`.
+```
+rs.set_temp(T)
+rs.set_concs(concs)
+```
+These state parameters can be updated frequently from time to time without changing the reaction system itself. 
+Finally we can call the `get_reac_rate()` function that returns the reaction rate value for each specie.
 ```
 reac_rate = rs.get_reac_rate()
 ```
