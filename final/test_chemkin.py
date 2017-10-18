@@ -1,7 +1,12 @@
+"""
+Created on Tue Oct 17 2017
+Harvard GSAS
+CS207 Group 9
+Module chemkin.py 
+"""
 
-from Xml2dict import Xml2dict
 import os
-
+from chemkin import *
 
 
 def test_class1():
