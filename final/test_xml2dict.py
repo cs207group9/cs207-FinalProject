@@ -7,7 +7,7 @@ import os
 def test_class1():
     r = xml2dict()
     print(os.listdir('.'))
-    r.parse('rxns.xml')
+    r.parse('./final/rxns.xml')
     assert(r.get_info()[1][1]['TYPE'] == 'Elementary')
     
 def test_class2():
