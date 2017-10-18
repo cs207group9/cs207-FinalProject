@@ -184,7 +184,7 @@ class Reaction:
     >>> print(str(r))
     ========================================
     Reaction Equation:
-    1H + 1O2 => 1OH + 1H
+    1H + 1O2 => 1H + 1OH
     ----------------------------------------
     Reaction Info:
     ID: reaction
@@ -395,10 +395,10 @@ class Reaction:
     def __str__(self):
         streq_left = ' + '.join(  
                 ['{}{}'.format(v,k) for k,v in 
-                sorted(self._params['reactants'].items(), key=lambda x:x[1])]  )
+                sorted(self._params['reactants'].items(), key=lambda x:x[0])]  )
         streq_right = ' + '.join( 
             ['{}{}'.format(v,k) for k,v in 
-            sorted(self._params['products'].items(), key=lambda x:x[1])]  )
+            sorted(self._params['products'].items(), key=lambda x:x[0])]  )
         streq_full = ' => '.join(  [streq_left, streq_right]  )
         keylist = [
             'TYPE', 'reversible', 
