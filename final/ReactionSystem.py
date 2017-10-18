@@ -1,8 +1,6 @@
 
 import numpy as np
 
-import sys
-sys.path.insert(0, '../final')
 from Reaction import Reaction
 from more_itertools import unique_everseen
 
@@ -94,7 +92,7 @@ class ReactionSystem:
     >>> concs = {'H':2, 'O2': 1, 'OH':0.5, 'O':1, 'H2':1}
     >>> rs = ReactionSystem(r_ls, initial_concs = concs);
     >>> rs.get_reac_rate()
-    array([-2., -4.,  6.,  2., -2.])
+    array([-3., -1.,  3., -4.,  5.])
     """
     
     def __init__(self, reactions_ls, species_ls = [], initial_T = 273, initial_concs = {}):
@@ -114,8 +112,11 @@ class ReactionSystem:
         self._species_ls = species_ls
         
         if not self._species_ls:
+            self.user_defined_order = False
             self.update_species()
-        
+        else:
+            self.user_defined_order = True
+            
         self.set_temp(initial_T)
         if initial_concs:
             self.set_concs(initial_concs)    
@@ -166,9 +167,19 @@ class ReactionSystem:
         species_list = []
         for r in self._reactions_ls:
             species_list+=r.get_species()
-        self._species_ls = list(unique_everseen(species_list))
+        if self.user_defined_order:
+            for specie in species_list:
+                if specie not in self._species_ls:
+                    self._species_ls.append(specie)
+        else:
+            species_list = []
+            for r in self._reactions_ls:
+                species_list+=r.get_species()
+            self._species_ls = list(unique_everseen(species_list))
+            self._species_ls = sorted(self._species_ls)
         
     def get_species(self, update = True):
+        # This can be used by the user to check the internal order of species
         if update:
             self.update_species()
             

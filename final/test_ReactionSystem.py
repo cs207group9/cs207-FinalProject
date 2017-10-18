@@ -147,8 +147,8 @@ def test_len_and_repr():
     
 def test_add_reaction_and_update_species():
     reactions = []
-    reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'A':1,'B':2}, products = {'C':1}))
-    reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'C':2}, products = {'A':1, 'B':2}))
+    reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'D':1,'B':2}, products = {'C':1}))
+    reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'C':2}, products = {'D':1, 'B':2}))
     rs = ReactionSystem(reactions)
     
     rs.add_reaction(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'A':1,'B':2}, products = {'D':1}))
@@ -165,3 +165,11 @@ def test_reac_rate_with_no_concs_error():
         rs.get_reac_rate()
     except Exception as err:
         assert(type(err) == ValueError)
+        
+def test_species_order_maintained_when_specified():
+    reactions = []
+    reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'A':1,'B':2}, products = {'C':1}))
+    reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'C':2}, products = {'A':1, 'B':2}))
+    
+    rs = ReactionSystem(reactions, species_ls=['A','C','D','B'])
+    assert(rs.get_species() == ['A', 'C', 'D', 'B'])
