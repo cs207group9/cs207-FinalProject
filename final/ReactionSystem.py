@@ -113,10 +113,10 @@ class ReactionSystem:
         self._species_ls = species_ls
         
         if not self._species_ls:
-            self.user_defined_order = False
+            self._user_defined_order = False
             self.update_species()
         else:
-            self.user_defined_order = True
+            self._user_defined_order = True
             
         self.set_temp(initial_T)
         if initial_concs:
@@ -168,7 +168,7 @@ class ReactionSystem:
         species_list = []
         for r in self._reactions_ls:
             species_list+=r.get_species()
-        if self.user_defined_order:
+        if self._user_defined_order:
             for specie in species_list:
                 if specie not in self._species_ls:
                     self._species_ls.append(specie)

@@ -2,7 +2,7 @@
 #Written by Baptiste Lemaire
 import xml.etree.ElementTree as ET
 
-class xml2dict:
+class Xml2dict:
     """
     xml2dict turns an XML file into a array of all the species involved into the system of
     reactions and a list of dictionaries. This latter contains a dictionary for every single 
@@ -67,7 +67,6 @@ class xml2dict:
             products = []
             Nup = []
             Nupp = []
-            ListCoeffUnits = []
         
             ListReactants = reaction.find('reactants').text.split()
             for elementsR in ListReactants:
