@@ -33,7 +33,7 @@ def test_rs_progress_rate():
     reactions.append(Reaction(reactants={'A':2,'C':2}, coeffLaw = 'Constant', coeffParams = {'k':10},  products = {'B':1, 'C':1}))
     
     concs = {'A':1, 'B':2, 'C':1}
-    rs = ReactionSystem(reactions, initial_concs=concs)
+    rs = ReactionSystem(reactions, species_ls=['A','B','C'], initial_concs=concs)
     prog_rate = rs.get_progress_rate()
     
     print(prog_rate.tolist())
@@ -47,7 +47,7 @@ def test_rs_reaction_rate():
     reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'C':2}, products = {'A':1, 'B':2}))
     
     concs = {'A':1, 'B':2, 'C':1}
-    rs = ReactionSystem(reactions, initial_concs=concs)
+    rs = ReactionSystem(reactions, species_ls=['A','B','C'], initial_concs=concs)
     reac_rate = rs.get_reac_rate()
             
     assert(reac_rate.tolist()==[-30., -60.,  20.])

@@ -90,9 +90,10 @@ class ReactionSystem:
             coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
         ))
     >>> concs = {'H':2, 'O2': 1, 'OH':0.5, 'O':1, 'H2':1}
-    >>> rs = ReactionSystem(r_ls, initial_concs = concs);
+    >>> species = ['H', 'O2', 'OH', 'O', 'H2']
+    >>> rs = ReactionSystem(r_ls, species_ls= species, initial_concs = concs);
     >>> rs.get_reac_rate()
-    array([-3., -1.,  3., -4.,  5.])
+    array([-2., -4.,  6.,  2., -2.])
     """
     
     def __init__(self, reactions_ls, species_ls = [], initial_T = 273, initial_concs = {}):
