@@ -229,13 +229,13 @@ class ReactionSystem:
             
         k = self.get_reac_rate_coefs()
         nu_react = self.get_nu_1()
-        print('In progress_rate, nu_react is', nu_react)
+        #print('In progress_rate, nu_react is', nu_react)
         progress_rate = k # Initialize progress rates with reaction rate coefficients
         
         for j in range(len(progress_rate)):
-            for i, xi in enumerate(self._concs.values()):
+            for i, sp in enumerate(self._species_ls):
                 nu_ij = nu_react[i,j]
-                progress_rate[j] *= xi**nu_ij     
+                progress_rate[j] *= self._concs[sp]**nu_ij     
                 
         return progress_rate
     
@@ -244,9 +244,9 @@ class ReactionSystem:
         nu_react = self.get_nu_1()
         nu_prod = self.get_nu_2()
         nu = nu_prod - nu_react
-        print('nu_react', nu_react)
-        print('nu_prod', nu_prod)
-        print('nu', nu)
+        #print('nu_react', nu_react)
+        #print('nu_prod', nu_prod)
+        #print('nu', nu)
         progress_rate = self.get_progress_rate()
             
         if not species_idx:
