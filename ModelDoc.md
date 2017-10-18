@@ -73,3 +73,61 @@ It is also possible to obtain the progress rate for each reaction:
 ```
 progress_rate = rs.get_progress_rate()
 ```
+
+## Extensibility
+
+Our library is basically working on irreversible elementary reaction systems, supporting reation rate coefficient laws including constant, Arrhenius, and modified Arrhenius. Once a user tries to set thing out of this range, a `NotImplementedError` is expected to get raised. However, we have built up some frames for user to extend a little bit on this library. We have formed a base class named `MathModel`, from which a user may derive some more rate coefficient laws as they wish. Once a new law is built, the user can add that law to the Reaction class. The whole process goes like:
+
+```
+# Build some self-defined law
+class SomeLaw(MathModel):
+	# specify the members...
+	@staticmethod
+	def _kernel(param1, param2, ..., **other_params):
+		# do the calculation
+		return reaction_rate_coeff
+
+# Update self-defined law into the Reaction class
+Reaction._CoeffLawsDict.update('SomeLaw', SomeLaw)
+```
+
+Then you can create Reaction instance with `'SomeLaw'`:
+```
+r = Reaction(
+	..., 
+	coeffLaw = 'SomeLaw', 
+	coeffParams = {
+		SomeLaw_param1 : value1, 
+		SomeLaw_param2 : value2 
+	},
+	...
+)
+```
+
+and then the `ReactionSystem` instance constructed with this reaction `r` would automatically call `SomeLaw` with the specified parameters when computing the reaction rate coefficients.
+
+Here we emphasize that you must at least specify the The `_kernel` method. As seen in the above example, the `kernel` method is the exact function that mathematically do the computation. You are expected to make this `_kernel` method as efficient as possible - forget about input check, do not use too many fancy keyword arguments, reduce your function calls...In case you really need input check, you can take the following implementation:
+
+```
+# Build some self-defined law
+class SomeLaw(MathModel):
+	# specify the members...
+	@staticmethod
+	def _kernel(param1, param2, param3, ..., **other_params):
+		# do the calculation
+		return reaction_rate_coeff
+	@staticmethod
+	def check_coeffparams(param1, param2,...):
+		# some check
+		# raise error if needed
+		# defaults doing nothing
+	def check_stateparams(self, param3,...):
+		# some check
+		# raise error if needed
+		# defaults doing nothing
+```
+
+
+Here `check_coeffparams` defaults to get called when initializing the `SomeLaw` instance. It checks the validity of your model parameters, such as Arrhenius prefactor and ideal gas constant - you need to define them at the begining, specifying a certain reaction, and keep them fixed after that. `check_stateparams` defaults to get called when doing runtime computation - it check the validity of your model inputs, such as concentration, temperature, pressure - you might want to update them frequently when running your program. In the end, there are also some tricks you can play with `MathModel` subclasses to bypass the input check during computation. Check these up in the `MathModel` documentation, and read through `Constant`, `Arrhenius`, and `modArrhenius` for more example.
+
+Besides this `MathModel`, you may want to learn more about the `_CoeffLawDict` attribute of `Reaction` class. `_CoeffLawDict` is a structure we designed by ourselves, it is basically a dictionary with two parts: one part is always fixed and the other part is subjected to all kinds of change. We have applied its fixed part to store the built-in laws for reaction rate coefficients, *i.e.* constant, Arrhenius and modified Arrhenius, with their names as the keys to access them. With the interfaces of `_CoeffLawDict`, users are not able to change these built-in laws. What they can do is adding and manipulating their self-defined laws using `update`, `remove`, `reset` and many other interfaces provided by this `_CoeffLawDict` -  and they basically come from a base class named `PartialLockedDict`. Check the documantation of `PartialLockedDict` and `_CoeffLawDict` for more details.
