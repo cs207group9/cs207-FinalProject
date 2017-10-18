@@ -1,8 +1,11 @@
 
 from xml2dict import xml2dict
 
+
+
 def test_class1():
     r = xml2dict()
+    print(os.listdir('.'))
     r.parse('rxns.xml')
     assert(r.get_info()[1][1]['TYPE'] == 'Elementary')
     
