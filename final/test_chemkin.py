@@ -28,7 +28,7 @@ def test_rateCoeff():
     assert(r3.rateCoeff(T=2.0) == 8/np.e)
 
 def test_CoeffLaws_get():
-    assert(Reaction._CoeffLawDict.getcopy('Arrhenius') == CoeffLaw.Arrhenius)
+    assert(Reaction._CoeffLawDict.getcopy('Arrhenius') == Arrhenius)
     assert(Reaction._CoeffLawDict.getcopy_all() == Reaction._CoeffLawDict._dict_all)
     assert(Reaction._CoeffLawDict.getcopy_builtin() == Reaction._CoeffLawDict._dict_builtin)
 
