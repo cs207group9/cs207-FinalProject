@@ -1134,10 +1134,15 @@ class ReactionSystem:
     
     def __repr__(self):
         # TODO: add info about concentrations
-        repr_ls = "ReactionSystem object with following Reactions:"
-        for i,r in enumerate(self._reactions_ls):
-            repr_ls += "\nReaction "+str(i)+": "+repr(r)
+        repr_ls = ", ".join([repr(r) for i,r in enumerate(self._reactions_ls)])
+        repr_ls = "( " + repr_ls + " )"
         return repr_ls
+    
+    def __str__(self):
+        str_ls = "ReactionSystem object with following Reactions: \n"
+        for i,r in enumerate(self._reactions_ls):
+            str_ls += "\nReaction "+str(i)+": \n"+str(r)+"\n"
+        return str_ls
     
     def add_reaction(self, reaction):
         if not isinstance(reaction, Reaction):
@@ -1343,6 +1348,9 @@ class xml2dict:
         return self.Species, self.ListDictionaries
     
     def __repr__(self):
+        return '( ' + str(self.Species) + ', ' + str(self.ListDictionaries) + ' )'
+
+    def __str__(self):
         return str(self.Species) + ' ' + str(self.ListDictionaries)
 
 
