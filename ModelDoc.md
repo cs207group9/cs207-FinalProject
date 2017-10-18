@@ -106,7 +106,7 @@ r = Reaction(
 
 and then the `ReactionSystem` instance constructed with this reaction `r` would automatically call `SomeLaw` with the specified parameters when computing the reaction rate coefficients.
 
-Here we emphasize that you must at least specify the The `_kernel` method. As seen in the above example, the `kernel` method is the exact function that mathematically do the computation. You are expected to make this `_kernel` method as efficient as possible - forget about input check, do not use too many fancy keyword arguments, reduce your function calls...In case you really need input check, you can take the following implementation:
+Here we emphasize that you must at least specify the The `_kernel` method. As seen in the above example, the `_kernel` method is the exact function that mathematically do the computation. You are expected to make this `_kernel` method as efficient as possible - forget about input check, do not use too many fancy keyword arguments, reduce your function calls...In case you really need input check, you can take the following implementation:
 
 ```
 # Build some self-defined law
