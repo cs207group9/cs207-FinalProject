@@ -12,7 +12,7 @@ def test_info():
     r.set_params(**dict(coeffLaw='Arrhenius', sth_irrel=42))
     assert(r.get_params()['coeffParams']['A'] == 1.0)
 
-def test_rateCeff():
+def test_rateCoeff():
     r1 = Reaction(coeffLaw='Constant', coeffParams=dict(k=3.14))
     r2 = Reaction(coeffLaw='Arrhenius', coeffParams=dict(E=8.314))
     r3 = Reaction(coeffLaw='modArrhenius', coeffParams=dict(b=3,E=2*8.314))
