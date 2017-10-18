@@ -184,7 +184,7 @@ class Reaction:
     >>> print(str(r))
     ========================================
     Reaction Equation:
-    1H + 1O2 => 1OH + 1H
+    1H + 1O2 => 1H + 1OH
     ----------------------------------------
     Reaction Info:
     ID: reaction
