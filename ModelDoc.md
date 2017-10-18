@@ -117,13 +117,17 @@ class SomeLaw(MathModel):
 		# do the calculation
 		return reaction_rate_coeff
 	@staticmethod
-	def check_coeffparams(param1, param2):
-		# do check
+	def check_coeffparams(param1, param2,...):
+		# some check
 		# raise error if needed
-	def check_stateparams(self, param3):
-		# do check
+		# defaults doing nothing
+	def check_stateparams(self, param3,...):
+		# some check
 		# raise error if needed
+		# defaults doing nothing
 ```
 
 
 Here `check_coeffparams` defaults to get called when initializing the `SomeLaw` instance. It checks the validity of your model parameters, such as Arrhenius prefactor and ideal gas constant - you need to define them at the begining, specifying a certain reaction, and keep them fixed after that. `check_stateparams` defaults to get called when doing runtime computation - it check the validity of your model inputs, such as concentration, temperature, pressure - you might want to update them frequently when running your program. In the end, there are also some tricks you can play with `MathModel` subclasses to bypass the input check during computation. Check these up in the `MathModel` documentation, and read through `Constant`, `Arrhenius`, and `modArrhenius` for more example.
+
+Besides this `MathModel`, you may want to learn more about the `_CoeffLawDict` attribute of `Reaction` class. `_CoeffLawDict` is a structure we designed by ourselves, it is basically a dictionary with two parts: one part is always fixed and the other part is subjected to all kinds of change. We have applied its fixed part to store the built-in laws for reaction rate coefficients, *i.e.* constant, Arrhenius and modified Arrhenius, with their names as the keys to access them. With the interfaces of `_CoeffLawDict`, users are not able to change these built-in laws. What they can do is adding and manipulating their self-defined laws using `update`, `remove`, `reset` and many other interfaces provided by this `_CoeffLawDict` -  and they basically come from a base class named `PartialLockedDict`. Check the documantation of `PartialLockedDict` and `_CoeffLawDict` for more details.
