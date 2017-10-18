@@ -184,17 +184,15 @@ class Reaction:
     >>> print(str(r))
     ========================================
     Reaction Equation:
-    1H + 1O2 =] 1OH + 1H
+    1H + 1O2 => 1OH + 1H
     ----------------------------------------
     Reaction Info:
-    reversible: False
-    TYPE: Elementary
     ID: reaction
+    TYPE: Elementary
+    reversible: False
     coeffLaw: Arrhenius
-    coeffParams: {'A': 2.718281828459045, 'E': 8.314, 'R': 8.314}
-    coeffUnits: {}
-    reactants: {'H': 1, 'O2': 1}
-    products: {'OH': 1, 'H': 1}
+    coeffParams: [('A', 2.718281828459045), ('E', 8.314), ('R', 8.314)]
+    coeffUnits: []
     ========================================
     >>> r.rateCoeff(T=1.0)
     1.0
@@ -259,8 +257,8 @@ class Reaction:
         ...     @staticmethod
         ...     def _kernel(T, A, **other_params):
         ...         return T * A
-        >>> Reaction._CoeffLawDict.update('sl', somelaw).getcopy_all().keys()
-        dict_keys(['Constant', 'Arrhenius', 'modArrhenius', 'sl'])
+        >>> sorted(Reaction._CoeffLawDict.update('sl', somelaw).getcopy_all())
+        ['Arrhenius', 'Constant', 'modArrhenius', 'sl']
         >>> r = Reaction( \
             reactants=dict(H=1,O2=1), \
             products=dict(OH=1,H=1), \
@@ -269,8 +267,8 @@ class Reaction:
         )
         >>> r.rateCoeff(T=0.1)
         0.2
-        >>> Reaction._CoeffLawDict.reset().getcopy_all().keys()
-        dict_keys(['Constant', 'Arrhenius', 'modArrhenius'])
+        >>> sorted(Reaction._CoeffLawDict.reset().getcopy_all())
+        ['Arrhenius', 'Constant', 'modArrhenius']
         """
             
         _dict_builtin = {
@@ -395,14 +393,23 @@ class Reaction:
         return str(self._params)
     
     def __str__(self):
-        streq_lefthand = ' + '.join(
-            ['{}{}'.format(v,k) for k,v in self._params['reactants'].items()])
-        streq_righthand = ' + '.join(
-            ['{}{}'.format(v,k) for k,v in self._params['products'].items()])
-        streq_full = ' =] '.join([streq_lefthand, streq_righthand])
-        strparams = '\n'.join(
-            [': '.join([str(k), str(v)]) for k,v in self._params.items()])
-        return '\n'.join([
+        streq_left = ' + '.join(  
+                ['{}{}'.format(v,k) for k,v in 
+                sorted(self._params['reactants'].items(), key=lambda x:x[1])]  )
+        streq_right = ' + '.join( 
+            ['{}{}'.format(v,k) for k,v in 
+            sorted(self._params['products'].items(), key=lambda x:x[1])]  )
+        streq_full = ' => '.join(  [streq_left, streq_right]  )
+        keylist = [
+            'TYPE', 'reversible', 
+            'coeffLaw', 'coeffParams', 'coeffUnits'
+        ]
+        strparams = 'ID: ' + str(self._params['ID'])
+        for k in keylist:
+            item = self._params[k]
+            if type(item) == dict:
+                item = sorted(item.items(), key=lambda x:x[0])
+            strparams = '\n'.join( [strparams, k + ': ' + str(item)] )
+        return '\n'.join( [
             '=' * 40, 'Reaction Equation:', streq_full, 
-            '-' * 40, 'Reaction Info:', strparams,
-            '=' * 40])
+            '-' * 40, 'Reaction Info:', strparams, '=' * 40] )
