@@ -33,7 +33,7 @@
             <reactants>OH:1 HO2:1</reactants>
             <products>H2O:1 O2:1</products>
         </reaction>
-        
+
         <!-- reaction 03  -->
         <reaction reversible="no" type="Elementary" id="reaction03">
             <equation>H2O + O2 [=] HO2 + OH</equation>
@@ -43,10 +43,10 @@
                     <E units="J/mol">1e+04</E>
                 </Arrhenius>
             </rateCoeff>
-            <reactants>H:1 O2:1</reactants>
-            <products>OH:1 O:1</products>
+            <reactants>H2O:1 O2:1</reactants>
+            <products>HO2:1 OH:1</products>
         </reaction>
-        
+
     </reactionData>
 
 </ctml>

@@ -244,9 +244,10 @@ class ReactionSystem:
         nu_react = self.get_nu_1()
         nu_prod = self.get_nu_2()
         nu = nu_prod - nu_react
-        #print('nu_react', nu_react)
-        #print('nu_prod', nu_prod)
-        #print('nu', nu)
+        
+#        print('nu_react', nu_react)
+#        print('nu_prod', nu_prod)
+#        print('nu', nu)
         progress_rate = self.get_progress_rate()
             
         if not species_idx:
