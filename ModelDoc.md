@@ -45,6 +45,15 @@ import chemkin
 import chemkin_tests
 ```
 
+The module uses an external module called more-itertools. To be sure, remember to install it by using:
+```
+pip install more-itertools
+```
+Or, if you're using anaconda:
+```
+conda install -c auto more-itertools
+```
+
 ## Basic Usage and Examples
 
 First of all, we need to turn an input file (XML file) into dictionaries and data readable by Python. Therefore we first implemented a class xml2dict.
