@@ -768,9 +768,6 @@ class ReactionSystem:
     
     def get_progress_rate(self):
         '''reversible method added'''
-        if self._nu_1 is None:
-            raise AttributeError("Stoichiometric matrix is bot .")
-        
         if not self._concs:
             raise ValueError("Concentrations not yet defined. Call set_state() before calling this function.")
             
