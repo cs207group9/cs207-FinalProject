@@ -3,6 +3,7 @@ import numpy as np
 
 from Reaction import Reaction
 from more_itertools import unique_everseen
+from CoeffLaw import BackwardLaw
 
 class ReactionSystem:
 
@@ -96,7 +97,7 @@ class ReactionSystem:
     # array([-2., -4.,  6.,  2., -2.])
     """
     
-    def __init__(self, nasa_query, reactions_ls, species_ls = [], initial_T = 273, initial_concs = {}):
+    def __init__(self, reactions_ls, species_ls = [], nasa_query=None, initial_T = 273, initial_concs = {}):
         
         if not reactions_ls:
             raise ValueError("Reaction array is empty or None.")
@@ -137,8 +138,11 @@ class ReactionSystem:
          
         self._T = T
 
-        self._a = [self._nasa_query.response(sp, T) for sp in self._species_ls]
-        self._a = np.concatenate(self._a, axis=0)
+        if self._nasa_query is None:
+            self._a = np.zeros( (len(self._species_ls), 7) )
+        else:
+            self._a = [self._nasa_query.response(sp, T) for sp in self._species_ls]
+            self._a = np.concatenate(self._a, axis=0)
         
     def get_temp(self):
         return self._T
@@ -208,9 +212,12 @@ class ReactionSystem:
         kf = np.zeros(len(self._reactions_ls))
         for n, r in enumerate(self._reactions_ls):
             kf[n] = r.rateCoeff(T = self._T)
-        nu = self._nu_2 - self._nu_1
-        ke = BackwardLaw().equilibrium(self._a, nu, self._T)
-        kb = kf / ke
+        if self._nasa_query is None:
+            kb = np.zeros(len(kf))
+        else:
+            nu = self._nu_2 - self._nu_1
+            ke = BackwardLaw().equilibrium(self._a, nu, self._T)
+            kb = kf / ke
         return kf, kb
     
     def get_nu_1(self):
@@ -272,7 +279,7 @@ class ReactionSystem:
         progress_rate = self.get_progress_rate()
             
         if not species_idx:
-            return np.dot(nu, p66rogress_rate)
+            return np.dot(nu, progress_rate)
         else:
             return np.dot(nu[species_idx,:], progress_rate)
      

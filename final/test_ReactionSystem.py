@@ -21,7 +21,7 @@ def test_rs_nu_matrix_creation():
     reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':1}))
     reactions.append(Reaction(reactants={'A':1,'C':2}, products = {'D':4}))
     
-    rs = ReactionSystem(nasa_query, reactions)
+    rs = ReactionSystem(reactions)
     nu_1 = rs.get_nu_1()
     nu_2 = rs.get_nu_2()
     
@@ -39,7 +39,7 @@ def test_rs_progress_rate():
     rs = ReactionSystem(reactions, species_ls=['A','B','C'], initial_concs=concs)
     prog_rate = rs.get_progress_rate()
     
-    print(prog_rate.tolist())
+    # print(prog_rate.tolist())
         
     assert(prog_rate.tolist() == [40.,10.])
     
