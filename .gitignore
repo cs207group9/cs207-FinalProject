@@ -2,6 +2,7 @@
 .ipynb_checkpoints/
 .nbgrader.log
 __pycache__/
+.coverage
 
 ## latex/pdflatex files
 *.aux
