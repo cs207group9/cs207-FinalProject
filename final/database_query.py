@@ -33,12 +33,14 @@ class CoeffQuery:
                         COEFF_4, COEFF_5, COEFF_6, COEFF_7 
                     FROM HIGH WHERE 
                         SPECIES_NAME = "''' + species_name + '''"'''
-        res_low = self.cursor.execute(query_low).fetchall()[0]
-        res_high = self.cursor.execute(query_high).fetchall()[0]
-        if temp >= res_low[0] and temp <= res_low[1]:
-            coeffs = np.array(res_low[2:])
-        elif temp >= res_high[0] and temp <= res_high[1]:
-            coeffs = np.array(res_high[2:])
+        res_low = self.cursor.execute(query_low).fetchall()
+        res_high = self.cursor.execute(query_high).fetchall()
+        if len(res_low) == 0 or len(res_high) == 0:
+            raise ValueError('Species = "{}". No match in the database.'.format(species_name))
+        if temp >= res_low[0][0] and temp <= res_low[0][1]:
+            coeffs = np.array(res_low[0][2:])
+        elif temp >= res_high[0][0] and temp <= res_high[0][1]:
+            coeffs = np.array(res_high[0][2:])
         else:
             raise ValueError('Species = "{}", T = {}. No match in the database.'.format(species_name, temp))
 

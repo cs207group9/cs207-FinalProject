@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Oct 15 17:50:51 2017
-@author: Camilo
+@author: Camilo, Yiqi
 """
 
 import sys
 sys.path.insert(0, '../final')
+from database_query import CoeffQuery
 from Reaction import Reaction
 from ReactionSystem import ReactionSystem
 import numpy as np
 
 ### Tests for ReactionSystems (rs):
+
+nasa_query = CoeffQuery('test_database.sqlite')
     
 def test_rs_nu_matrix_creation():
     
@@ -18,7 +21,7 @@ def test_rs_nu_matrix_creation():
     reactions.append(Reaction(reactants={'A':1,'B':2}, products = {'C':1}))
     reactions.append(Reaction(reactants={'A':1,'C':2}, products = {'D':4}))
     
-    rs = ReactionSystem(reactions)
+    rs = ReactionSystem(nasa_query, reactions)
     nu_1 = rs.get_nu_1()
     nu_2 = rs.get_nu_2()
     
@@ -29,7 +32,7 @@ def test_rs_nu_matrix_creation():
 def test_rs_progress_rate():
     
     reactions = []
-    reactions.append(Reaction( coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'A':1,'B':2}, products = {'C':2}))
+    reactions.append(Reaction(coeffLaw = 'Constant', coeffParams = {'k':10}, reactants={'A':1,'B':2}, products = {'C':2}))
     reactions.append(Reaction(reactants={'A':2,'C':2}, coeffLaw = 'Constant', coeffParams = {'k':10},  products = {'B':1, 'C':1}))
     
     concs = {'A':1, 'B':2, 'C':1}

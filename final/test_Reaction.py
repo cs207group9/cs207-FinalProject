@@ -1,5 +1,5 @@
 from Reaction import *
-from CoeffLaw import *
+import CoeffLaw
 import numpy as np
 
 

@@ -80,23 +80,23 @@ class ReactionSystem:
             
     EXAMPLES:
     =========
-    >>> r_ls = []
-    >>> r_ls.append(Reaction(\
-            reactants=dict(H=1,O2=1), products=dict(OH=1,O=1),\
-            coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
-        ))
-    >>> r_ls.append(Reaction(\
-            reactants=dict(H2=1,O=1), products=dict(OH=1,H=1),\
-            coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
-        ))
-    >>> concs = {'H':2, 'O2': 1, 'OH':0.5, 'O':1, 'H2':1}
-    >>> species = ['H', 'O2', 'OH', 'O', 'H2']
-    >>> rs = ReactionSystem(r_ls, species_ls= species, initial_concs = concs);
-    >>> rs.get_reac_rate()
-    array([-2., -4.,  6.,  2., -2.])
+    # >>> r_ls = []
+    # >>> r_ls.append(Reaction(\
+    #         reactants=dict(H=1,O2=1), products=dict(OH=1,O=1),\
+    #         coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
+    #     ))
+    # >>> r_ls.append(Reaction(\
+    #         reactants=dict(H2=1,O=1), products=dict(OH=1,H=1),\
+    #         coeffLaw='Arrhenius', coeffParams=dict(A=2.0)\
+    #     ))
+    # >>> concs = {'H':2, 'O2': 1, 'OH':0.5, 'O':1, 'H2':1}
+    # >>> species = ['H', 'O2', 'OH', 'O', 'H2']
+    # >>> rs = ReactionSystem(r_ls, species_ls= species, initial_concs = concs);
+    # >>> rs.get_reac_rate()
+    # array([-2., -4.,  6.,  2., -2.])
     """
     
-    def __init__(self, reactions_ls, species_ls = [], initial_T = 273, initial_concs = {}):
+    def __init__(self, nasa_query, reactions_ls, species_ls = [], initial_T = 273, initial_concs = {}):
         
         if not reactions_ls:
             raise ValueError("Reaction array is empty or None.")
@@ -108,7 +108,7 @@ class ReactionSystem:
         for r in reactions_ls:
             if not isinstance(r, Reaction): 
                 raise TypeError("input reactions_ls array contains elements that are not instances of Reaction")
-        
+
         self._reactions_ls = reactions_ls
         self._species_ls = species_ls
         
@@ -117,18 +117,28 @@ class ReactionSystem:
             self.update_species()
         else:
             self._user_defined_order = True
+
+        self._nasa_query = nasa_query
+        self._a = np.zeros( (len(self._species_ls), 7) )
             
         self.set_temp(initial_T)
         if initial_concs:
             self.set_concs(initial_concs)    
         else:
             self._concs = {}
+
+        self._nu_1 = self.get_nu_1()
+        self._nu_2 = self.get_nu_2()
+
        
     def set_temp(self, T):
         if (T <= 0):
             raise ValueError("T = {0:18.16e}: Negative Temperature is prohibited!".format(T))
          
-        self._T = T    
+        self._T = T
+
+        self._a = [self._nasa_query.response(sp, T) for sp in self._species_ls]
+        self._a = np.concatenate(self._a, axis=0)
         
     def get_temp(self):
         return self._T
@@ -152,10 +162,15 @@ class ReactionSystem:
     
     def __repr__(self):
         # TODO: add info about concentrations
-        repr_ls = "ReactionSystem object with following Reactions:"
-        for i,r in enumerate(self._reactions_ls):
-            repr_ls += "\nReaction "+str(i)+": "+repr(r)
+        repr_ls = ", ".join([repr(r) for i,r in enumerate(self._reactions_ls)])
+        repr_ls = "( " + repr_ls + " )"
         return repr_ls
+    
+    def __str__(self):
+        str_ls = "ReactionSystem object with following Reactions: \n"
+        for i,r in enumerate(self._reactions_ls):
+            str_ls += "\nReaction "+str(i)+": \n"+str(r)+"\n"
+        return str_ls
     
     def add_reaction(self, reaction):
         if not isinstance(reaction, Reaction):
@@ -187,13 +202,16 @@ class ReactionSystem:
         return self._species_ls
         
     def get_reac_rate_coefs(self):
+        '''reversible method added'''
         if not self._T:
             raise ValueError("Temperature not yet defined. Call set_state() before calling this function.")
-        k = np.zeros(len(self._reactions_ls))
+        kf = np.zeros(len(self._reactions_ls))
         for n, r in enumerate(self._reactions_ls):
-            k[n] = r.rateCoeff(T = self._T)
-            
-        return k
+            kf[n] = r.rateCoeff(T = self._T)
+        nu = self._nu_2 - self._nu_1
+        ke = BackwardLaw().equilibrium(self._a, nu, self._T)
+        kb = kf / ke
+        return kf, kb
     
     def get_nu_1(self):
         nu_1 = np.zeros([len(self._species_ls), len(self._reactions_ls)])
@@ -220,38 +238,41 @@ class ReactionSystem:
         return nu_2
     
     def get_progress_rate(self):
-        
+        '''reversible method added'''
         if not self._concs:
             raise ValueError("Concentrations not yet defined. Call set_state() before calling this function.")
             
         if len(self._concs) != len(self._species_ls):
             raise ValueError("Dimensions of concentrations and species arrays do not match. Update your concentrations.")
             
-        k = self.get_reac_rate_coefs()
-        nu_react = self.get_nu_1()
-        #print('In progress_rate, nu_react is', nu_react)
-        progress_rate = k # Initialize progress rates with reaction rate coefficients
+        kf, kb = self.get_reac_rate_coefs()
+        nu_react = self._nu_1
+        nu_prod = self._nu_2
+        progress_rate_f, progress_rate_b = kf, kb # Initialize progress rates with reaction rate coefficients
         
-        for j in range(len(progress_rate)):
+        for j, r in enumerate(self._reactions_ls):
             for i, sp in enumerate(self._species_ls):
-                nu_ij = nu_react[i,j]
-                progress_rate[j] *= self._concs[sp]**nu_ij     
+                progress_rate_f[j] *= self._concs[sp]**nu_react[i,j]
+            if r.is_reversible():
+                for i, sp in enumerate(self._species_ls):
+                    progress_rate_b[j] *= self._concs[sp]**nu_prod[i,j]
+            else:
+                progress_rate_b[j] = 0
+
+        progress_rate = progress_rate_f - progress_rate_b
                 
         return progress_rate
     
-    def get_reac_rate(self,species_idx = []):
+    def get_reac_rate(self, species_idx = []):
             
-        nu_react = self.get_nu_1()
-        nu_prod = self.get_nu_2()
+        nu_react = self._nu_1
+        nu_prod = self._nu_2
         nu = nu_prod - nu_react
         
-#        print('nu_react', nu_react)
-#        print('nu_prod', nu_prod)
-#        print('nu', nu)
         progress_rate = self.get_progress_rate()
             
         if not species_idx:
-            return np.dot(nu, progress_rate)
+            return np.dot(nu, p66rogress_rate)
         else:
             return np.dot(nu[species_idx,:], progress_rate)
      

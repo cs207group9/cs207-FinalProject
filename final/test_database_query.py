@@ -42,6 +42,14 @@ def test_response():
     assert( np.prod(coeffs_low - truth_low) == 0 )
     assert( np.prod(coeffs_high - truth_high) == 0 )
     nasa_query.terminate()
+
+def test_response_no_such_species():
+    nasa_query = CoeffQuery('test_database.sqlite')
+    try:
+        coeffs = nasa_query.response('ARBITRARY', 100)
+    except ValueError as err:
+        assert( type(err) == ValueError )
+    nasa_query.terminate()
     
 def test_response_out_of_range():
     nasa_query = CoeffQuery('test_database.sqlite')
