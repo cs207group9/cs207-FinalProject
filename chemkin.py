@@ -1134,10 +1134,15 @@ class ReactionSystem:
     
     def __repr__(self):
         # TODO: add info about concentrations
-        repr_ls = "ReactionSystem object with following Reactions:"
-        for i,r in enumerate(self._reactions_ls):
-            repr_ls += "\nReaction "+str(i)+": "+repr(r)
+        repr_ls = ", ".join([repr(r) for i,r in enumerate(self._reactions_ls)])
+        repr_ls = "( " + repr_ls + " )"
         return repr_ls
+    
+    def __str__(self):
+        str_ls = "ReactionSystem object with following Reactions: \n"
+        for i,r in enumerate(self._reactions_ls):
+            str_ls += "\nReaction "+str(i)+": \n"+str(r)+"\n"
+        return str_ls
     
     def add_reaction(self, reaction):
         if not isinstance(reaction, Reaction):
@@ -1226,9 +1231,10 @@ class ReactionSystem:
         nu_react = self.get_nu_1()
         nu_prod = self.get_nu_2()
         nu = nu_prod - nu_react
-        #print('nu_react', nu_react)
-        #print('nu_prod', nu_prod)
-        #print('nu', nu)
+        
+#        print('nu_react', nu_react)
+#        print('nu_prod', nu_prod)
+#        print('nu', nu)
         progress_rate = self.get_progress_rate()
             
         if not species_idx:
@@ -1241,7 +1247,7 @@ class ReactionSystem:
 
 
 
-class Xml2dict:
+class xml2dict:
     """
     xml2dict turns an XML file into a array of all the species involved into the system of
     reactions and a list of dictionaries. This latter contains a dictionary for every single 
@@ -1342,6 +1348,9 @@ class Xml2dict:
         return self.Species, self.ListDictionaries
     
     def __repr__(self):
+        return '( ' + str(self.Species) + ', ' + str(self.ListDictionaries) + ' )'
+
+    def __str__(self):
         return str(self.Species) + ' ' + str(self.ListDictionaries)
 
 

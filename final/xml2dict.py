@@ -2,7 +2,7 @@
 #Written by Baptiste Lemaire
 import xml.etree.ElementTree as ET
 
-class Xml2dict:
+class xml2dict:
     """
     xml2dict turns an XML file into a array of all the species involved into the system of
     reactions and a list of dictionaries. This latter contains a dictionary for every single 

@@ -28,7 +28,7 @@ def test_rateCoeff():
     assert(r3.rateCoeff(T=2.0) == 8/np.e)
 
 def test_CoeffLaws_get():
-    assert(Reaction._CoeffLawDict.getcopy('Arrhenius') == CoeffLaw.Arrhenius)
+    assert(Reaction._CoeffLawDict.getcopy('Arrhenius') == Arrhenius)
     assert(Reaction._CoeffLawDict.getcopy_all() == Reaction._CoeffLawDict._dict_all)
     assert(Reaction._CoeffLawDict.getcopy_builtin() == Reaction._CoeffLawDict._dict_builtin)
 
@@ -290,32 +290,32 @@ def test_species_order_maintained_when_specified():
 
 
 def test_class1():
-    r = Xml2dict()
+    r = xml2dict()
     print(os.listdir('.'))
     r.parse('./final/rxns.xml')
     assert(r.get_info()[1][1]['TYPE'] == 'Elementary')
     
 def test_class2():
-    r = Xml2dict()
+    r = xml2dict()
     r.parse('./final/rxns.xml')
     assert(r.get_info()[0][1] == 'O')    
     
 def test_class3():
-    r = Xml2dict()
+    r = xml2dict()
     r.parse('./final/rxns.xml')
     assert(r.get_info()[1][1]['products'] == {'H': 1, 'OH': 1})
     
 def test_class5():
-    r = Xml2dict()
+    r = xml2dict()
     r.parse('./final/rxns2.xml')
     assert(r.get_info()[1][1]['reactants'] == {'HO2': 1, 'OH': 1}) 
     
 def test_class6():
-    r = Xml2dict()
+    r = xml2dict()
     r.parse('./final/rxns2.xml')
     assert(r.get_info()[1][2]['ID'] == 'reaction03') 
     
 def test_class7():
-    r = Xml2dict()
+    r = xml2dict()
     r.parse('./final/rxns2.xml')
     assert(r.get_info()[1][2]['reversible'] == 'no') 
