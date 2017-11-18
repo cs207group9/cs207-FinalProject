@@ -622,7 +622,7 @@ class ReactionSystem:
     array([-2., -4.,  6.,  2., -2.])
     """
     
-    def __init__(self, reactions_ls, nasa_base, species_ls = [], initial_T = 273, initial_concs = {}):
+    def __init__(self, nasa_query, reactions_ls, species_ls = [], initial_T = 273, initial_concs = {}):
         
         if not reactions_ls:
             raise ValueError("Reaction array is empty or None.")
@@ -634,7 +634,7 @@ class ReactionSystem:
         for r in reactions_ls:
             if not isinstance(r, Reaction): 
                 raise TypeError("input reactions_ls array contains elements that are not instances of Reaction")
-        
+
         self._reactions_ls = reactions_ls
         self._species_ls = species_ls
         
@@ -643,6 +643,9 @@ class ReactionSystem:
             self.update_species()
         else:
             self._user_defined_order = True
+
+        self._nasa_query = nasa_query
+        self._a = np.zeros( (len(self._species_ls), 7) )
             
         self.set_temp(initial_T)
         if initial_concs:
@@ -653,18 +656,15 @@ class ReactionSystem:
         self._nu_1 = self.get_nu_1()
         self._nu_2 = self.get_nu_2()
 
-        '''
-        nasa_base should have method:
-            nasa_base.feed_back(species, T), returns a[1:7] of species and T
-        '''
-        self._nasa_base = nasa_base
-
        
     def set_temp(self, T):
         if (T <= 0):
             raise ValueError("T = {0:18.16e}: Negative Temperature is prohibited!".format(T))
          
-        self._T = T    
+        self._T = T
+
+        self._a = [self._nasa_query.reponse(sp, T) for sp in self._species_ls]
+        self._a = np.concatenate(self._a, axis=0)
         
     def get_temp(self):
         return self._T
@@ -735,10 +735,7 @@ class ReactionSystem:
         for n, r in enumerate(self._reactions_ls):
             kf[n] = r.rateCoeff(T = self._T)
         nu = self._nu_2 - self._nu_1
-        a = np.zeros((len(self._species_ls), 7))
-        for m, e in enumerate(self._species_ls):
-            a[m, :] = self._nasa_base(e, self._T)
-        ke = BackwardLaw().equilibrium(a, nu, self._T)
+        ke = BackwardLaw().equilibrium(self._a, nu, self._T)
         kb = kf / ke
         return kf, kb
     

@@ -54,10 +54,10 @@ def test_init_notimplemented():
         assert(type(err) == ValueError)
 
 def test_init_bad_stoich():
-    try:
-        Reaction(reversible=True)
-    except NotImplementedError as err:
-        assert(type(err) == NotImplementedError)
+    # try:
+    #     Reaction(reversible=True)
+    # except NotImplementedError as err:
+    #     assert(type(err) == NotImplementedError)
     try:
         Reaction(**{'TYPE':'duplicate'})
     except NotImplementedError as err:
