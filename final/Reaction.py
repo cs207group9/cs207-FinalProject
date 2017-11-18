@@ -2,7 +2,7 @@ from useful_structure import PartialLockedDict
 from mathematical_science import MathModel
 from copy import deepcopy
 import numpy as np
-import CoeffLaw
+from CoeffLaw import *
 
 
 class Reaction:

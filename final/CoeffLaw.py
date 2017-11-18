@@ -260,3 +260,65 @@ class modArrhenius(MathModel):
     @staticmethod
     def _kernel(T, A, b, E, R, **other_params):
         return A * (T ** b) * (np.e ** (-E / (R * T)))
+
+
+
+
+    
+# ================================================================================ #
+
+
+class BackwardLaw:
+    """Methods for calculating the backward reaction rate.
+
+    Cp_over_R: Returns specific heat of each specie given by 
+               the NASA polynomials.
+    H_over_RT:  Returns the enthalpy of each specie given by 
+                the NASA polynomials.
+    S_over_R: Returns the entropy of each specie given by 
+              the NASA polynomials.
+    backward_coeffs:  Returns the backward reaction rate 
+                      coefficient for reach reaction.
+
+    Please see the notes in each routine for clarifications and 
+    warnings.  You will need to customize these methods (and 
+    likely the entire class) to suit your own code base.  
+    Nevertheless, it is hoped that you will find these methods 
+    to be of some use.
+    """
+
+    def __init__(self):
+        self.p0 = 1.0e+05
+        self.R = 8.3144598
+
+    def Cp_over_R(self, a, T):
+        Cp_R = (a[:,0] + a[:,1] * T + a[:,2] * T**2.0 \
+                + a[:,3] * T**3.0 + a[:,4] * T**4.0)
+        return Cp_R
+
+    def H_over_RT(self, a, T):
+        H_RT = (a[:,0] + a[:,1] * T / 2.0 + a[:,2] * T**2.0 / 3.0 \
+                + a[:,3] * T**3.0 / 4.0 + a[:,4] * T**4.0 / 5.0 \
+                + a[:,5] / T)
+        return H_RT
+               
+
+    def S_over_R(self, a, T):
+        S_R = (a[:,0] * np.log(T) + a[:,1] * T + a[:,2] * T**2.0 / 2.0 \
+               + a[:,3] * T**3.0 / 3.0 + a[:,4] * T**4.0 / 4.0 + a[:,6])
+        return S_R
+
+    def equilibrium_coeffs(self, a, nu, T):
+        # Change in enthalpy and entropy for each reaction
+        delta_H_over_RT = np.dot(nu.T, self.H_over_RT(a, T))
+        delta_S_over_R = np.dot(nu.T, self.S_over_R(a, T))
+        # Negative of change in Gibbs free energy for each reaction 
+        delta_G_over_RT = delta_S_over_R - delta_H_over_RT
+        # Prefactor in Ke
+        fact = self.p0 / self.R / T
+        # gamma
+        gamma = np.sum(nu, axis=0)
+        # Ke
+        ke = fact**self.gamma * np.exp(delta_G_over_RT)
+
+        return ke

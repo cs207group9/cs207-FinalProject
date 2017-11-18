@@ -1,5 +1,5 @@
-from Reaction import Reaction
-import CoeffLaw
+from Reaction import *
+from CoeffLaw import *
 import numpy as np
 
 
@@ -11,6 +11,7 @@ def test_info():
     assert(r.getProducts() == dict(OH=1,H=1))
     r.set_params(**dict(coeffLaw='Arrhenius', sth_irrel=42))
     assert(r.get_params()['coeffParams']['A'] == 1.0)
+    assert(r.is_reversible()==False)
 
 def test_rateCoeff():
     r1 = Reaction(coeffLaw='Constant', coeffParams=dict(k=3.14))
