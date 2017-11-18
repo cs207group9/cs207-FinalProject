@@ -1,7 +1,9 @@
 ## Jupyter notebook
 .ipynb_checkpoints/
 .nbgrader.log
-
+__pycache__/
+.coverage
+.DS_Store
 
 ## latex/pdflatex files
 *.aux
