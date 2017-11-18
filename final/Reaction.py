@@ -268,9 +268,9 @@ class Reaction:
         """
             
         _dict_builtin = {
-            'Constant'    :CoeffLaw.Constant, 
-            'Arrhenius'   :CoeffLaw.Arrhenius, 
-            'modArrhenius':CoeffLaw.modArrhenius
+            'Constant'    :Constant, 
+            'Arrhenius'   :Arrhenius, 
+            'modArrhenius':modArrhenius
         }
         _dict_all = deepcopy(_dict_builtin) 
         
@@ -318,9 +318,14 @@ class Reaction:
             params['reversible'] = True
         elif params['reversible'] == 'no':
             params['reversible'] = False
-        self._params = deepcopy(self._check_params(params))
+        self._check_params(params)
+        self._params = deepcopy(params)
         self.rateCoeff, self._params['coeffParams'] = \
             self._specify_CoeffLaw(params['coeffLaw'], params['coeffParams'])
+
+    def is_reversible(self):
+        '''reversible method added'''
+        return self._params['reversible']
     
     def get_params(self):
         return deepcopy(self._params)
@@ -351,9 +356,6 @@ class Reaction:
     
     @staticmethod
     def _check_params(params):
-        if 'reversible' in params and params['reversible'] == True:
-            raise NotImplementedError(
-                'Reversible reaction is not implemented.')
         if 'TYPE' in params and params['TYPE'] != 'Elementary':
             raise NotImplementedError(' '.join([
                 'TYPE = {}.'.format(params['TYPE']),
