@@ -78,7 +78,7 @@ We may encounter imbalanced parameter if we try to set size/weight to the graph.
 
 From this graph, we could have a basic understanding of the relationships among reactions.
 
-[Alt text](final/demo2.png?raw=true "Title")
+![Alt text](final/demo2.png?raw=true "Title")
 ```
 Example 2: Reaction for Hierarchical graph
 A + B = C + D
@@ -94,7 +94,7 @@ Additional option:
 - Add attribute “+ related_reactant” on edges.
 - Set start species / end species for the graph.
 
-[Alt text](final/demo3.png?raw=true "Title")
+![Alt text](final/demo3.png?raw=true "Title")
 
 For reversible reaction, we may use undirected edge or double arrows.
 
