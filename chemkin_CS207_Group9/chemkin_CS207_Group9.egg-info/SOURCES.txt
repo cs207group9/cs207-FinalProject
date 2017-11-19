@@ -1,0 +1,7 @@
+setup.py
+chemkin_CS207_Group9/__init__.py
+chemkin_CS207_Group9.egg-info/PKG-INFO
+chemkin_CS207_Group9.egg-info/SOURCES.txt
+chemkin_CS207_Group9.egg-info/dependency_links.txt
+chemkin_CS207_Group9.egg-info/not-zip-safe
+chemkin_CS207_Group9.egg-info/top_level.txt
