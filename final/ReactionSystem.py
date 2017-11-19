@@ -132,18 +132,19 @@ class ReactionSystem:
         self._nu_2 = self.compute_nu_2()
 
        
-    def set_temp(self, T):
+    def set_temp(self, T, update_nasa=True):
         if (T <= 0):
             raise ValueError("T = {0:18.16e}: Negative Temperature is prohibited!".format(T))
          
         self._T = T
 
-        if self._nasa_query is None:
-            self._a = np.zeros( (len(self._species_ls), 7) )
-        else:
-            self._a = [self._nasa_query.response(sp, T).reshape(1, -1) 
-                            for sp in self._species_ls]
-            self._a = np.concatenate(self._a, axis=0)
+        if update_nasa:
+            if self._nasa_query is None:
+                self._a = np.zeros( (len(self._species_ls), 7) )
+            else:
+                self._a = [self._nasa_query.response(sp, T).reshape(1, -1) 
+                                for sp in self._species_ls]
+                self._a = np.concatenate(self._a, axis=0)
         
     def get_temp(self):
         return self._T
