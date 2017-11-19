@@ -128,8 +128,8 @@ class ReactionSystem:
         else:
             self._concs = {}
 
-        self._nu_1 = self.get_nu_1()
-        self._nu_2 = self.get_nu_2()
+        self._nu_1 = self.compute_nu_1()
+        self._nu_2 = self.compute_nu_2()
 
        
     def set_temp(self, T):
@@ -141,11 +141,15 @@ class ReactionSystem:
         if self._nasa_query is None:
             self._a = np.zeros( (len(self._species_ls), 7) )
         else:
-            self._a = [self._nasa_query.response(sp, T) for sp in self._species_ls]
+            self._a = [self._nasa_query.response(sp, T).reshape(1, -1) 
+                            for sp in self._species_ls]
             self._a = np.concatenate(self._a, axis=0)
         
     def get_temp(self):
         return self._T
+
+    def get_a(self):
+        return self._a
     
     def set_concs(self, concs):
         
@@ -216,11 +220,11 @@ class ReactionSystem:
             kb = np.zeros(len(kf))
         else:
             nu = self._nu_2 - self._nu_1
-            ke = BackwardLaw().equilibrium(self._a, nu, self._T)
+            ke = BackwardLaw().equilibrium_coeffs(nu, self._a, self._T)
             kb = kf / ke
         return kf, kb
     
-    def get_nu_1(self):
+    def compute_nu_1(self):
         nu_1 = np.zeros([len(self._species_ls), len(self._reactions_ls)])
         
         for n, r in enumerate(self._reactions_ls):
@@ -230,9 +234,10 @@ class ReactionSystem:
                 if nu_1[idx, n] < 0:
                     raise ValueError("nu_{0}1 = {1}:  Negative stoichiometric coefficients are prohibited!".format(idx, nu_1[idx, n]))
 
+        self._nu_1 = nu_1
         return nu_1
     
-    def get_nu_2(self):
+    def compute_nu_2(self):
         nu_2= np.zeros([len(self._species_ls), len(self._reactions_ls)])
         
         for n, r in enumerate(self._reactions_ls):
@@ -242,7 +247,14 @@ class ReactionSystem:
                 if nu_2[idx, n] < 0:
                     raise ValueError("nu_{0}2 = {1}:  Negative stoichiometric coefficients are prohibited!".format(idx, nu_2[idx, n]))
 
+        self._nu_2 = nu_2
         return nu_2
+
+    def get_nu_1(self):
+        return self._nu_1
+
+    def get_nu_2(self):
+        return self._nu_2
     
     def get_progress_rate(self):
         '''reversible method added'''

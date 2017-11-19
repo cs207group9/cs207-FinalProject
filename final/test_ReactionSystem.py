@@ -7,13 +7,12 @@ Created on Sun Oct 15 17:50:51 2017
 import sys
 sys.path.insert(0, '../final')
 from database_query import CoeffQuery
+from CoeffLaw import BackwardLaw
 from Reaction import Reaction
 from ReactionSystem import ReactionSystem
 import numpy as np
 
 ### Tests for ReactionSystems (rs):
-
-nasa_query = CoeffQuery('test_database.sqlite')
     
 def test_rs_nu_matrix_creation():
     
@@ -176,3 +175,71 @@ def test_species_order_maintained_when_specified():
     
     rs = ReactionSystem(reactions, species_ls=['A','C','D','B'])
     assert(rs.get_species() == ['A', 'C', 'D', 'B'])
+
+
+# ========================== REVERSIBLE APPROACHES =============================== #
+
+nasa_query = CoeffQuery('nasa_thermo.sqlite')
+
+tol = 1e-10
+
+def test_set_temp_with_nasa():
+    reactions = []
+    reactions.append(Reaction(reactants={'H2':2,'O2':1}, products={'OH':2,'H2':1}))
+    reactions.append(Reaction(reactants={'OH':1,'HO2':1}, products={'H2O':1,'O2':1}))
+    species = ['H2','O2','OH','HO2','H2O']
+
+    rs = ReactionSystem(reactions, species, nasa_query, initial_T=300)
+
+    a_res = rs.get_a()
+
+    a_truth = np.zeros((5,7))
+    a_truth[0,:] = np.array([
+        3.3372792, -4.94024731e-05, 4.99456778e-07,
+        -1.79566394e-10, 2.00255376e-14, -950.158922, -3.20502331])
+    a_truth[1,:] = np.array([
+        3.28253784, 0.00148308754, -7.57966669e-07, 
+        2.09470555e-10, -2.16717794e-14, -1088.45772, 5.45323129])
+    a_truth[2,:] = np.array([
+        3.09288767, 0.000548429716, 1.26505228e-07, 
+        -8.79461556e-11, 1.17412376e-14, 3858.657, 4.4766961])
+    a_truth[3,:] = np.array([
+        4.0172109, 0.00223982013, -6.3365815e-07, 
+        1.1424637e-10, -1.07908535e-14, 111.856713, 3.78510215])
+    a_truth[4,:] = np.array([
+        3.03399249, 0.00217691804, -1.64072518e-07, 
+        -9.7041987e-11, 1.68200992e-14, -30004.2971, 4.9667701])
+
+    assert( np.prod(np.abs(a_truth-a_res)<tol) )
+
+
+def test_validate_equilibrium():
+    '''This test validates that 'reaction rate == 0' at equilibrium'''
+
+    species = ['H2','O2','OH']
+    reactions = [ Reaction(reversible='yes', 
+                           reactants={'H2':2,'O2':1}, 
+                           products={'OH':2,'H2':1}) ]
+    nu = np.array([-1,-1,2]).reshape(-1,1)
+    T = 2200
+
+    rs = ReactionSystem(reactions, species, nasa_query, initial_T=T)
+    ke_truth = BackwardLaw().equilibrium_coeffs(nu, rs.get_a(), T)
+
+    # make sure that ke is at the order of 1
+    assert( np.log10(ke_truth) > -0.5 and np.log10(ke_truth) < 0.5 )
+
+    # calculate concentrations at equilibrium
+    concs_prob = dict(H2=2, O2=2, OH=2*np.sqrt(ke_truth))
+    rs.set_concs(concs_prob)
+
+    # calsulate reaction rate at equilibrium (relative to kf,kb)
+    # they should be essentially zero
+    kf_res, kb_res = rs.get_reac_rate_coefs()
+    reac_rate_res = rs.get_reac_rate()
+    ratiof = reac_rate_res / kf_res
+    ratiob = reac_rate_res / kb_res
+
+    assert( np.prod(ratiof<tol) and np.prod(ratiob<tol) )
+
+
