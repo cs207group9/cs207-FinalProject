@@ -41,7 +41,7 @@ class xml2dict:
     EXAMPLES
     =========
     >>> reader = xml2dict()
-    >>> reader.parse('./final/rxns.xml')
+    >>> reader.parse('./rxns.xml')
     >>> reader.get_info()[0][0]
     'H'
     """
