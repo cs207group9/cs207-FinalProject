@@ -85,7 +85,7 @@ A + B = C + D
 ```
 
 
-`plot_path(element_filter, start = None, end = None, ReactionSystem)`: plot the path of species containig specific element
+- `plot_path(element_filter, start = None, end = None, ReactionSystem)`: plot the path of species containig specific element
 We construct a network with species under specific element filter using graphviz.
 For elementary reaction:
 Build directed edges (u,v) if v is u’s product in an equation.
@@ -98,7 +98,7 @@ Additional option:
 
 For reversible reaction, we may use undirected edge or double arrows.
 
-`plot_evolution(graph, type, time_range)`: visualize the network graph dynamically
+- `plot_evolution(graph, type, time_range)`: visualize the network graph dynamically
 We plot the initial, intermidiate and final state of a graph within time_range to get the change of concentration.
 Require ODE solver to calculate concentration (and/or progress rate)
 Plot three different graph with same graph structure but different node size (and/or edge weight)
