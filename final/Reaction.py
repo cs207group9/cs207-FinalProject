@@ -184,7 +184,7 @@ class Reaction:
     >>> print(str(r))
     ========================================
     Reaction Equation:
-    1H + 1O2 => 1H + 1OH
+    1H + 1O2 =] 1H + 1OH
     ----------------------------------------
     Reaction Info:
     ID: reaction
@@ -254,7 +254,7 @@ class Reaction:
         ...     def _kernel(T, A, **other_params):
         ...         return T * A
         >>> sorted(Reaction._CoeffLawDict.update('sl', somelaw).getcopy_all())
-        ['Arrhenius', 'Constant', 'modArrhenius', 'sl']
+        ['Arrhenius', 'Constant', 'modArrhenius', 'modifiedArrhenius', 'sl']
         >>> r = Reaction( \
             reactants=dict(H=1,O2=1), \
             products=dict(OH=1,H=1), \
@@ -264,13 +264,14 @@ class Reaction:
         >>> r.rateCoeff(T=0.1)
         0.2
         >>> sorted(Reaction._CoeffLawDict.reset().getcopy_all())
-        ['Arrhenius', 'Constant', 'modArrhenius']
+        ['Arrhenius', 'Constant', 'modArrhenius', 'modifiedArrhenius']
         """
             
         _dict_builtin = {
-            'Constant'    :Constant, 
-            'Arrhenius'   :Arrhenius, 
-            'modArrhenius':modArrhenius
+            'Constant'         :Constant, 
+            'Arrhenius'        :Arrhenius, 
+            'modArrhenius'     :modArrhenius, 
+            'modifiedArrhenius':modArrhenius
         }
         _dict_all = deepcopy(_dict_builtin) 
         
@@ -397,7 +398,8 @@ class Reaction:
         streq_right = ' + '.join( 
             ['{}{}'.format(v,k) for k,v in 
             sorted(self._params['products'].items(), key=lambda x:x[0])]  )
-        streq_full = ' => '.join(  [streq_left, streq_right]  )
+        streq_con = ' [=] ' if self.is_reversible() else ' =] '
+        streq_full = streq_con.join(  [streq_left, streq_right]  )
         keylist = [
             'TYPE', 'reversible', 
             'coeffLaw', 'coeffParams', 'coeffUnits'
