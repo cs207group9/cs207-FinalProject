@@ -1,5 +1,5 @@
-from mathematical_science import MathModel
-from check_and_response import ValueCheck
+from chemkin_CS207_G9.mathematical_science import MathModel
+from chemkin_CS207_G9.check_and_response import ValueCheck
 import numpy as np
 
 

@@ -1,5 +1,5 @@
-from solver.Reaction import *
-import solver.CoeffLaw
+from chemkin_CS207_Group9.solver.Reaction import *
+import chemkin_CS207_Group9.solver.CoeffLaw
 import numpy as np
 
 

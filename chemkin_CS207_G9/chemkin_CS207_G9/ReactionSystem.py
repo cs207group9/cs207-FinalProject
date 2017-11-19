@@ -1,9 +1,9 @@
 
 import numpy as np
 
-from Reaction import Reaction
+from chemkin_CS207_G9.Reaction import Reaction
 from more_itertools import unique_everseen
-from CoeffLaw import BackwardLaw
+from chemkin_CS207_G9.CoeffLaw import BackwardLaw
 
 class ReactionSystem:
 

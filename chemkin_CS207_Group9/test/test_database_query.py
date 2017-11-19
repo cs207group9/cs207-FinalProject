@@ -7,7 +7,7 @@ Created on Wed Nov 15 12:16:57 2017
 @author: Camilo, Yiqi
 """
 
-from preprocessing.database_query import *
+from chemkin_CS207_Group9.preprocessing.database_query import *
 
 # def test_get_coeffs():
     

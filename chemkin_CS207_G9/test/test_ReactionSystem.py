@@ -6,10 +6,10 @@ Created on Sun Oct 15 17:50:51 2017
 
 import sys
 sys.path.insert(0, '../final')
-from database_query import CoeffQuery
-from CoeffLaw import BackwardLaw
-from Reaction import Reaction
-from ReactionSystem import ReactionSystem
+from chemkin_CS207_G9.database_query import CoeffQuery
+from chemkin_CS207_G9.CoeffLaw import BackwardLaw
+from chemkin_CS207_G9.Reaction import Reaction
+from chemkin_CS207_G9.ReactionSystem import ReactionSystem
 import numpy as np
 
 ### Tests for ReactionSystems (rs):

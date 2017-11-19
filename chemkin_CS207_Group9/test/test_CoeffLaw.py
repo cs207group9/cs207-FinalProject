@@ -1,4 +1,4 @@
-from solver.CoeffLaw import *
+from chemkin_CS207_Group9.solver.CoeffLaw import *
 import numpy as np
 
 

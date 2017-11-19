@@ -1,9 +1,3 @@
 {
-  "final/test_xml2dict.py::test_class1": true,
-  "final/test_xml2dict.py::test_class2": true,
-  "final/test_xml2dict.py::test_class3": true,
-  "final/test_xml2dict.py::test_class5": true,
-  "final/test_xml2dict.py::test_class6": true,
-  "final/test_xml2dict.py::test_class7": true,
-  "final/xml2dict.py::xml2dict.xml2dict": true
+  "chemkin_CS207_G9/setup.py": true
 }
