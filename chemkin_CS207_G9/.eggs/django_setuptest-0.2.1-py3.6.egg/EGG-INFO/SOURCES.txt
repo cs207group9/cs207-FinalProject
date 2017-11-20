@@ -1,0 +1,15 @@
+AUTHORS.rst
+CHANGELOG.rst
+LICENSE
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+django_setuptest.egg-info/PKG-INFO
+django_setuptest.egg-info/SOURCES.txt
+django_setuptest.egg-info/dependency_links.txt
+django_setuptest.egg-info/not-zip-safe
+django_setuptest.egg-info/requires.txt
+django_setuptest.egg-info/top_level.txt
+setuptest/__init__.py
+setuptest/setuptest.py
