@@ -28,19 +28,36 @@ The folder "chemkin_CS207_G9" contains the file setup.py that can be used to run
 
 ### Basic Usage and Examples
 
-To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and a concentration value for each specie in the array. Let's first create some Reactions and an array of concentrations:
+To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and some related informations. Let's first create those essential ingredients:
 ```
 # Reactions involving species A, B and C
-reaction1 = Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'const', coeffParams = 10)
-reaction2 = Reaction(reactants={'A':1,'B':2}, products = {'C':1}, coeffLaw = 'const', coeffParams = 10)
+reaction1 = Reaction(
+    reactants={'H2':2,'O2':1}, products = {'OH':2,'H2':1}, 
+    coeffLaw = 'const', coeffParams = {'k':10}, 
+    reversible='no')
+reaction2 = Reaction(
+    reactants={'OH':1,'HO2':1}, products = {'H2O':1,'O2':1}, 
+    coeffLaw = 'Arrhenius', coeffParams = {'A':5, 'E':-10}, 
+    reversible='yes')
 reactions = [reaction1, reaction2]
 
+# Species specified in order
+species = ['H2', 'O2', 'OH', 'HO2', 'H2O']
+
 # One concentration value is needed for each species of our reactions
-concentrations = [1,2,1]
+concentrations = {'H2':1, 'O2':2, 'OH':2, 'HO2':1, 'H2O':1}
+
+# And the temperature under which they react
+temperature = 300
+
+# Database connection object to the nasa coefficients
+nasa_query = CoeffQuery('nasa_database.sqlite')
 ```
 We can now create our ReactionSystem object:
 ```
-rs = ReactionSystem(reactions, concentrations)
+rs = ReactionSystem(
+    reactions, species, nasa_query, 
+    initial_concs=concentrations, initial_T=temperature)
 ```
 And call the get_reac_rate() function that returns the reaction rate value for each specie.
 ```
