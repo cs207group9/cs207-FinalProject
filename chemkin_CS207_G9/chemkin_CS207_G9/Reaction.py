@@ -73,7 +73,6 @@ class Reaction:
         check if params are valid.
         will get called by the __init__ method.
         it raises `NotImplementedError` if:
-            params['reversible'] == True
             params['TYPE']       != 'Elementary'
             params['coeffLaw'] not in self._CoeffLawDict._dict_all
         it raises `ValueError` if:
@@ -124,7 +123,6 @@ class Reaction:
         ID:          str keyword, defaults 'reaction', reaction id
 
         reversible:  boolean keyword, defaults False, reversibility
-                     if True, will raise NotImplementedError
 
         TYPE:        str keyword, defaults 'Elementary', reaction type, 
                      if not 'Elementary', will raise NotImplementedError
@@ -159,7 +157,6 @@ class Reaction:
         inner class _CoeffLawDict does not require instantiation.
         several argument checks will run automatically:
             --------------------------------------------------------------------------------
-            reversible           if True                                 NotImplementedError
             TYPE                 if not 'Elementary'                     NotImplementedError
             coeffLaw             if not in _CoeffLawDict._dict_all       NotImplementedError
             coeffParams          if cannot pass the param check          ValueError

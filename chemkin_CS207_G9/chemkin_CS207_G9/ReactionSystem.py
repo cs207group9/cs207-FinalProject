@@ -22,6 +22,9 @@ class ReactionSystem:
     species_ls: optional list of strings, with one specie per string. The list of species
     must match the total set of species in the given Reactions. Order is important
     and is maintained throughout the class.
+
+    nasa_query: CoeffQuery object, or object of any type with method response(...) implemented.
+    nasa_query.response(species_name, temp) should return the nasa coeffs of given species at given temperature
     
     **initial_state: optional parameter indicating the initial state of the reaction.
     Can contain temperature and an array of concentrations.
@@ -36,6 +39,16 @@ class ReactionSystem:
     _T: float, temperature
     
     _concs: array of float, concentration
+
+    _a: ndarray of float, nasa coefficients for all species
+
+    _nu_1: ndarray of float, stoich coeffs for reactants
+
+    _nu_2: ndarray of float, stoich coeffs for products
+
+    _nasa_query: CoeffQuery object, or object of any type with method response(...) implemented.
+    an object that connect this reaction system to the database of nasa coeffs.
+
     
     METHODS:
     ========
@@ -59,11 +72,11 @@ class ReactionSystem:
             function in class Reaction to calculate coefficient rate under given conditions
             OUTPUTS: k, float, reaction rate coefficient
     
-    calculate_nu_1(self):
+    compute_nu_1(self):
             return formatted reactant matrix
             OUTPUTS: matrix of float
             
-    calculate_nu_2(self):
+    compute_nu_2(self):
             return formatted product matrix
             OUTPUTS: matrix of float
     
@@ -75,9 +88,6 @@ class ReactionSystem:
             returns the reaction rate of a system of irreversible, elementary reactions
             OUTPUTS: numpy array of floats, size: num_species, reaction rate of each specie
             
-    compute_all(self):
-            return the reaction rate of a system reactions without calling the other methods
-            OUTPUTS: numpy array of floats, size: num_species, reaction rate of each specie
             
     EXAMPLES:
     =========
