@@ -89,7 +89,7 @@ reader = xml2dict()
 reader.parse('rxns_reversible.xml')
 info = reader.get_info()
 ```
-`info` will be a well-organized `dict`, from which you retrieve the species and the reactions:
+`info[0]` will be a well-organized python structure, from which you can retrieve the species and the reactions:
 ```
 species = info[0]
 reactions = [Reaction(**r) for r in info[1]]
