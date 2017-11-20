@@ -28,6 +28,8 @@ To run this library, you will need following packages:
 
 ### Test Coverage
 
+As can be seen, **our test coverage is 94%**.
+
 ![Test Coverage](/TestCoverage.png "Test Coverage")
 
 ### Basic Usage and Examples
