@@ -7,10 +7,10 @@ chemkin_CS207_G9/__init__.py
 chemkin_CS207_G9/check_and_response.py
 chemkin_CS207_G9/database_query.py
 chemkin_CS207_G9/mathematical_science.py
+chemkin_CS207_G9/nasa_thermo.sqlite
+chemkin_CS207_G9/rxns_reversible.xml
 chemkin_CS207_G9/useful_structure.py
 chemkin_CS207_G9/xml2dict.py
-chemkin_CS207_G9/rxns_reversible.xml
-chemkin_CS207_G9/nasa_thermo.sqlite
 chemkin_CS207_G9.egg-info/PKG-INFO
 chemkin_CS207_G9.egg-info/SOURCES.txt
 chemkin_CS207_G9.egg-info/dependency_links.txt
