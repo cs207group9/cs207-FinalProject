@@ -33,12 +33,11 @@ To run this library, you will need following packages:
 
 ### Basic Usage and Examples
 
-Basic usage of this library starts with importing
+Basic usage of this library starts with importing:
 ```
-from chemkin_CS207_G9.xml2dict import xml2dict
-from chemkin_CS207_G9.database_query import CoeffQuery
 from chemkin_CS207_G9.Reaction import Reaction
 from chemkin_CS207_G9.ReactionSystem import ReactionSystem
+from chemkin_CS207_G9.database_query import CoeffQuery
 ```
 
 To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and some related informations. Let's first create those essential ingredients:
@@ -64,7 +63,7 @@ concentrations = {'H2':1, 'O2':2, 'OH':2, 'HO2':1, 'H2O':1}
 temperature = 300
 
 # Database connection object to the nasa coefficients
-nasa_query = CoeffQuery('nasa_database.sqlite')
+nasa_query = CoeffQuery('nasa_thermo.sqlite')
 ```
 We can now create our ReactionSystem object:
 ```
@@ -81,6 +80,20 @@ It is also possible to obtain the progress rate for each reaction:
 progress_rate = rs.get_progress_rate()
 ```
 This gives us a 1 dimensional list with one element per reaction.
+
+For most cases one may want to import the reactions from other files instead of typing them in manually. We currently provide one method to allow users import from formatted `.xml` file:
+```
+from chemkin_CS207_G9.xml2dict import xml2dict
+
+reader = xml2dict()
+reader.parse('rxns_reversible.xml')
+info = reader.get_info()
+```
+`info` will be a well-organized `dict`, from which you retrieve the species and the reactions:
+```
+species = info[0]
+reactions = [Reaction(**r) for r in info[1]]
+```
 
 ## Authors
 
