@@ -5,12 +5,14 @@ Created on Sun Oct 15 17:50:51 2017
 """
 
 import sys
-sys.path.insert(0, '../final')
 from chemkin_CS207_G9.database_query import CoeffQuery
 from chemkin_CS207_G9.CoeffLaw import BackwardLaw
 from chemkin_CS207_G9.Reaction import Reaction
 from chemkin_CS207_G9.ReactionSystem import ReactionSystem
 import numpy as np
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 ### Tests for ReactionSystems (rs):
     
@@ -179,7 +181,7 @@ def test_species_order_maintained_when_specified():
 
 # ========================== REVERSIBLE APPROACHES =============================== #
 
-nasa_query = CoeffQuery('nasa_thermo.sqlite')
+nasa_query = CoeffQuery(os.path.join(BASE_DIR, 'nasa_thermo.sqlite'))
 
 tol = 1e-10
 

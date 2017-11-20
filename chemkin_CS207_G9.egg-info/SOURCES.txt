@@ -18,3 +18,4 @@ test/test_CoeffLaw.py
 test/test_Reaction.py
 test/test_ReactionSystem.py
 test/test_database_query.py
+test/test_xml2dict.py

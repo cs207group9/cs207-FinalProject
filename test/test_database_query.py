@@ -8,6 +8,9 @@ Created on Wed Nov 15 12:16:57 2017
 """
 
 from chemkin_CS207_G9.database_query import *
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # def test_get_coeffs():
     
@@ -30,7 +33,7 @@ from chemkin_CS207_G9.database_query import *
 
 def test_response():
 
-    nasa_query = CoeffQuery('test_database.sqlite')
+    nasa_query = CoeffQuery(os.path.join(BASE_DIR, 'test_database.sqlite'))
     coeffs_low = nasa_query.response('O', 500)
     coeffs_high = nasa_query.response('O', 5000)
     truth_low = np.array([  
@@ -44,7 +47,7 @@ def test_response():
     nasa_query.terminate()
 
 def test_response_no_such_species():
-    nasa_query = CoeffQuery('test_database.sqlite')
+    nasa_query = CoeffQuery(os.path.join(BASE_DIR, 'test_database.sqlite'))
     try:
         coeffs = nasa_query.response('ARBITRARY', 100)
     except ValueError as err:
@@ -52,7 +55,7 @@ def test_response_no_such_species():
     nasa_query.terminate()
     
 def test_response_out_of_range():
-    nasa_query = CoeffQuery('test_database.sqlite')
+    nasa_query = CoeffQuery(os.path.join(BASE_DIR, 'test_database.sqlite'))
     try:
         coeffs = nasa_query.response('O', 100)
     except ValueError as err:
