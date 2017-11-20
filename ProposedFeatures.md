@@ -56,7 +56,7 @@ Build directed edges (u,1) to (v,2) if edge u is the reactant of equation v.
 Build directed edges (u,2) to (v,1) if edge v is the product of equation u.
 From this graph, we could recompute the reaction equations.
 
-![Alt text](final/demo1.png?raw=true "Title")
+![Alt text](pic/demo1.png?raw=true "Title")
 ```
 Example 1: Reaction System for Birpartite graph
 #1: A + B = C
@@ -78,7 +78,7 @@ We may encounter imbalanced parameter if we try to set size/weight to the graph.
 
 From this graph, we could have a basic understanding of the relationships among reactions.
 
-![Alt text](final/demo2.png?raw=true "Title")
+![Alt text](pic/demo2.png?raw=true "Title")
 ```
 Example 2: Reaction for Hierarchical graph
 A + B = C + D
@@ -94,7 +94,7 @@ Additional option:
 - Add attribute “+ related_reactant” on edges.
 - Set start species / end species for the graph.
 
-![Alt text](final/demo3.png?raw=true "Title")
+![Alt text](pic/demo3.png?raw=true "Title")
 
 For reversible reaction, we may use undirected edge or double arrows.
 
