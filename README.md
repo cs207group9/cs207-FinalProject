@@ -91,6 +91,17 @@ species = info[0]
 reactions = [Reaction(**r) for r in info[1]]
 ```
 
+### Additional Files
+Along with the package there are two additional files - one is `nasa_thermo.sqlite` which is the database containing all the nasa coefficients, and the other is `rxns_reversible.xml` which is the example `.xml` file of reactions and species. Users may access them by:
+```
+import os
+import chemkin_CS207_G9
+BASE_DIR = os.path.dirname(os.path.abspath(chemkin_CS207_G9.__file__))
+
+path_xml = os.path.join(BASE_DIR, 'rxns_reversible.xml') # path to the .xml file
+path_sql = os.path.join(BASE_DIR, 'nasa_thermo.sqlite')  # path to the .sqlite file
+```
+
 ## Authors
 
 * **Camilo Fosco**
