@@ -1,3 +1,4 @@
+setup.cfg
 setup.py
 chemkin_CS207_G9/CoeffLaw.py
 chemkin_CS207_G9/Reaction.py
