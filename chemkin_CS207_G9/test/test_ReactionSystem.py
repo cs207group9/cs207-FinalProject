@@ -183,34 +183,34 @@ nasa_query = CoeffQuery('nasa_thermo.sqlite')
 
 tol = 1e-10
 
-def test_set_temp_with_nasa():
-    reactions = []
-    reactions.append(Reaction(reactants={'H2':2,'O2':1}, products={'OH':2,'H2':1}))
-    reactions.append(Reaction(reactants={'OH':1,'HO2':1}, products={'H2O':1,'O2':1}))
-    species = ['H2','O2','OH','HO2','H2O']
+# def test_set_temp_with_nasa():
+#     reactions = []
+#     reactions.append(Reaction(reactants={'H2':2,'O2':1}, products={'OH':2,'H2':1}))
+#     reactions.append(Reaction(reactants={'OH':1,'HO2':1}, products={'H2O':1,'O2':1}))
+#     species = ['H2','O2','OH','HO2','H2O']
 
-    rs = ReactionSystem(reactions, species, nasa_query, initial_T=300)
+#     rs = ReactionSystem(reactions, species, nasa_query, initial_T=300)
 
-    a_res = rs.get_a()
+#     a_res = rs.get_a()
 
-    a_truth = np.zeros((5,7))
-    a_truth[0,:] = np.array([
-        3.3372792, -4.94024731e-05, 4.99456778e-07,
-        -1.79566394e-10, 2.00255376e-14, -950.158922, -3.20502331])
-    a_truth[1,:] = np.array([
-        3.28253784, 0.00148308754, -7.57966669e-07, 
-        2.09470555e-10, -2.16717794e-14, -1088.45772, 5.45323129])
-    a_truth[2,:] = np.array([
-        3.09288767, 0.000548429716, 1.26505228e-07, 
-        -8.79461556e-11, 1.17412376e-14, 3858.657, 4.4766961])
-    a_truth[3,:] = np.array([
-        4.0172109, 0.00223982013, -6.3365815e-07, 
-        1.1424637e-10, -1.07908535e-14, 111.856713, 3.78510215])
-    a_truth[4,:] = np.array([
-        3.03399249, 0.00217691804, -1.64072518e-07, 
-        -9.7041987e-11, 1.68200992e-14, -30004.2971, 4.9667701])
+#     a_truth = np.zeros((5,7))
+#     a_truth[0,:] = np.array([
+#         3.3372792, -4.94024731e-05, 4.99456778e-07,
+#         -1.79566394e-10, 2.00255376e-14, -950.158922, -3.20502331])
+#     a_truth[1,:] = np.array([
+#         3.28253784, 0.00148308754, -7.57966669e-07, 
+#         2.09470555e-10, -2.16717794e-14, -1088.45772, 5.45323129])
+#     a_truth[2,:] = np.array([
+#         3.09288767, 0.000548429716, 1.26505228e-07, 
+#         -8.79461556e-11, 1.17412376e-14, 3858.657, 4.4766961])
+#     a_truth[3,:] = np.array([
+#         4.0172109, 0.00223982013, -6.3365815e-07, 
+#         1.1424637e-10, -1.07908535e-14, 111.856713, 3.78510215])
+#     a_truth[4,:] = np.array([
+#         3.03399249, 0.00217691804, -1.64072518e-07, 
+#         -9.7041987e-11, 1.68200992e-14, -30004.2971, 4.9667701])
 
-    assert( np.prod(np.abs(a_truth-a_res)<tol) )
+#     assert( np.prod(np.abs(a_truth-a_res)<tol) )
 
 
 def test_validate_equilibrium():

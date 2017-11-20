@@ -280,7 +280,7 @@ class BackwardLaw:
     equilibrium_coeffs:  Returns the equilibrium coefficients.
     """
 
-    def __init__(self, p0=1.0e+05, R=8.314):
+    def __init__(self, p0=1.0e+05, R=8.3144598):
         self.p0 = p0
         self.R = R
 

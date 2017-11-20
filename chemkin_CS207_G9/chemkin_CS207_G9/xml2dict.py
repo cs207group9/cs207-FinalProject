@@ -38,12 +38,6 @@ class xml2dict:
         OUTPUTS: str
     
     
-    EXAMPLES
-    =========
-    >>> reader = xml2dict()
-    >>> reader.parse('rxns.xml')
-    >>> reader.get_info()[0][0]
-    'H'
     """
 
     def parse(self, file):
