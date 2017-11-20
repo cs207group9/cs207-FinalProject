@@ -9,21 +9,17 @@ This is the repository for the CS207 project for chemical kinetics.
 
 Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
-## Getting Started
-
-Download the chemkin.py module. All the classes are there. Download the chemkin_tests.py module for the test suite.
-
-### Installing
+### Installing and Getting Started
 
 One can download the package by using the following command:
 
-pip install chemkin_CS207_G9
+`pip install chemkin_CS207_G9`
 
-However, to be able to enter the command "python setup.py test", it may be preferred to download the entire repo :
+However, to be able to enter the command `python setup.py test`, it may be preferred to download the entire release:
 
-https://github.com/cs207group9/cs207-FinalProject/archive/v1.1-alpha.zip
+https://github.com/cs207group9/cs207-FinalProject/releases/tag/v1.2
 
-The folder "chemkin_CS207_G9" contains the file setup.py that can be used to run the tes.
+The root directory contains the file `setup.py` that can be used to run the tes.
 
 ### External Dependencies
 
