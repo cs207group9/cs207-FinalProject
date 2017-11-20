@@ -26,6 +26,9 @@ The root directory contains the file `setup.py` that can be used to run the test
 To run this library, you will need following packages: 
 ```numpy, xml, sqlite3, copy, more_itertools```
 
+### Test Coverage
+
+![Test Coverage](/TestCoverage.png "Test Coverage")
 
 ### Basic Usage and Examples
 
