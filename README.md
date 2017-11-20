@@ -33,6 +33,14 @@ To run this library, you will need following packages:
 
 ### Basic Usage and Examples
 
+Basic usage of this library starts with importing
+```
+from chemkin_CS207_G9.xml2dict import xml2dict
+from chemkin_CS207_G9.database_query import CoeffQuery
+from chemkin_CS207_G9.Reaction import Reaction
+from chemkin_CS207_G9.ReactionSystem import ReactionSystem
+```
+
 To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and some related informations. Let's first create those essential ingredients:
 ```
 # Reactions involving species A, B and C
