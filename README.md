@@ -17,9 +17,9 @@ One can download the package by using the following command:
 
 However, to be able to enter the command `python setup.py test`, it may be preferred to download the entire release:
 
-https://github.com/cs207group9/cs207-FinalProject/releases/tag/v1.2
+https://github.com/cs207group9/cs207-FinalProject/archive/v1.8.zip
 
-The root directory contains the file `setup.py` that can be used to run the tes.
+The root directory contains the file `setup.py` that can be used to run the test command.
 
 ### External Dependencies
 
