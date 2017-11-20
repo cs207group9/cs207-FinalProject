@@ -15,14 +15,16 @@ Download the chemkin.py module. All the classes are there. Download the chemkin_
 
 ### Installing
 
-This module is currently composed of one main file, chemkin.py, that can be downloaded and imported at will. The file is located in the main folder of this repository. Download the file and import it in your project.
+One can download the package by using the following command:
 
-To run the test suite, download and run chemkin_tests.py. This file must be located in the same folder as your chemkin.py file.
+pip install chemkin_CS207_G9
 
-```
-import chemkin
-import chemkin_tests
-```
+However, to be able to enter the command "python setup.py test", it may be preferred to download the entire repo :
+
+https://github.com/cs207group9/cs207-FinalProject/archive/v1.1-alpha.zip
+
+The folder "chemkin_CS207_G9" contains the file setup.py that can be used to run the tes.
+
 
 ### Basic Usage and Examples
 
