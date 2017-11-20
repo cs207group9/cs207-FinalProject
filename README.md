@@ -25,6 +25,11 @@ https://github.com/cs207group9/cs207-FinalProject/archive/v1.1-alpha.zip
 
 The folder "chemkin_CS207_G9" contains the file setup.py that can be used to run the tes.
 
+### External Dependencies
+
+To run this library, you will need following packages: 
+```numpy, xml, sqlite3, copy, more_itertools```
+
 
 ### Basic Usage and Examples
 
