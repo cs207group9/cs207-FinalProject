@@ -29,6 +29,7 @@ setup(name='chemkin_CS207_G9',
       #setup_requires=['pytest-runner'],
       #tests_require=['pytest'],      
       tests_require=['pytest'],
+      python_requires='>=3',
       cmdclass = {'test': PyTest},
       package_data = {
                  '': ['*.txt', '*.xml','*.md','*.sqlite'],},       
