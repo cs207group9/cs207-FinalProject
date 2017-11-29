@@ -1,5 +1,6 @@
 setup.cfg
 setup.py
+chemkin_CS207_G9/__init__.py
 chemkin_CS207_G9.egg-info/PKG-INFO
 chemkin_CS207_G9.egg-info/SOURCES.txt
 chemkin_CS207_G9.egg-info/dependency_links.txt
