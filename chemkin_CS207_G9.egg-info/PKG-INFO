@@ -1,6 +1,6 @@
-Metadata-Version: 1.0
+Metadata-Version: 1.2
 Name: chemkin-CS207-G9
-Version: 1.81
+Version: 1.82
 Summary: The vital Chemical Kinetics packages - a life-changing module.
 Home-page: https://github.com/cs207group9/cs207-FinalProject/tree/master/chemkin_CS207_G9
 Author: Group 9 - CF, YX, JL, BJL
@@ -8,3 +8,4 @@ Author-email: blemaire@g.harvard.edu
 License: Harvard University
 Description: UNKNOWN
 Platform: UNKNOWN
+Requires-Python: >=3
