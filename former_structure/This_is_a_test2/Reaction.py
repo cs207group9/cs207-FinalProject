@@ -1,4 +1,4 @@
-from chemkin_CS207_G9.useful_structure import PartialLockedDict
+from chemkin_CS207_G9.This_is_a_test2.useful_structure import PartialLockedDict
 from chemkin_CS207_G9.mathematical_science import MathModel
 from copy import deepcopy
 import numpy as np
