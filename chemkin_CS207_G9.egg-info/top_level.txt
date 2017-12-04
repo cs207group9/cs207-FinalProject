@@ -1,2 +1,3 @@
 chemkin_CS207_G9
+former_structure
 test
