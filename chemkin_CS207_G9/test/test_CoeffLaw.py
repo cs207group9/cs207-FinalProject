@@ -1,4 +1,4 @@
-from chemkin_CS207_G9.reaction.CoeffLaw import *
+from chemkin_CS207_G9.chemkin.reaction.CoeffLaw import *
 import numpy as np
 
 

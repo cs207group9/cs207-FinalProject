@@ -46,7 +46,7 @@ To calculate a reaction coefficient of a particular system, first we must create
 # Reactions involving species A, B and C
 reaction1 = Reaction(
     reactants={'H2':2,'O2':1}, products = {'OH':2,'H2':1}, 
-    coeffLaw = 'const', coeffParams = {'k':10}, 
+    coeffLaw = 'Constant', coeffParams = {'k':10}, 
     reversible='no')
 reaction2 = Reaction(
     reactants={'OH':1,'HO2':1}, products = {'H2O':1,'O2':1}, 

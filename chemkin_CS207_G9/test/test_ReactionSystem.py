@@ -5,10 +5,10 @@ Created on Sun Oct 15 17:50:51 2017
 """
 
 import sys
-from chemkin_CS207_G9.parser.database_query import CoeffQuery
-from chemkin_CS207_G9.reaction.CoeffLaw import BackwardLaw
-from chemkin_CS207_G9.reaction.Reaction import Reaction
-from chemkin_CS207_G9.reaction.ReactionSystem import ReactionSystem
+from chemkin_CS207_G9.chemkin.parser.database_query import CoeffQuery
+from chemkin_CS207_G9.chemkin.reaction.CoeffLaw import BackwardLaw
+from chemkin_CS207_G9.chemkin.reaction.Reaction import Reaction
+from chemkin_CS207_G9.chemkin.reaction.ReactionSystem import ReactionSystem
 import numpy as np
 import os
 

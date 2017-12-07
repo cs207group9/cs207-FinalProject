@@ -1,5 +1,5 @@
-from chemkin_CS207_G9.reaction.Reaction import *
-from chemkin_CS207_G9.reaction import CoeffLaw
+from chemkin_CS207_G9.chemkin.reaction.Reaction import *
+from chemkin_CS207_G9.chemkin.reaction import CoeffLaw
 import numpy as np
 
 

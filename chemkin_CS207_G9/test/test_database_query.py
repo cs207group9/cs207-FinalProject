@@ -7,7 +7,7 @@ Created on Wed Nov 15 12:16:57 2017
 @author: Camilo, Yiqi
 """
 
-from chemkin_CS207_G9.parser.database_query import *
+from chemkin_CS207_G9.chemkin.parser.database_query import *
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
