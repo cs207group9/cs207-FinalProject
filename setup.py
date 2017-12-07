@@ -21,7 +21,7 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 setup(name='chemkin_CS207_G9',
-      version='2.21',
+      version='2.22',
       description='The vital Chemical Kinetics packages - a life-changing module.',
       url='https://github.com/cs207group9/cs207-FinalProject/tree/master/chemkin_CS207_G9',
       author='Group 9 - CF, YX, JL, BJL',
