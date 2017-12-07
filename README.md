@@ -36,9 +36,9 @@ As can be seen, **our test coverage is 94%**.
 
 Basic usage of this library starts with importing:
 ```
-from chemkin_CS207_G9.Reaction import Reaction
-from chemkin_CS207_G9.ReactionSystem import ReactionSystem
-from chemkin_CS207_G9.database_query import CoeffQuery
+from chemkin_CS207_G9.chemkin.reaction.Reaction import Reaction
+from chemkin_CS207_G9.chemkin.reaction.ReactionSystem import ReactionSystem
+from chemkin_CS207_G9.chemkin.parser.database_query import CoeffQuery
 ```
 
 To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and some related informations. Let's first create those essential ingredients:
