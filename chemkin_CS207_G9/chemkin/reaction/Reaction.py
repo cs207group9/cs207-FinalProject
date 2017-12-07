@@ -1,8 +1,8 @@
-from chemkin_CS207_G9.auxiliary.useful_structure import PartialLockedDict
-from chemkin_CS207_G9.auxiliary.mathematical_science import MathModel
+from chemkin_CS207_G9.chemkin.auxiliary.useful_structure import PartialLockedDict
+from chemkin_CS207_G9.chemkin.auxiliary.mathematical_science import MathModel
 from copy import deepcopy
 import numpy as np
-from chemkin_CS207_G9.reaction.CoeffLaw import *
+from chemkin_CS207_G9.chemkin.reaction.CoeffLaw import *
 
 
 class Reaction:
