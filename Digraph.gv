@@ -1,63 +1,35 @@
-// Hierarchical Graph
 digraph {
-	graph [arrowhead=open color=white fontcolor=white fontname=Courier fontsize=12 style=dashed]
-	H
-	O
-	OH
-	H2
-	H2O
-	O2
-	HO2
-	H2O2
-	H -> O [color=3]
-	H -> OH [color=3]
-	H -> O2 [arrowhead=none]
-	O2 -> O [color=3]
-	O2 -> OH [color=3]
-	O -> H [color=3]
-	O -> OH [color=3]
-	O -> H2 [arrowhead=none]
-	H2 -> H [color=3]
-	H2 -> OH [color=3]
-	H2 -> H2O [color=3]
-	H2 -> H [color=3]
-	H2 -> OH [arrowhead=none]
-	OH -> H2O [color=3]
-	OH -> H [color=3]
-	O -> OH [color=3]
-	O -> H2O [arrowhead=none]
-	H2O -> OH [color=3]
-	HO2 -> H2 [color=3]
-	HO2 -> O2 [color=3]
-	HO2 -> H [arrowhead=none]
-	H -> H2 [color=3]
-	H -> O2 [color=3]
-	HO2 -> OH [color=3]
-	HO2 -> H [arrowhead=none]
-	H -> OH [color=3]
-	HO2 -> O2 [color=3]
-	HO2 -> OH [color=3]
-	HO2 -> O [arrowhead=none]
-	O -> O2 [color=3]
-	O -> OH [color=3]
-	HO2 -> H2O [color=3]
-	HO2 -> O2 [color=3]
-	HO2 -> OH [arrowhead=none]
-	OH -> H2O [color=3]
-	OH -> O2 [color=3]
-	H2O2 -> H2O [color=3]
-	H2O2 -> OH [color=3]
-	H2O2 -> H [arrowhead=none]
-	H -> H2O [color=3]
-	H -> OH [color=3]
-	H2O2 -> HO2 [color=3]
-	H2O2 -> H2 [color=3]
-	H2O2 -> H [arrowhead=none]
-	H -> HO2 [color=3]
-	H -> H2 [color=3]
-	H2O2 -> OH [color=3]
-	H2O2 -> HO2 [color=3]
-	H2O2 -> O [arrowhead=none]
-	O -> OH [color=3]
-	O -> HO2 [color=3]
+	graph [bgcolor="#333333" fontcolor=white fontsize=16 pad=1 rankdir=LR ranksep=2]
+	node [color=white fillcolor=black fontcolor=white fontname=Helvetica shape=octagon style=filled]
+	edge [arrowhead=open color=white fontcolor=white fontname=Courier fontsize=12 style=dashed]
+	subgraph "Reactant graph" {
+		node [rank=same]
+		H2O
+		O
+	}
+	subgraph "Product graph" {
+		node [rank=same]
+		H
+		H2
+		O2
+		OH
+	}
+	H -> O [arrowhead=none color="#A55777"]
+	H -> OH [arrowhead=none color="#A55777"]
+	H -> H [arrowhead=none color="#A55777" style=filled]
+	O2 -> O [arrowhead=none color="#A55777"]
+	O2 -> OH [arrowhead=none color="#A55777"]
+	O -> H [arrowhead=none color="#CC34DA"]
+	O -> OH [arrowhead=none color="#CC34DA"]
+	H -> H [arrowhead=none color="#CC34DA" style=filled]
+	H2 -> H [arrowhead=none color="#CC34DA"]
+	H2 -> OH [arrowhead=none color="#CC34DA"]
+	H2 -> H2O [arrowhead=none color="#4A9963"]
+	H2 -> H [arrowhead=none color="#4A9963"]
+	H -> H [arrowhead=none color="#4A9963" style=filled]
+	OH -> H2O [arrowhead=none color="#4A9963"]
+	OH -> H [arrowhead=none color="#4A9963"]
+	O -> OH [arrowhead=none color="#B6EFFC"]
+	H -> H [arrowhead=none color="#B6EFFC" style=filled]
+	H2O -> OH [arrowhead=none color="#B6EFFC"]
 }

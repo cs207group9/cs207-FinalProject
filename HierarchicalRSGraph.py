@@ -25,7 +25,7 @@ class HierarchicalRSGraph():
     
     """
     
-    default_style = {
+    self.default_style = {
         'graph': {
             'fontsize': '16',
             'fontcolor': 'white',
@@ -59,7 +59,7 @@ class HierarchicalRSGraph():
     def initialize_top_graph(self, format="pdf", style = None):
         self.top = Digraph(format = format)
         if style == None:
-            self.change_style(default_style)
+            self.change_style(self.default_style)
         else:
             self.change_style(style)
         
