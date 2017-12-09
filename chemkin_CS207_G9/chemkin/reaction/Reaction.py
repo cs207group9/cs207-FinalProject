@@ -380,6 +380,18 @@ class Reaction:
                         'Stoich. coeff must be a non-negative integer.']))
         return params
     
+    def get_reaction_equation(self):
+        streq_left = ' + '.join(  
+                ['{}{}'.format(v,k) for k,v in 
+                sorted(self._params['reactants'].items(), key=lambda x:x[0])]  )
+        streq_right = ' + '.join( 
+            ['{}{}'.format(v,k) for k,v in 
+            sorted(self._params['products'].items(), key=lambda x:x[0])]  )
+        streq_con = ' [=] ' if self.is_reversible() else ' =] '
+        streq_full = streq_con.join(  [streq_left, streq_right]  )
+        
+        return streq_full
+    
     @staticmethod         
     def _specify_CoeffLaw(coeffLaw, coeffParams):
         selection = Reaction._CoeffLawDict._dict_all[coeffLaw](check=False, **coeffParams)
@@ -389,14 +401,7 @@ class Reaction:
         return str(self._params)
     
     def __str__(self):
-        streq_left = ' + '.join(  
-                ['{}{}'.format(v,k) for k,v in 
-                sorted(self._params['reactants'].items(), key=lambda x:x[0])]  )
-        streq_right = ' + '.join( 
-            ['{}{}'.format(v,k) for k,v in 
-            sorted(self._params['products'].items(), key=lambda x:x[0])]  )
-        streq_con = ' [=] ' if self.is_reversible() else ' =] '
-        streq_full = streq_con.join(  [streq_left, streq_right]  )
+        streq_full = self.get_reaction_equation()
         keylist = [
             'TYPE', 'reversible', 
             'coeffLaw', 'coeffParams', 'coeffUnits'

@@ -1,2 +1,67 @@
+// Hierarchical Graph
 digraph "Top graph" {
+	graph [bgcolor="#333333" fontcolor=white fontsize=16 pad=1 rankdir=LR ranksep=2]
+	node [color=white fillcolor=black fontcolor=white fontname=Helvetica shape=octagon style=filled]
+	edge [arrowhead=open color=white fontcolor=white fontname=Courier fontsize=12 style=dashed]
+	H -> O [color="#65E3AF"]
+	H -> OH [color="#65E3AF"]
+	H -> O2 [arrowhead=none color="#65E3AF" style=filled]
+	O2 -> O [color="#65E3AF"]
+	O2 -> OH [color="#65E3AF"]
+	O -> H [color="#A46B22"]
+	O -> OH [color="#A46B22"]
+	O -> H2 [arrowhead=none color="#A46B22" style=filled]
+	H2 -> H [color="#A46B22"]
+	H2 -> OH [color="#A46B22"]
+	H2 -> H2O [color="#EA3A7A"]
+	H2 -> H [color="#EA3A7A"]
+	H2 -> OH [arrowhead=none color="#EA3A7A" style=filled]
+	OH -> H2O [color="#EA3A7A"]
+	OH -> H [color="#EA3A7A"]
+	O -> OH [color="#C87C03"]
+	O -> H2O [arrowhead=none color="#C87C03" style=filled]
+	H2O -> OH [color="#C87C03"]
+	HO2 -> H2 [color="#29887D"]
+	HO2 -> O2 [color="#29887D"]
+	HO2 -> H [arrowhead=none color="#29887D" style=filled]
+	H -> H2 [color="#29887D"]
+	H -> O2 [color="#29887D"]
+	HO2 -> OH [color="#486246"]
+	HO2 -> H [arrowhead=none color="#486246" style=filled]
+	H -> OH [color="#486246"]
+	HO2 -> O2 [color="#8D77C7"]
+	HO2 -> OH [color="#8D77C7"]
+	HO2 -> O [arrowhead=none color="#8D77C7" style=filled]
+	O -> O2 [color="#8D77C7"]
+	O -> OH [color="#8D77C7"]
+	HO2 -> H2O [color="#379B70"]
+	HO2 -> O2 [color="#379B70"]
+	HO2 -> OH [arrowhead=none color="#379B70" style=filled]
+	OH -> H2O [color="#379B70"]
+	OH -> O2 [color="#379B70"]
+	H2O2 -> H2O [color="#FBB495"]
+	H2O2 -> OH [color="#FBB495"]
+	H2O2 -> H [arrowhead=none color="#FBB495" style=filled]
+	H -> H2O [color="#FBB495"]
+	H -> OH [color="#FBB495"]
+	subgraph "Reactant graph" {
+		graph [rank=source]
+	}
+	subgraph "Reactant graph" {
+		graph [rank=source]
+		H
+		O
+		H2
+		HO2
+	}
+	subgraph "Product graph" {
+		graph [rank=min]
+		OH
+		H2O
+		O2
+	}
+	subgraph "Product graph" {
+		graph [rank=max]
+		H2O2
+	}
 }

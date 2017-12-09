@@ -219,6 +219,9 @@ class ReactionSystem:
             self.update_species()
             
         return self._species_ls
+    
+    def get_reactions(self):
+        return self._reactions_ls
         
     def get_reac_rate_coefs(self):
         '''reversible method added'''
@@ -270,7 +273,7 @@ class ReactionSystem:
     def get_progress_rate(self):
         '''reversible method added'''
         if not self._concs:
-            raise ValueError("Concentrations not yet defined. Call set_state() before calling this function.")
+            raise ValueError("Concentrations not yet defined. Call set_concs() before calling this function.")
             
         if len(self._concs) != len(self._species_ls):
             raise ValueError("Dimensions of concentrations and species arrays do not match. Update your concentrations.")
