@@ -27,7 +27,7 @@ where <img width="13" height="15" src="https://github.com/cs207group9/cs207-Fina
 were <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omega.png">, the progress rate, is:
 
 <p align="center">
-  <img width="210" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omegaDef.png">
+  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omegaDef.png">
 </p>
 
 And <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/kj.png"> is the forward reaction rate coefficient. This coefficient can be obtained in multiple ways. Implemented coefficients are:
