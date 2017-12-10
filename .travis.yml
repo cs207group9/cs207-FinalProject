@@ -1,6 +1,6 @@
 language: python
 python:
-    - "3.6"
+    - "3.5"
 before_install:
     - pip install pytest pytest-cov
     - pip install coveralls
