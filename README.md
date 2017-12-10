@@ -9,6 +9,10 @@ This is the repository for the CS207 project for chemical kinetics.
 
 Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
+##Problem Solving
+
+\sum_{i=1}^{10} t_i
+
 ## Required modules
 
 To run this library, you will need to download and install (if not installed yet) the following modules:
@@ -130,7 +134,7 @@ path_sql = os.path.join(BASE_DIR, 'nasa_thermo.sqlite')  # path to the .sqlite f
 * **Yiqi Xie**
 [yiqixie94](https://github.com/yiqixie94)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/cs207group9/cs207-FinalProject/pulse) who participated in this project.
 
 ## License
 
