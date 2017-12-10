@@ -36,4 +36,4 @@ setup(name='chemkin_CS207_G9',
                  '': ['*.txt', '*.xml','*.md','*.sqlite'],},      
       license='Harvard University',
       packages=find_packages(),
-      zip_safe=False)
+      zip_safe=False,)
