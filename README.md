@@ -9,6 +9,11 @@ This is the repository for the CS207 project for chemical kinetics.
 
 Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
+## Required modules
+
+To run this library, you will need to download and install (if not installed yet) the following modules:
+```numpy, xml, sqlite3, copy, more_itertools, scipy```
+
 ### Installing and Getting Started
 
 One can download the package by using the following command:
@@ -21,10 +26,6 @@ https://github.com/cs207group9/cs207-FinalProject/archive/v1.8.zip
 
 The root directory contains the file `setup.py` that can be used to run the test command.
 
-### External Dependencies
-
-To run this library, you will need following packages: 
-```numpy, xml, sqlite3, copy, more_itertools```
 
 ### Test Coverage
 
@@ -36,9 +37,9 @@ As can be seen, **our test coverage is 94%**.
 
 Basic usage of this library starts with importing:
 ```
-from chemkin_CS207_G9.chemkin.reaction.Reaction import Reaction
-from chemkin_CS207_G9.chemkin.reaction.ReactionSystem import ReactionSystem
-from chemkin_CS207_G9.chemkin.parser.database_query import CoeffQuery
+from chemkin_CS207_G9.reaction.Reaction import Reaction
+from chemkin_CS207_G9.reaction.ReactionSystem import ReactionSystem
+from chemkin_CS207_G9.parser.database_query import CoeffQuery
 ```
 
 To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and some related informations. Let's first create those essential ingredients:
