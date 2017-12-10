@@ -9,7 +9,26 @@ This is the repository for the CS207 project for chemical kinetics.
 
 Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
-### Installing and Getting Started
+## Problem Solving
+
+**Theorem**: The translation $[\![e]\!]$ given by
+\begin{align*}
+\alpha
+\end{align*}
+
+
+
+## Required modules
+
+To run this library, you will need to download and install (if not installed yet) the following modules:
+
+```numpy, xml, sqlite3, copy, more_itertools, scipy``` .
+
+You can download and install these modules by using the following commande:
+
+`pip install MODULENAME`.
+
+## Installing and Getting Started
 
 One can download the package by using the following command:
 
@@ -21,24 +40,26 @@ https://github.com/cs207group9/cs207-FinalProject/archive/v1.8.zip
 
 The root directory contains the file `setup.py` that can be used to run the test command.
 
-### External Dependencies
 
-To run this library, you will need following packages: 
-```numpy, xml, sqlite3, copy, more_itertools```
+## Test Coverage
 
-### Test Coverage
+The fastest way to check the coverage of our library is to run the following commands in the terminal:
 
-As can be seen, **our test coverage is 94%**.
+`git clone https://github.com/cs207group9/cs207-FinalProject.git`  
+`cd cs207-FinalProject`  
+`python setup.py test`  
+
+As can be seen on the screenshot below, **our test coverage is 94%**.
 
 ![Test Coverage](/TestCoverage.png "Test Coverage")
 
-### Basic Usage and Examples
+## Basic Usage and Examples
 
 Basic usage of this library starts with importing:
 ```
-from chemkin_CS207_G9.chemkin.reaction.Reaction import Reaction
-from chemkin_CS207_G9.chemkin.reaction.ReactionSystem import ReactionSystem
-from chemkin_CS207_G9.chemkin.parser.database_query import CoeffQuery
+from chemkin_CS207_G9.reaction.Reaction import Reaction
+from chemkin_CS207_G9.reaction.ReactionSystem import ReactionSystem
+from chemkin_CS207_G9.parser.database_query import CoeffQuery
 ```
 
 To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and some related informations. Let's first create those essential ingredients:
@@ -84,7 +105,7 @@ This gives us a 1 dimensional list with one element per reaction.
 
 For most cases one may want to import the reactions from other files instead of typing them in manually. We currently provide one method to allow users import from formatted `.xml` file:
 ```
-from chemkin_CS207_G9.chemkin.parser.xml2dict import xml2dict
+from chemkin_CS207_G9.parser.xml2dict import xml2dict
 
 reader = xml2dict()
 reader.parse('rxns_reversible.xml')
@@ -96,18 +117,18 @@ species = info[0]
 reactions = [Reaction(**r) for r in info[1]]
 ```
 
-### Additional Files
+## Additional Files
 Along with the package there are two additional files - one is `nasa_thermo.sqlite` which is the database containing all the nasa coefficients, and the other is `rxns_reversible.xml` which is the example `.xml` file of reactions and species. Users may access them by:
 ```
 import os
 import chemkin_CS207_G9
-BASE_DIR = os.path.dirname(os.path.abspath(chemkin_CS207_G9.chemkin.data.__file__))
+BASE_DIR = os.path.dirname(os.path.abspath(chemkin_CS207_G9.data.__file__))
 
 path_xml = os.path.join(BASE_DIR, 'rxns_reversible.xml') # path to the .xml file
 path_sql = os.path.join(BASE_DIR, 'nasa_thermo.sqlite')  # path to the .sqlite file
 ```
 
-## Authors
+# Authors
 
 * **Camilo Fosco**
 [cfosco](https://github.com/cfosco)
@@ -118,11 +139,11 @@ path_sql = os.path.join(BASE_DIR, 'nasa_thermo.sqlite')  # path to the .sqlite f
 * **Yiqi Xie**
 [yiqixie94](https://github.com/yiqixie94)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/cs207group9/cs207-FinalProject/pulse) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Harvard License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
