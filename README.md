@@ -40,7 +40,7 @@ The fastest way to check the coverage of our library is to run the following com
 `cd cs207-FinalProject`
 `python setup.py test`
 
-As can be seen, **our test coverage is 94%**.
+As can be seen on the screenshot below, **our test coverage is 94%**.
 
 ![Test Coverage](/TestCoverage.png "Test Coverage")
 
