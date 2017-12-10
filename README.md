@@ -18,6 +18,7 @@ This project aims to calculate reaction coefficients for a set of M chemical rea
 ![Equation1](/Equation1.png "Equation1"){width:200px;}
 ![Equation1](/Equation1.png "Equation1"){width:200px}
 
+![Eq1](/Eq1.png "Eq1")
 
 
 ## Required modules
