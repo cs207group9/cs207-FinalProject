@@ -1,41 +1,32 @@
 digraph {
-	graph [bgcolor="#333333" fontcolor=white fontsize=16 pad=1 rankdir=BT]
+	graph [bgcolor="#333333" fontcolor=white fontsize=16 pad=1 rankdir=LR ranksep=2]
 	node [color=white fillcolor=black fontcolor=white fontname=Helvetica shape=octagon style=filled]
 	edge [arrowhead=open color=white fontcolor=white fontname=Courier fontsize=12 style=dashed]
-	subgraph clusterReaction {
-		graph [label="1H + 1O2 [=] 1O + 1OH"]
-		"1H + 1O2 [=] 1O + 1OH OOOOOO H" [label="1H + 1O2 [=] 1O + 1OHH"]
-		"1H + 1O2 [=] 1O + 1OH OOOOOO O2" [label="1H + 1O2 [=] 1O + 1OHO2"]
-		"1H + 1O2 [=] 1O + 1OH OOOOOO O" [label="1H + 1O2 [=] 1O + 1OHO"]
-		"1H + 1O2 [=] 1O + 1OH OOOOOO OH" [label="1H + 1O2 [=] 1O + 1OHOH"]
-		H -> O [arrowhead=none color="#743836"]
-		H -> OH [arrowhead=none color="#743836"]
-		H -> O2 [arrowhead=none color="#743836" style=filled]
-		O2 -> O [arrowhead=none color="#743836"]
-		O2 -> OH [arrowhead=none color="#743836"]
+	subgraph "Reactant graph" {
+		node [rank=same]
+		H2O
+		O
 	}
-	subgraph clusterReaction {
-		graph [label="1H2 + 1O [=] 1H + 1OH"]
-		"1H2 + 1O [=] 1H + 1OH OOOOOO O" [label="1H2 + 1O [=] 1H + 1OHO"]
-		"1H2 + 1O [=] 1H + 1OH OOOOOO H2" [label="1H2 + 1O [=] 1H + 1OHH2"]
-		"1H2 + 1O [=] 1H + 1OH OOOOOO H" [label="1H2 + 1O [=] 1H + 1OHH"]
-		"1H2 + 1O [=] 1H + 1OH OOOOOO OH" [label="1H2 + 1O [=] 1H + 1OHOH"]
-		O -> H [arrowhead=none color="#E272ED"]
-		O -> OH [arrowhead=none color="#E272ED"]
-		O -> H2 [arrowhead=none color="#E272ED" style=filled]
-		H2 -> H [arrowhead=none color="#E272ED"]
-		H2 -> OH [arrowhead=none color="#E272ED"]
+	subgraph "Product graph" {
+		node [rank=same]
+		H
+		H2
+		O2
+		OH
 	}
-	subgraph clusterReaction {
-		graph [label="1H2 + 1OH [=] 1H + 1H2O"]
-		"1H2 + 1OH [=] 1H + 1H2O OOOOOO H2" [label="1H2 + 1OH [=] 1H + 1H2OH2"]
-		"1H2 + 1OH [=] 1H + 1H2O OOOOOO OH" [label="1H2 + 1OH [=] 1H + 1H2OOH"]
-		"1H2 + 1OH [=] 1H + 1H2O OOOOOO H2O" [label="1H2 + 1OH [=] 1H + 1H2OH2O"]
-		"1H2 + 1OH [=] 1H + 1H2O OOOOOO H" [label="1H2 + 1OH [=] 1H + 1H2OH"]
-		H2 -> H2O [arrowhead=none color="#9C6902"]
-		H2 -> H [arrowhead=none color="#9C6902"]
-		H2 -> OH [arrowhead=none color="#9C6902" style=filled]
-		OH -> H2O [arrowhead=none color="#9C6902"]
-		OH -> H [arrowhead=none color="#9C6902"]
-	}
+	H -> O [arrowhead=none color="#20B267"]
+	H -> OH [arrowhead=none color="#20B267"]
+	H -> O2 [arrowhead=none color="#20B267" style=filled]
+	O2 -> O [arrowhead=none color="#20B267"]
+	O2 -> OH [arrowhead=none color="#20B267"]
+	O -> H [arrowhead=none color="#23753A"]
+	O -> OH [arrowhead=none color="#23753A"]
+	O -> H2 [arrowhead=none color="#23753A" style=filled]
+	H2 -> H [arrowhead=none color="#23753A"]
+	H2 -> OH [arrowhead=none color="#23753A"]
+	H2 -> H2O [arrowhead=none color="#CBAF0E"]
+	H2 -> H [arrowhead=none color="#CBAF0E"]
+	H2 -> OH [arrowhead=none color="#CBAF0E" style=filled]
+	OH -> H2O [arrowhead=none color="#CBAF0E"]
+	OH -> H [arrowhead=none color="#CBAF0E"]
 }
