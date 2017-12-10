@@ -1,6 +1,6 @@
 
 import numpy as np
-import scipy.integrate as spint
+from scipy.integrate import solve_ivp as scipy_ivp
 
 from more_itertools import unique_everseen
 from chemkin_CS207_G9.reaction.CoeffLaw import BackwardLaw
@@ -364,7 +364,7 @@ class ReactionSystem:
             return jac
 
         if method in methods_scipy:
-            res_int = spint.solve_ivp(
+            res_int = scipy_ivp(
                 method=method,
                 fun=fun_reac_rate, 
                 jac=jac_reac_rate, 
