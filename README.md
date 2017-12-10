@@ -17,7 +17,7 @@ This project aims to calculate reaction coefficients for a set of M chemical rea
   <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Equation1.png">
 </p>
 
-where <img width="10" height="20" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Si.png"> represents the species, ![NuP](/nuP.png "NuP") is the stoichiometric coefficient matrix for reactants, and 
+where <img width="10" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Si.png"> represents the species, ![NuP](/nuP.png "NuP") is the stoichiometric coefficient matrix for reactants, and 
 ![NuPP](/nuPP.png "NuPP") is the stoichiometric matrix for products. To calculate the reaction coefficients, we use the following equation:
 
 vdf  
