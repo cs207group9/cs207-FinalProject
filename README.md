@@ -90,7 +90,7 @@ This gives us a 1 dimensional list with one element per reaction.
 
 For most cases one may want to import the reactions from other files instead of typing them in manually. We currently provide one method to allow users import from formatted `.xml` file:
 ```
-from chemkin_CS207_G9.chemkin.parser.xml2dict import xml2dict
+from chemkin_CS207_G9.parser.xml2dict import xml2dict
 
 reader = xml2dict()
 reader.parse('rxns_reversible.xml')
@@ -107,7 +107,7 @@ Along with the package there are two additional files - one is `nasa_thermo.sqli
 ```
 import os
 import chemkin_CS207_G9
-BASE_DIR = os.path.dirname(os.path.abspath(chemkin_CS207_G9.chemkin.data.__file__))
+BASE_DIR = os.path.dirname(os.path.abspath(chemkin_CS207_G9.data.__file__))
 
 path_xml = os.path.join(BASE_DIR, 'rxns_reversible.xml') # path to the .xml file
 path_sql = os.path.join(BASE_DIR, 'nasa_thermo.sqlite')  # path to the .sqlite file
