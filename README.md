@@ -11,10 +11,7 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
 ## Problem Solving
 
-**Theorem**: The translation $[\![e]\!]$ given by
-\begin{align*}
-\alpha
-\end{align*}
+
 
 
 
@@ -22,7 +19,7 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
 To run this library, you will need to download and install (if not installed yet) the following modules:
 
-```numpy, xml, sqlite3, copy, more_itertools, scipy``` .
+```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib ``` .
 
 You can download and install these modules by using the following commande:
 
