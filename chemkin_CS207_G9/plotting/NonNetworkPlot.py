@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-from chemkin_CS207_G9.chemkin.reaction.ReactionSystem import ReactionSystem
+from chemkin_CS207_G9.reaction.ReactionSystem import ReactionSystem
 
 
 
