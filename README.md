@@ -14,11 +14,11 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 This project aims to calculate reaction coefficients for a set of M chemical reactions involving N species. The reactions are of the form:  
 
 <p align="center">
-  <img width="600" height="100" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Eq1.png">
+  <img width="400" height="60" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Eq1.png">
 </p>
 
 <p align="center">
-  <img width="800" height="100" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Equation1.png">
+  <img width="500" height="80" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Equation1.png">
 </p>
 
 where ![Si](/Si.png "Si") represents the species, ![NuP](/nuP.png "NuP") is the stoichiometric coefficient matrix for reactants, and 
