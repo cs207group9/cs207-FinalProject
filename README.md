@@ -36,9 +36,9 @@ The root directory contains the file `setup.py` that can be used to run the test
 
 The fastest way to check the coverage of our library is to run the following commands in the terminal:
 
-`git clone https://github.com/cs207group9/cs207-FinalProject.git`
-`cd cs207-FinalProject`
-`python setup.py test`
+`git clone https://github.com/cs207group9/cs207-FinalProject.git`  
+`cd cs207-FinalProject`  
+`python setup.py test`  
 
 As can be seen on the screenshot below, **our test coverage is 94%**.
 
