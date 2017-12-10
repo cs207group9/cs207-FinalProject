@@ -140,29 +140,29 @@ Our library is structured as followed:
 
 ``` 
 chemkin_CS207_G9/
+	__init__.py
+	auxiliary/
 		__init__.py
-		auxiliary/
-				__init__.py
-				check_and_response.py
-				mathematical_science.py
-				useful_structure.py
-		data/
-				__init__.py
-				nasa_thermo_all.sqlite
-				nasa_thermo.sqlite
-				rxns_reversible.xml
-		parser/
-				__init__.py
-				database_query.py
-				xml2dict.py
-		plotting/
-				__init__.py
-				NonNetworkPlot.py
-		reaction/
-				__init__.py
-				CoeffLaw.py
-				Reaction.py
-				ReactionSystem.py
+		check_and_response.py
+		mathematical_science.py
+		useful_structure.py
+	data/
+		__init__.py
+		nasa_thermo_all.sqlite
+		nasa_thermo.sqlite
+		rxns_reversible.xml
+	parser/
+		__init__.py
+		database_query.py
+		xml2dict.py
+	plotting/
+		__init__.py
+		NonNetworkPlot.py
+	reaction/
+		__init__.py
+		CoeffLaw.py
+		Reaction.py
+		ReactionSystem.py
 						
 ```
 
