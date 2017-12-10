@@ -11,7 +11,7 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
 ## Problem Solving
 
-`` \sum_{i=1}^{10} t_i ```
+$\sum_{i=1}^{10} t_i$
 
 ## Required modules
 
