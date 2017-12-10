@@ -92,6 +92,8 @@ class xml2dict:
             Dict['products'] = dict(zip(products, Nupp))
             Dict['coeffLaw'] = Law
             self.ListDictionaries.append(Dict)
+
+        return self
     
     def get_info(self):
         return self.Species, self.ListDictionaries
