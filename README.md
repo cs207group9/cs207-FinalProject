@@ -18,16 +18,16 @@ This project aims to calculate reaction coefficients for a set of M chemical rea
 </p>
 
 where <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Si.png"> represents the species, <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/nuP.png"> is the stoichiometric coefficient matrix for reactants, and 
-<img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/nuPP.png"> is the stoichiometric matrix for products. To calculate the reaction coefficients, we use the following equation:
+<img width="16" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/nuPP.png"> is the stoichiometric matrix for products. To calculate the reaction coefficients, we use the following equation:
 
 <p align="center">
-  <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Equation2.png">
+  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Equation2.png">
 </p>
 
-were <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omega.png">, the progress rate, is:
+were <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omega.png">, the progress rate, is:
 
 <p align="center">
-  <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omegaDef.png">
+  <img width="210" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omegaDef.png">
 </p>
 
 And <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/kj.png"> is the forward reaction rate coefficient. This coefficient can be obtained in multiple ways. Implemented coefficients are:
