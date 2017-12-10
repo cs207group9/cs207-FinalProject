@@ -1,5 +1,6 @@
 
 import numpy as np
+import scipy.integrate as spint
 
 from more_itertools import unique_everseen
 from chemkin_CS207_G9.chemkin.reaction.CoeffLaw import BackwardLaw
@@ -129,8 +130,13 @@ class ReactionSystem:
         else:
             self._user_defined_order = True
 
+        self._nu_1 = self.compute_nu_1()
+        self._nu_2 = self.compute_nu_2()
+
         self._nasa_query = nasa_query
         self._a = np.zeros( (len(self._species_ls), 7) )
+        self._kb = np.zeros( len(self._reactions_ls) )
+        self._kf = np.zeros( len(self._reactions_ls) )
             
         self.set_temp(initial_T)
         if initial_concs:
@@ -138,16 +144,12 @@ class ReactionSystem:
         else:
             self._concs = {}
 
-        self._nu_1 = self.compute_nu_1()
-        self._nu_2 = self.compute_nu_2()
-
        
     def set_temp(self, T, update_nasa=True):
         if (T <= 0):
             raise ValueError("T = {0:18.16e}: Negative Temperature is prohibited!".format(T))
          
         self._T = T
-
         if update_nasa:
             if self._nasa_query is None:
                 self._a = np.zeros( (len(self._species_ls), 7) )
@@ -155,6 +157,8 @@ class ReactionSystem:
                 self._a = [self._nasa_query.response(sp, T).reshape(1, -1) 
                                 for sp in self._species_ls]
                 self._a = np.concatenate(self._a, axis=0)
+        self.compute_reac_rate_coefs()
+        return self
         
     def get_temp(self):
         return self._T
@@ -175,6 +179,9 @@ class ReactionSystem:
     
     def get_concs(self):
         return self._concs
+
+    def get_concs_array(self):
+        return [self._concs[sp] for sp in self._species_ls]
     
     def __len__(self):
         return len(self._reactions_ls)
@@ -223,7 +230,7 @@ class ReactionSystem:
     def get_reactions(self):
         return self._reactions_ls
         
-    def get_reac_rate_coefs(self):
+    def compute_reac_rate_coefs(self):
         '''reversible method added'''
         if not self._T:
             raise ValueError("Temperature not yet defined. Call set_state() before calling this function.")
@@ -236,7 +243,11 @@ class ReactionSystem:
             nu = self._nu_2 - self._nu_1
             ke = BackwardLaw().equilibrium_coeffs(nu, self._a, self._T)
             kb = kf / ke
+        self._kf, self._kb = kf, kb
         return kf, kb
+
+    def get_reac_rate_coefs(self):
+        return self._kf, self._kb
     
     def compute_nu_1(self):
         nu_1 = np.zeros([len(self._species_ls), len(self._reactions_ls)])
@@ -281,7 +292,7 @@ class ReactionSystem:
         kf, kb = self.get_reac_rate_coefs()
         nu_react = self._nu_1
         nu_prod = self._nu_2
-        progress_rate_f, progress_rate_b = kf, kb # Initialize progress rates with reaction rate coefficients
+        progress_rate_f, progress_rate_b = np.copy(kf), np.copy(kb) # Initialize progress rates with reaction rate coefficients
         
         for j, r in enumerate(self._reactions_ls):
             for i, sp in enumerate(self._species_ls):
@@ -309,4 +320,61 @@ class ReactionSystem:
         else:
             return np.dot(nu[species_idx,:], progress_rate)
      
+
+    def evolute(self, t_bound, method='LSODA', rtol=1e-3, atol=1e-6, **options):
+
+        methods_scipy = ['LSODA', 'Radau', 'BDF']
+        methods_chemkin = []
+        methods_allowed = methods_scipy + methods_chemkin
+        if method not in methods_allowed:
+            raise ValueError(
+                '''ODE solver \'{}\' is not applicable. '''
+                '''ReactionSystem currently support: {}'''.format(method, ', '.join(methods_allowed)) )
+
+        def fun_reac_rate(t, concs):
+            '''formulated reac_rate for ode solver'''
+            concs_valid = [c if c>0 else 0 for c in concs]
+            self.set_concs(dict(zip(self._species_ls, concs_valid)))
+            return self.get_reac_rate()
+
+        def jac_reac_rate(t, concs):
+            '''formulated jacobian of reac_rate for ode solver'''
+            concs_valid = [c if c>0 else 0 for c in concs]
+            jac_prog_rate_f = _jac_prog_rate(self._kf, self._nu_1, concs_valid)
+            jac_prog_rate_b = _jac_prog_rate(self._kb, self._nu_2, concs_valid)
+            jac = np.dot(self._nu_2-self._nu_1, jac_prog_rate_f-jac_prog_rate_b)
+            return jac
+
+        def _jac_prog_rate(k, nu, concs):
+            '''jacobian of progress_rate, called by jac_reac_rate'''
+            N = len(self._species_ls)
+            M = len(self._reactions_ls)
+            jac = np.zeros((M, N))
+            for m in range(M):
+                for j in range(N):
+                    if nu[j, m] == 0:
+                        jac[m, j] == 0
+                        continue
+                    jac[m, j] == k[m]
+                    for n in range(N):
+                        if n == j:
+                            jac[m, j] *= nu[j, m] * (concs[j] ** (nu[j, m] - 1))
+                        else:
+                            jac[m, j] *= concs[j] ** nu[j, m]
+            return jac
+
+        if method in methods_scipy:
+            res_int = spint.solve_ivp(
+                method=method,
+                fun=fun_reac_rate, 
+                jac=jac_reac_rate, 
+                t_span=(0, t_bound), 
+                y0=self.get_concs_array(),
+                rtol=rtol, atol=atol, 
+                dense_output=True,
+                **options)
         
+        def solution(t):
+            return dict(zip(self._species_ls, res_int.sol(t)))
+
+        return solution
