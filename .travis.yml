@@ -6,6 +6,7 @@ before_install:
     - pip install coveralls
     - pip install more-itertools
     - pip install scipy
+    - pip install matplotlib
 script:
     - py.test
 after_success:
