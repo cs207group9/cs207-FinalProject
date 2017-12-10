@@ -11,7 +11,9 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
 ## Problem Solving
 
-$\sum_{i=1}^{10} t_i$
+$\\sum_{i=1}^{10} t_i$  
+"$$\\sum_{i=1}^{N}{\\nu_{ij}^{\\prime}\\mathcal{S}_{i}} \\longrightarrow \\sum_{i=1}^{N}{\\nu_{ij}^{\\prime\\prime}\\mathcal{S}_{i}} \\qquad j = 1, \\ldots, M$$"  
+$$\\sum_{i=1}^{N}{\\nu_{ij}^{\\prime}\\mathcal{S}_{i}} \\longrightarrow \\sum_{i=1}^{N}{\\nu_{ij}^{\\prime\\prime}\\mathcal{S}_{i}} \\qquad j = 1, \\ldots, M$$  
 
 ## Required modules
 
