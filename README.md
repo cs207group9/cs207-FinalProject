@@ -13,7 +13,10 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
 This project aims to calculate reaction coefficients for a set of M chemical reactions involving N species. The reactions are of the form:  
 
-![Equation1](/Equation1.png "Equation1"){width:200px; heigth:20}
+![Equation1](/Equation1.png "Equation1"){width:200px;height:20px;}
+
+![Equation1](/Equation1.png "Equation1"){width:200px;}
+![Equation1](/Equation1.png "Equation1"){width:200px}
 
 
 
