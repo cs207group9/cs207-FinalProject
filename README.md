@@ -12,9 +12,14 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 ## Required modules
 
 To run this library, you will need to download and install (if not installed yet) the following modules:
-```numpy, xml, sqlite3, copy, more_itertools, scipy```
 
-### Installing and Getting Started
+```numpy, xml, sqlite3, copy, more_itertools, scipy``` .
+
+You can download and install these modules by using the following commande:
+
+`pip install MODULENAME`.
+
+## Installing and Getting Started
 
 One can download the package by using the following command:
 
@@ -27,13 +32,13 @@ https://github.com/cs207group9/cs207-FinalProject/archive/v1.8.zip
 The root directory contains the file `setup.py` that can be used to run the test command.
 
 
-### Test Coverage
+## Test Coverage
 
 As can be seen, **our test coverage is 94%**.
 
 ![Test Coverage](/TestCoverage.png "Test Coverage")
 
-### Basic Usage and Examples
+## Basic Usage and Examples
 
 Basic usage of this library starts with importing:
 ```
@@ -97,7 +102,7 @@ species = info[0]
 reactions = [Reaction(**r) for r in info[1]]
 ```
 
-### Additional Files
+## Additional Files
 Along with the package there are two additional files - one is `nasa_thermo.sqlite` which is the database containing all the nasa coefficients, and the other is `rxns_reversible.xml` which is the example `.xml` file of reactions and species. Users may access them by:
 ```
 import os
@@ -108,7 +113,7 @@ path_xml = os.path.join(BASE_DIR, 'rxns_reversible.xml') # path to the .xml file
 path_sql = os.path.join(BASE_DIR, 'nasa_thermo.sqlite')  # path to the .sqlite file
 ```
 
-## Authors
+# Authors
 
 * **Camilo Fosco**
 [cfosco](https://github.com/cfosco)
@@ -123,7 +128,7 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Harvard License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
