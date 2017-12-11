@@ -14,7 +14,7 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 This project aims to derive and evalutate the evolutionary equation for a set of M chemical reactions involving N species. The reactions are of the form: 
 
 <p align="center">
-  <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_1.png">
+  <img width="300" height="60" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_1.png">
 </p>
 
 where <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Si.png"> represents the species, <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/nuP.png"> is the stoichiometric coefficient matrix for reactants, and 
@@ -22,12 +22,12 @@ where <img width="13" height="15" src="https://github.com/cs207group9/cs207-Fina
 
 To calculate the reaction rates, we use the following formula:
 <p align="center">
-  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_2.png">
+  <img width="220" height="60" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_2.png">
 </p>
 
-were <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omega.png">, the progress rate, is:
+This is also the euation of evolution. Here <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omega.png">, the progress rate, is:
 <p align="center">
-  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_3.png">
+  <img width="350" height="60" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_3.png">
 </p>
 
 `kf` and `kb` denote for the forward reaction rate coefficient and the backward reaction rate coefficient, respectively. Their ratio should be fixed as the equilibrium constant. For irreversible reactions, the equilibrium constant is theoretically very large so that one can mannually set `kb=0`. The forward coefficient `kf` can be obtained in multiple ways. Implemented forward coefficients are:
@@ -35,7 +35,9 @@ were <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalP
 - Coefficient for Arrhenius reaction
 - Coefficient for modified Arrhenius reaction
 
-Note that the relation between reaction rate `f` and concentration `x` is quite simple. We can derive their jacobian mannually if we want.
+The equilibrium constant can be inferred from a set of NASA coefficients. Once we obtained the forward coefficient and the equilibrium constant, we have the backward coefficient, thus the specific equation of evolution.
+
+Note that the relation between reaction rate `f` and concentration `x` turns out to be quite simple. We can derive their jacobian mannually if we want.
 
 ## Required modules
 
