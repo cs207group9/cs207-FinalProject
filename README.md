@@ -329,16 +329,31 @@ plt.show()
 Our library is structured as followed:
 
 ``` python
-**chemkin_CS207_G9/**
+chemkin_CS207_G9/
 	__init__.py
 	auxiliary/
 		__init__.py
 		check_and_response.py
-			Classes: ValueCheck
+			Class ValueCheck
+				Methods:
+				response(x, label, term)
 		mathematical_science.py
-			Classes: MathModel
+			Class MathModel
+				Methods:
+				compute(check=True, **stateparams)
+				get_defaults()
+				get_coeffparams()
+				check_stateparams(**stateparams)
+				check_coeffparams(**coeffparams)
 		useful_structure.py
-			Classes: PartialLockedDict
+			Class PartialLockedDict
+				Methods:
+				getcopy(key)
+				getcopy_all()
+				getcopy_builtin()
+				update(key, value)
+				update_group(dict_update)
+				remove(key)
 	data/
 		__init__.py
 		nasa_thermo_all.sqlite
@@ -347,29 +362,135 @@ Our library is structured as followed:
 	math/
 		__init__.py
 		ode_solver.py
-			Classes: solve_ivp, SemiImplicitExtrapolation, DenseOutput
+			Function solve_ivp
+			Class SemiImplicitExtrapolation
+				Methods:
+				judge_err(yhat, y, atol, rtol)
+				take_step(h, t, y)
+				solve_step_fixed(y0, t_start, t_end, n_step)
+				solve(y0, t_start, t_end, max_step=np.inf, rtol=1e-3, atol=1e-6)
+			Class DenseOutput
+				Methods:
+				fit(t_sol, y_sol)
+				sol(t)
 	parser/
 		__init__.py
 		database_query.py
-			Classes: CoeffQuery
+			Class CoeffQuery
+				Methods:
+				__del__()
+				terminate()
+				response(species_name, temp)
 		Reaction_Creator.py
-			Classes: Reaction_Creator
+			Function Reaction_Creator
 		xml2dict.py
-			Classes: xml2dict
+			Class xml2dict
+				Methods:
+				parse(file)
+				get_info()
+				__repr__()
 	plotting/
 		__init__.py
 		NonNetworkPlot.py
-			Functions: plot_concentration, plot_reaction_rate, plot_modified_arrhenius 
+			Function plot_concentration
+			Function plot_reaction_rate
+			Function plot_modified_arrhenius 
 		RSGraph.py
-			Classes: RSGraph, BipartiteRSGraph, HierarchicalRSGraph
+			Class RSGraph
+				Methods:
+				initialize_top_graph(format="pdf", label='')
+				apply_style(style)
+				get_random_color()
+				reset_default_style()
+				modify_current_style(style)
+				plot(method = 'jupyter',path="RSGraph", view=True)
+				plot_system(method='jupyter', path="", view =True)
+			Class BipartiteRSGraph
+				Methods:
+				plot_system(method='jupyter', path="", view =True)
+			Class HierarchicalRSGraph
+				Methods:
+				build_reaction_graph(reaction, prefix = "cluster", color = None)
+				plot_reactions(method = 'jupyter', path = "RSGraph", idxs = [], view=True)
+				plot_system(method='jupyter',path="RSGraph",colors=None,view=True)
+				fillcolor_string(th, bg_color, node_color)
+				set_edges(g, reaction, color, node_prefix = "")
+				save_evolution_movie(solver_step_size = 1e-14, 
+					timesteps=5, path="HGRSVideo",
+					format = 'gif', colors = None, 
+					system=True)
 	reaction/
 		__init__.py
 		CoeffLaw.py
-			Classes: Constant, Arrhenius, modArrhenius, BackwardLaw
+			Class Constant
+				Methods:
+				compute(check=True, **other_params)
+				check_coeffparams(k, **other_params)
+				_kernel(k, **other_params)
+			Class Arrhenius
+				Methods:
+				compute(check=True, 
+					T = _default_settings['stateparams']['T'], 
+					**other_params)
+				check_stateparams(T, **other_params)
+				check_coeffparams(A, R, **other_params)
+				_kernel(T, A, E, R, **other_params)
+			Class modArrhenius
+				Methods:
+				compute(check=True, 
+					T = _default_settings['stateparams']['T'], 
+        			**other_params)
+        		check_stateparams(T, **other_params)
+        		check_coeffparams(A, R, **other_params)
+        		_kernel(T, A, b, E, R, **other_params)
+			Class BackwardLaw
+				Methods:
+				Cp_over_R(a, T)
+				H_over_RT(a, T)
+				S_over_R(a, T)
+				equilibrium_coeffs(nu, a, T)
 		Reaction.py
-			Classes: Reaction
+			Class Reaction
+				Methods:
+				is_reversible()
+				get_params()
+				set_params(**kwargs)
+				getReactants()
+				getProducts()
+				get_species()
+				_check_params(params)
+				get_reaction_equation()
+				_specify_CoeffLaw(coeffLaw, coeffParams)
+				__repr__()
+				__str__()
 		ReactionSystem.py
-			Classes: ReactionSystem
+			Class ReactionSystem
+				Methods:
+				set_temp(T, update_nasa=True)
+				get_temp()
+				get_a()
+				set_concs(concs, initial=False)
+				get_concs()
+				get_init_concs()
+				get_concs_array()
+				__len__()
+				__repr__()
+				__str__()
+				add_reaction(reaction)
+				update_species()
+				get_species(update = True)
+				get_reactions()
+				compute_reac_rate_coefs()
+				get_reac_rate_coefs()
+				compute_nu_1()
+				compute_nu_2()
+				get_nu_1()
+				get_nu_2()
+				get_progress_rate()
+				get_reac_rate(species_idx = [])
+				evolute(t_bound, method='LSODA', 
+					rtol=1e-3, atol=1e-6, **options)
+				
 						
 ```
 
