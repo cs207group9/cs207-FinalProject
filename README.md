@@ -176,7 +176,7 @@ We will also provide functions for concentration / reaction rate visualization o
 `RSGraph` is a base class of network visualization, which have some common basic function for plotting and changing the style of graphs. The graph assigns a color to each equation (can be defined by the user) and can show the change of concentration of a given specie in the set of reactions by color of the node.
 There are two types of graphs derived from the network visulization class `RSGraph`: `BipartiteRSGraph` and `HierarchicalRSGraph`.
 
-We could plot the graph with function `plot`, and set the method as `jupyter` (shown in jupyter notebook directly), or `pdf` (opened in pdf) and the path to saved.
+We could plot the graph with function `plot`, and set the method as `jupyter` (shown in jupyter notebook directly), or to be opened in pdf and the path to saved.
 ```
 graph.plot(method='jupyter',path="")
 ```
@@ -216,7 +216,7 @@ b_graph.plot_system(method='jupyter',path="")
 `HierarchicalRSGraph` is a network graph with only species as nodes. The network of reactions can be plotted all at once or separately, with different grouping options and style options.
 From this graph, we could have a basic understanding of the relationships among reactions.
 Build undirected edges/line (u,v) if u and v are reactants in an equation.
-Build directed edges/arrow (u,v) if v is u’s product in an equation.
+Build directed dashed edges/arrow (u,v) if v is u’s product in an equation.  If it is reversible, then we use a double sided arrow.
 
 <p align="center">
   <img src="Illustrations/demo2.png"/>
