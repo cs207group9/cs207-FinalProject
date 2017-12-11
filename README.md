@@ -334,6 +334,41 @@ chemkin_CS207_G9/
 	auxiliary/
 		__init__.py
 		check_and_response.py
+		mathematical_science.py
+		useful_structure.py
+	data/
+		__init__.py
+		nasa_thermo_all.sqlite
+		nasa_thermo.sqlite
+		rxns_reversible.xml
+	math/
+		__init__.py
+		ode_solver.py
+	parser/
+		__init__.py
+		database_query.py
+		Reaction_Creator.py
+		xml2dict.py
+	plotting/
+		__init__.py
+		NonNetworkPlot.py
+		RSGraph.py
+	reaction/
+		__init__.py
+		CoeffLaw.py
+		Reaction.py
+		ReactionSystem.py
+						
+```
+
+Which in details becomes:
+
+``` python
+chemkin_CS207_G9/
+	__init__.py
+	auxiliary/
+		__init__.py
+		check_and_response.py
 			Class ValueCheck
 				Methods:
 				response(x, label, term)
