@@ -324,7 +324,7 @@ plt.show()
 
 Our library is structured as followed:
 
-``` javascript
+``` python
 chemkin_CS207_G9/
 	__init__.py
 	auxiliary/
