@@ -14,23 +14,23 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 This project aims to calculate reaction coefficients for a set of M chemical reactions involving N species. The reactions are of the form:  
 
 <p align="center">
-  <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Equation1.png">
+  <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Equation1.png">
 </p>
 
-where <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Si.png"> represents the species, <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/nuP.png"> is the stoichiometric coefficient matrix for reactants, and 
-<img width="16" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/nuPP.png"> is the stoichiometric matrix for products. To calculate the reaction coefficients, we use the following equation:
+where <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Si.png"> represents the species, <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/nuP.png"> is the stoichiometric coefficient matrix for reactants, and 
+<img width="16" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/nuPP.png"> is the stoichiometric matrix for products. To calculate the reaction coefficients, we use the following equation:
 
 <p align="center">
-  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Equation2.png">
+  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Equation2.png">
 </p>
 
-were <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omega.png">, the progress rate, is:
+were <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omega.png">, the progress rate, is:
 
 <p align="center">
-  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omegaDef.png">
+  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omegaDef.png">
 </p>
 
-And <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/kj.png"> is the forward reaction rate coefficient. This coefficient can be obtained in multiple ways. Implemented coefficients are:
+And <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/kj.png"> is the forward reaction rate coefficient. This coefficient can be obtained in multiple ways. Implemented coefficients are:
 - Constant coefficient
 - Coefficient for Arrhenius reaction
 - Coefficient for modified Arrhenius reaction
@@ -49,13 +49,17 @@ You can download and install these modules by using the following commande:
 
 One can download the package by using the following command:
 
+`pip3 install chemkin_CS207_G9`
+
+or
+
 `pip install chemkin_CS207_G9`
 
-However, to be able to enter the command `python setup.py test`, it may be preferred to download the entire release:
+One can also download and install the library from GitHub by entering the following commands:
 
-https://github.com/cs207group9/cs207-FinalProject/archive/v1.8.zip
-
-The root directory contains the file `setup.py` that can be used to run the test command.
+`git clone https://github.com/cs207group9/cs207-FinalProject.git`  
+`cd cs207-FinalProject`  
+`python setup.py install`  
 
 
 ## Test Coverage
