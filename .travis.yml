@@ -6,6 +6,7 @@ before_install:
     - pip install coveralls
     - pip install more-itertools
     - pip install scipy
+    - pip install --upgrade scipy
     - pip install matplotlib
     - pip install graphviz
 script:
