@@ -199,6 +199,50 @@ chemkin_CS207_G9/
 						
 ```
 
+## Contribution
+
+We acknowledge that out version is perfectible and we strongly encourage our users to make new suggestions.
+
+If a user wants to contribute to our package, contribution is possible by following these steps:
+
+- Log into your GitHub account, and go to the chemkin_CS207_G9 page (https://github.com/cs207group9/cs207-FinalProject.git)
+- Click on the fork button (upper right corner) and choose your own repository.
+- Create a local copy of your fork of chemkin_CS207_G9 on your computer: on your fork page of chemkin_CS207_G9 on GitHub, 
+click on the green button "Clone or download" and copy the link. On your terminal, enter the following command:
+```git clone CLONE_OR_DOWNLOAD_LINK``
+- Then get inside this new repo, enter the following command to keep up with the changes on the original chemkin_CS207_G9 repo:
+```git remote add chemkin_G9 git://github.com/cs207group9/cs207-FinalProject```
+- To make it explicit that the "origin" remote is actually your own fork repo, you are advised to enter the following command:
+```git remote rename origin your-user-name```
+
+Now, you are almost ready to work on your contribution:
+- Fetch the latest changes made on chemkin_CS207_G9 on Github:
+```git fetch chemkin_G9```
+- Make a new feature branch, where you will actually make your suggestions of new changes:
+```git branch my-new-feature chemkin_G9/master``
+```git checkout my-new-feature```
+- Connect the branch to GitHub:
+```git push --set-upstream your-github-username my-new-feature```
+- Activate the development mode of chemkin_CS207_G9:
+```python setup.py develop```
+
+From now on, you can change the files inside your local repo, and you can even add new files. You should check that your changes do no
+break the existing code. Add documentation to your code, but also add some tests for your code changes in order to maintain our
+overall coverage over 75%. Commit your changes on git by entering the following commands:
+```git add .```
+```git commit -m "message-you-want-to-add"```
+
+And push your changes on GitHub:
+```git push```
+
+Last, you need to ask for your changes to be reviewed by our team (**Group 9** of the class **CS207**):
+- Go on the webpage of your fork of chemkin_CS207_G9 (e.g.: https://github.com/your-user-name/chemkin_CS207_G9)
+- Click on the "Branch:master" button ("Switch branches/tags", on the upper left corner of the page) and select 
+your branch with your changes on it ("my-new-feature").
+- Click on the "pull request" button to send us your suggestion of new changes. Please enter as many details as possible
+(title, details of your changes, and reasons why you thought your changes were relevant).
+
+
 # Authors
 
 * **Camilo Fosco**
