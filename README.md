@@ -304,7 +304,12 @@ And push your changes on GitHub:
 Last, you need to ask for your changes to be reviewed by our team (**Group 9** of the class **CS207**):  
 - Go on the webpage of your fork of chemkin_CS207_G9 (e.g.: https://github.com/your-user-name/chemkin_CS207_G9).   
 - Click on the "Branch:master" button ("Switch branches/tags", on the upper left corner of the page) and select 
-your branch with your changes on it ("my-new-feature").  
+your branch with your changes on it ("my-new-feature").    
+
+<p align="center">
+  <img width="200" height="80" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Switching.png">
+</p>
+
 - Click on the "pull request" button to send us your suggestion of new changes. Please enter as many details as possible
 (title, details of your changes, and reasons why you thought your changes were relevant).  
 
