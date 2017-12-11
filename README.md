@@ -140,7 +140,7 @@ This calls the ode solvers to update the concentrations. The default solver is `
 ```
 rs.get_concs()
 ```
-Furthermore, one may utlize the `chemkin_CS207_G9.plotting` module to get more insights into the reaction systems through quickly generated visualizations. Please refer to the `ModelDoc.md` for more details.
+Furthermore, one may utlize the `chemkin_CS207_G9.plotting` module to get more insights into the reaction systems through quickly generated visualizations. Please refer to later sections for more details.
 
 For most cases it would be much easier to import the reactions from other files instead of typing them in manually. We currently provide one method to allow users import from formatted `.xml` file:
 ```
