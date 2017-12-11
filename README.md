@@ -196,7 +196,7 @@ Set edges to be dashed if the equation is reversible, otherwise filled.
 From this graph, we could recompute the reaction equations.
 
 <p align="center">
-  <img src="Illustrations/b_graph.jpg"/>
+  <img width="370" height="460" src="Illustrations/b_graph.jpg"/>
 </p>
 
 ```
