@@ -45,6 +45,10 @@ You can download and install these modules by using the following commande:
 
 `pip install MODULENAME`.
 
+The `scipy` package needs to have `solve_ivp` method in its `integrate` module. To make sure, one'd better upgrade the package if (s)he already have it:
+
+`pip intall --upgrade scipy`
+
 ## Installing and Getting Started
 
 One can download the package by using the following command:
