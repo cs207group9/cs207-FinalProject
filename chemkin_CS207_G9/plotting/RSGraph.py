@@ -234,17 +234,33 @@ class HierarchicalRSGraph(RSGraph):
     METHODS
     =======
     build_reaction_graph(self, reaction, prefix = "cluster", color = None):
-        Creates a graph for one reaction. If the prefiz cluster is sent, the reaction 
+        Creates a graph for one reaction. If the prefix cluster is sent, the reaction 
         gets plotted in its own cluster, and is a subgraph of the main plot. Color
-        sets the color of the edges
-    plot_reactions(self, method = 'jupyter', path = "RSGraph", idxs = [])
-    plot_system(self,method='jupyter',path="RSGraph",colors=None)
-    set_edges(self, g, reaction, color, node_prefix = "")
-    save_evolution_mp4(self, solver_step_size = 1e-14, timesteps=5, path="HGRSVideo")
+        sets the color of the edges.
+    
+    plot_reactions(self, method = 'jupyter', path = "RSGraph", idxs = []):
+        Plots all the reactions on the current ReactionSystem on different clusters.
+        the varibale idxs can be used to plot certain reactions and not others.
+        For example, idxs=[2,3] only plots the reactions with index 2 and 3 in the 
+        reaction list of the ReactionSystem.
+   
+    plot_system(self,method='jupyter',path="RSGraph",colors=None):
+        Plots the Reaction system as a whole, without separation between reactions. Shows how each specie interacts 
+        In the full reaction system. If the amount of reactions in the system is less than 4, the plot will be generated
+        With 2 columns of species, representing on the left the species that are more reactant than product, and on the right
+        the species that are more product than reactant. If the system has more than 4 reactions, an automatic organization
+        of nodes is performed instead.
+        
+    set_edges(self, g, reaction, color, node_prefix = ""):
+        Generates the edges for a reaction. Edges are dotted for Reactant to Product and filled for product to reactant.
+
+    save_evolution_mp4(self, solver_step_size = 1e-14, timesteps=5, path="HGRSVideo")L:
+        Generates and saves and mp4 with the evolution of the system on n timesteps, 
+        with an ODE step size defined by the user. 
     
     EXAMPLES
     ========
-    >>> rs = ReactionSystem(reactions)
+    >>> rs = ReactionSystem([Reaction(), Reaction()])
     >>> h_graph = HierarchicalRSGraph(rs)
     >>> h_graph.view(method='jupyter')   # Displays on a jupyter notebook without saving to pdf
     
@@ -253,7 +269,9 @@ class HierarchicalRSGraph(RSGraph):
            
     def build_reaction_graph(self, reaction, prefix = "cluster", color = None):
         """
-        Builds a graph for one reaction.
+        Creates a graph for one reaction. If the prefix cluster is sent, the reaction 
+        gets plotted in its own cluster, and is a subgraph of the main plot. Color
+        sets the color of the edges.
         """
         
         if color == None:
@@ -364,6 +382,9 @@ class HierarchicalRSGraph(RSGraph):
         return self.plot(method=method, path=path)
     
     def set_edges(self, g, reaction, color, node_prefix = ""):
+        """
+        Generates the edges for a reaction. Edges are dottes for Reactant to Product and filled for product to reactant.
+        """
         for idx, s1 in enumerate(reaction.getReactants().keys()):
             for s2 in reaction.getProducts().keys():
                 if reaction.is_reversible():
@@ -377,6 +398,10 @@ class HierarchicalRSGraph(RSGraph):
                     
     
     def save_evolution_mp4(self, solver_step_size = 1e-14, timesteps=5, path="HGRSVideo"):
+        """
+        Generates and saves and mp4 with the evolution of the system on n timesteps, 
+        with an ODE step size defined by the user. 
+        """
         clip_paths = []        
         for n in range(timesteps):
             self.rs.evolute(solver_step_size)
