@@ -196,7 +196,10 @@ Build directed edges (u,2) to (v,1) if edge v is the product of equation u.
 Set edges to be dashed if the equation is reversible, otherwise filled.
 From this graph, we could recompute the reaction equations.
 
+<p align="center">
 ![Alt text](pic/demo1.png?raw=true "Title")
+</p>
+
 ```
 Example 1: Reaction System for Birpartite graph
 #1: A + B = C
@@ -216,7 +219,10 @@ From this graph, we could have a basic understanding of the relationships among 
 Build undirected edges/line (u,v) if u and v are reactants in an equation.
 Build directed edges/arrow (u,v) if v is u’s product in an equation.
 
+<p align="center">
 ![Alt text](pic/demo2.png?raw=true "Title")
+</p>
+
 ```
 Example 2: Reaction for Hierarchical graph
 A + B = C + D
