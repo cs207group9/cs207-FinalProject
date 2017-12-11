@@ -239,7 +239,7 @@ h_graph.plot_reactions(self, method = 'jupyter', path = "RSGraph", idxs = [])
 ```
 The variable `idxs` is a list of integers that allows the user to select specific reactions from the reaction system to plot.
 
-## Organization
+# Organization
 
 Our library is structured as followed:
 
@@ -275,7 +275,7 @@ chemkin_CS207_G9/
 						
 ```
 
-## Contribution
+# Contribution
 
 We acknowledge that our version is perfectible and we strongly encourage our users to make new suggestions.
 
