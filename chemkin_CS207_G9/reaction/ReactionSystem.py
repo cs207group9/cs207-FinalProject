@@ -140,7 +140,7 @@ class ReactionSystem:
             
         self.set_temp(initial_T)
         if initial_concs:
-            self.set_concs(initial_concs)    
+            self.set_concs(initial_concs, initial = True)    
         else:
             self._concs = {}
 
@@ -166,7 +166,7 @@ class ReactionSystem:
     def get_a(self):
         return self._a
     
-    def set_concs(self, concs):
+    def set_concs(self, concs, initial=False):
         
         if len(concs.keys()) != len(self._species_ls):
             raise ValueError("Length of concentrations ("+str(len(concs.keys()))+") and species arrays ("+str(len(self._species_ls))+") do not match. Update your concentrations.")
@@ -175,10 +175,15 @@ class ReactionSystem:
             if conc < 0:
                 raise ValueError("x{0} = {1:18.16e}:  Negative concentrations are prohibited!".format(i, conc))
 
+        if initial == True:
+            self._init_concs = concs
         self._concs = concs
     
     def get_concs(self):
         return self._concs
+
+    def get_init_concs(self):
+        return self._init_concs
 
     def get_concs_array(self):
         return [self._concs[sp] for sp in self._species_ls]

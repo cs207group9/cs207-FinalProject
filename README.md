@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cs207group9/cs207-FinalProject.svg?branch=master)](https://travis-ci.org/cs207group9/cs207-FinalProject.svg?branch=master)
+﻿[![Build Status](https://travis-ci.org/cs207group9/cs207-FinalProject.svg?branch=master)](https://travis-ci.org/cs207group9/cs207-FinalProject.svg?branch=master)
 
 [![Coverage Status](https://coveralls.io/repos/github/cs207group9/cs207-FinalProject/badge.svg?branch=master)](https://coveralls.io/github/cs207group9/cs207-FinalProject?branch=master&service=github)
 
@@ -47,7 +47,7 @@ For practice, we built several classes to read in the reaction information and c
 
 To run this library, you will need to download and install (if not installed yet) the following modules:
 
-```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz``` .
+```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz, moviepy``` .
 
 You can download and install these modules by using the following commande:
 

@@ -1,0 +1,38 @@
+digraph {
+	graph [bgcolor="#333333" fontcolor=white fontsize=16 pad=1 rankdir=LR ranksep=2]
+	node [color=white fillcolor=black fontcolor=white fontname=Helvetica shape=circle style=filled]
+	edge [arrowhead=open color=white fontcolor=white fontname=Courier fontsize=12 style=dashed]
+	subgraph "Reactant graph" {
+		graph [rank=source]
+		H2 [label="H2
+0.83" fillcolor="#997777;0.33:#333333" gradientangle=90 style=filled]
+		O [label="O
+1.11" fillcolor="#997777;0.61:#333333" gradientangle=90 style=filled]
+		O2 [label="O2
+0.80" fillcolor="#997777;0.31:#333333" gradientangle=90 style=filled]
+	}
+	subgraph "Product graph" {
+		graph [rank=sink]
+		H [label="H
+1.97" fillcolor="#997777;0.47:#333333" gradientangle=90 style=filled]
+		H2O [label="H2O
+1.09" fillcolor="#997777;0.58:#333333" gradientangle=90 style=filled]
+		OH [label="OH
+0.70" fillcolor="#997777;0.69:#333333" gradientangle=90 style=filled]
+	}
+	H -> O [color="#4285f4" dirtype=both penwidth=2]
+	H -> OH [color="#4285f4" dirtype=both penwidth=2]
+	H -> O2 [arrowhead=none color="#4285f4" penwidth=1.5 style=filled]
+	O2 -> O [color="#4285f4" dirtype=both penwidth=2]
+	O2 -> OH [color="#4285f4" dirtype=both penwidth=2]
+	O -> H [color="#ea4335" dirtype=both penwidth=2]
+	O -> OH [color="#ea4335" dirtype=both penwidth=2]
+	O -> H2 [arrowhead=none color="#ea4335" penwidth=1.5 style=filled]
+	H2 -> H [color="#ea4335" dirtype=both penwidth=2]
+	H2 -> OH [color="#ea4335" dirtype=both penwidth=2]
+	H2 -> H2O [color="#fbbc05" dirtype=both penwidth=2]
+	H2 -> H [color="#fbbc05" dirtype=both penwidth=2]
+	H2 -> OH [arrowhead=none color="#fbbc05" penwidth=1.5 style=filled]
+	OH -> H2O [color="#fbbc05" dirtype=both penwidth=2]
+	OH -> H [color="#fbbc05" dirtype=both penwidth=2]
+}
