@@ -155,6 +155,7 @@ reactions = [Reaction(**info) for info in reaction_info]
 ```
 We also provide a wrap-up `Reaction_Creator` for users to get reaction system object efficiently. The start and end equations could be specified.
 ```
+from chemkin_CS207_G9.parser.Reaction_Creator import Reaction_Creator
 Reaction_Creator(path_xml, path_sql, start = None, end = None)
 ```
 
