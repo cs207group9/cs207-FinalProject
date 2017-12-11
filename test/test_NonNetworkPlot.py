@@ -1,7 +1,8 @@
-from chemkin_CS207_G9.plotting.NonNetworkPlot import *
 import matplotlib
-import matplotlib.pyplot as plt
 matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+from chemkin_CS207_G9.plotting.NonNetworkPlot import *
 
 from chemkin_CS207_G9.parser.xml2dict import xml2dict
 from chemkin_CS207_G9.parser.database_query import CoeffQuery
