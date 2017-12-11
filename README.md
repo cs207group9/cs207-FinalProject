@@ -288,8 +288,9 @@ The output of the function is as follows. For reaction systems (`system=True`):
 And for reactions as clusters (`system=False`):
 
 <p align="center">
-<img src="Nice Gifs/ReacGif-3.gif" width="500" height="200" />
-<img src="Nice Gifs/ReacGif-2.gif" width="500" height="200" />
+<img src="Nice Gifs\ReacGif-3-F.gif" width="700" height="600" />
+<img src="Nice Gifs\ReacGif-5.gif" width="700" height="500" />
+<img src="Nice Gifs\ReacGif-6.gif" width="700" height="800" />
 </p>
 
 ### Evolution curves
