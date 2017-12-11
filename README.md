@@ -238,7 +238,7 @@ We could also plots individual graphs for each reaction in the ReactionSystem  `
 h_graph.plot_reactions(method = 'jupyter', path = "RSGraph", idxs = [])
 ```
 <p align="center">
-<img width="370" height="410"  src="Illustrations/h_graph_reaction.jpg"/>
+<img width="370" height="440"  src="Illustrations/h_graph_reaction.jpg"/>
 </p>
 
 
