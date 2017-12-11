@@ -14,20 +14,20 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 This project aims to derive and evalutate the evolutionary equation for a set of M chemical reactions involving N species. The reactions are of the form: 
 
 <p align="center">
-  <img width="330" height="60" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_1.png">
+  <img width="330" height="60" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Illustrations/Eq_Rev_1.png">
 </p>
 
-where <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Si.png"> represents the species, <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/nuP.png"> is the stoichiometric coefficient matrix for reactants, and 
-<img width="16" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/nuPP.png"> is the stoichiometric matrix for products. Here we put a double sided arrow in between to indicate that in general we allow the reactions to be reversible. 
+where <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Illustrations/Si.png"> represents the species, <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Illustrations/nuP.png"> is the stoichiometric coefficient matrix for reactants, and 
+<img width="16" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Illustrations/nuPP.png"> is the stoichiometric matrix for products. Here we put a double sided arrow in between to indicate that in general we allow the reactions to be reversible. 
 
 To calculate the reaction rates, we use the following formula:
 <p align="center">
-  <img width="300" height="60" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_2.png">
+  <img width="300" height="60" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Illustrations/Eq_Rev_2.png">
 </p>
 
-This is also the equation of evolution. Here <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omega.png">, the progress rate, is:
+This is also the equation of evolution. Here <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Illustrations/omega.png">, the progress rate, is:
 <p align="center">
-  <img width="430" height="55" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_3.png">
+  <img width="430" height="55" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Illustrations/Eq_Rev_3.png">
 </p>
 
 `kf` and `kb` denote for the forward reaction rate coefficient and the backward reaction rate coefficient, respectively. Their ratio should be fixed as the equilibrium constant. For irreversible reactions, the equilibrium constant is theoretically very large so that one can mannually set `kb=0`. The forward coefficient `kf` can be obtained in multiple ways. Implemented forward coefficients are:
@@ -47,7 +47,7 @@ For practice, we built several classes to read in the reaction information and c
 
 To run this library, you will need to download and install (if not installed yet) the following modules:
 
-```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz, moviepy``` .
+```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz, moviepy, imageio``` .
 
 You can download and install these modules by using the following commande:
 
@@ -84,7 +84,7 @@ The fastest way to check the coverage of our library is to run the following com
 
 As can be seen on the screenshot below, **our test coverage is 94%**.
 
-![Test Coverage](pic/TestCoverage.png "Test Coverage")
+![Test Coverage](Illustrations/TestCoverage.png "Test Coverage")
 
 ## Basic Usage and Examples
 
@@ -197,7 +197,7 @@ Set edges to be dashed if the equation is reversible, otherwise filled.
 From this graph, we could recompute the reaction equations.
 
 <p align="center">
-  <img src="pic/demo1.png"/>
+  <img src="Illustrations/demo1.png"/>
 </p>
 
 ```
@@ -220,7 +220,7 @@ Build undirected edges/line (u,v) if u and v are reactants in an equation.
 Build directed edges/arrow (u,v) if v is u’s product in an equation.
 
 <p align="center">
-  <img src="pic/demo2.png"/>
+  <img src="Illustrations/demo2.png"/>
 </p>
 
 ```
@@ -317,7 +317,7 @@ Last, you need to ask for your changes to be reviewed by our team (**Group 9** o
 your branch with your changes on it ("my-new-feature").    
 
 <p align="center">
-  <img width="200" height="35" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Switching.png">
+  <img width="200" height="35" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Illustrations/Switching.png">
 </p>
 
 - Click on the "pull request" button to send us your suggestion of new changes. Please enter as many details as possible

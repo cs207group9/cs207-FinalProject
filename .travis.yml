@@ -30,6 +30,8 @@ install:
     - pip install scipy
     - pip install matplotlib
     - pip install graphviz
+    - pip install moviepy
+    - pip install imageio
 script:
     - py.test
 after_success:
