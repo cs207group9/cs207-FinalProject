@@ -200,7 +200,7 @@ From this graph, we could recompute the reaction equations.
 </p>
 
 ```
-Example 2: Reaction for Hierarchical graph (reversible)
+Example 1: Reaction for Bipartite graph (reversible)
 0: H + O2 = O + OH
 1: O + H2 = H + OH
 ```
