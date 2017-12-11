@@ -1,4 +1,6 @@
-
+import imageio
+imageio.plugins.ffmpeg.download()
+from moviepy.editor import ImageClip, concatenate_videoclips
 import random
 import graphviz 
 from graphviz import Digraph
@@ -8,7 +10,7 @@ from chemkin_CS207_G9.reaction.Reaction import Reaction
 from chemkin_CS207_G9.reaction.ReactionSystem import ReactionSystem
 import numpy as np
 import random
-from moviepy.editor import ImageClip, concatenate_videoclips
+
 
 class RSGraph():
     """
@@ -231,8 +233,14 @@ class HierarchicalRSGraph(RSGraph):
     
     METHODS
     =======
-    
-    
+    build_reaction_graph(self, reaction, prefix = "cluster", color = None):
+        Creates a graph for one reaction. If the prefiz cluster is sent, the reaction 
+        gets plotted in its own cluster, and is a subgraph of the main plot. Color
+        sets the color of the edges
+    plot_reactions(self, method = 'jupyter', path = "RSGraph", idxs = [])
+    plot_system(self,method='jupyter',path="RSGraph",colors=None)
+    set_edges(self, g, reaction, color, node_prefix = "")
+    save_evolution_mp4(self, solver_step_size = 1e-14, timesteps=5, path="HGRSVideo")
     
     EXAMPLES
     ========
