@@ -4,7 +4,7 @@ from setuptools.command.test import test as TestCommand
 
 
 setup(name='chemkin_CS207_G9',
-      version='2.23',
+      version='2.4',
       description='The vital Chemical Kinetics packages - a life-changing module.',
       url='https://github.com/cs207group9/cs207-FinalProject/tree/master/chemkin_CS207_G9',
       author='Group 9 - CF, YX, JL, BJL',
