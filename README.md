@@ -55,7 +55,7 @@ You can download and install these modules by using the following commande:
 
 The `scipy` package needs to have `solve_ivp` method in its `integrate` module. To make sure, one'd better upgrade the package if (s)he already have it:
 
-`pip intall --upgrade scipy`
+`pip install --upgrade scipy`
 
 ## Installing and Getting Started
 
@@ -250,6 +250,9 @@ chemkin_CS207_G9/
 		nasa_thermo_all.sqlite
 		nasa_thermo.sqlite
 		rxns_reversible.xml
+	math/
+		__init__.py
+		ode_solver.py
 	parser/
 		__init__.py
 		database_query.py
@@ -257,6 +260,7 @@ chemkin_CS207_G9/
 	plotting/
 		__init__.py
 		NonNetworkPlot.py
+		RSGraph.py
 	reaction/
 		__init__.py
 		CoeffLaw.py
@@ -267,7 +271,7 @@ chemkin_CS207_G9/
 
 ## Contribution
 
-We acknowledge that out version is perfectible and we strongly encourage our users to make new suggestions.
+We acknowledge that our version is perfectible and we strongly encourage our users to make new suggestions.
 
 If a user wants to contribute to our package, contribution is possible by following these steps:
 
@@ -304,7 +308,12 @@ And push your changes on GitHub:
 Last, you need to ask for your changes to be reviewed by our team (**Group 9** of the class **CS207**):  
 - Go on the webpage of your fork of chemkin_CS207_G9 (e.g.: https://github.com/your-user-name/chemkin_CS207_G9).   
 - Click on the "Branch:master" button ("Switch branches/tags", on the upper left corner of the page) and select 
-your branch with your changes on it ("my-new-feature").  
+your branch with your changes on it ("my-new-feature").    
+
+<p align="center">
+  <img width="200" height="40" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Switching.png">
+</p>
+
 - Click on the "pull request" button to send us your suggestion of new changes. Please enter as many details as possible
 (title, details of your changes, and reasons why you thought your changes were relevant).  
 
