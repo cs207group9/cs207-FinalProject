@@ -409,7 +409,7 @@ See also the list of [contributors](https://github.com/cs207group9/cs207-FinalPr
 
 ## License
 
-This project is licensed under the Harvard License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Harvard License.
 
 ## Acknowledgments
 
