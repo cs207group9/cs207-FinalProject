@@ -169,8 +169,7 @@ Then `path_xml` and `path_sql` can be fed to the above `xml2dict` object and `Co
 # New Feature: Visualization
 ## Motivation and description of the feature
 Our feature is a visualization module that allows the user to observe different species of a certain reaction system in multiple ways. The main feature of the module is a graph visualization of the current reaction system, created with graphviz.
-We will also provide functions for reaction rate visualization over time and over a range of temperatures, evolution of arrhenius coefficients, as well as plots of concentrations as a function of time. For that last element, we will implement an ODE solver to compute the concentrations. The plots will have multiple parameters for user customization, such as log scale options, selection of one or multiple species, visualization of several curves on one graph, real time visualization, etc.
-As a bonus feature, we will also try to provide an easy to use GUI to visualize the different elements.
+We will also provide functions for concentration / reaction rate visualization over time. We will implement an ODE solver to compute the concentrations. The plots will have multiple parameters for user customization, such as log scale options, selection of one or multiple species, visualization of several curves on one graph, real time visualization, etc. 
 
 
 ## Implementation of Network Graph
@@ -238,6 +237,73 @@ We could also plots individual graphs for each reaction in the ReactionSystem  `
 h_graph.plot_reactions(self, method = 'jupyter', path = "RSGraph", idxs = [])
 ```
 The variable `idxs` is a list of integers that allows the user to select specific reactions from the reaction system to plot.
+
+## Time Evolution
+As shown in previous section, we have the `evolute` method to update the `ReactionSystem` through some time interval. The `evolute` method calculates the reaction rate and the corresponding jacobian automatically, and calls an ode solver to solve the evolution. A user may specify the solver explicitly, by default it is the `LSODA` method from `scipy` package:
+```
+rs.evolute(time_evolute, method='LSODA')
+```
+Other feasible `scipy` solvers are `Radau` and `BDF`. All of them are implicit methods. We also implemented a semi-implicit extrapolation method, `SIE`, as an option. We made this `SIE` stepsize adaptive, but in general `scipy` solvers are faster and stabler. For all the solvers, the default error tolerance is `1e-3` for relative error and `1e-6` for absolute error. There are also other common parameters like `max_step`, and users are free to adjust them with keywords. 
+
+With the `evolution` method we can pass the `ReactionSystem` objects as the input arguments of evolution-plotting funtions. There are two functions of such kind, `plot_concentration` and `plot_reaction_rate`. Here is an example of their usage. First we load the `ReactionSystem` as usual:
+```
+from chemkin_CS207_G9.reaction.Reaction import Reaction
+from chemkin_CS207_G9.reaction.ReactionSystem import ReactionSystem
+from chemkin_CS207_G9.parser.xml2dict import xml2dict
+from chemkin_CS207_G9.parser.database_query import CoeffQuery
+import numpy as np
+
+import os
+import chemkin_CS207_G9
+BASE_DIR = os.path.dirname(os.path.abspath(chemkin_CS207_G9.__file__))
+path_xml = os.path.join(BASE_DIR, 'data/rxns_reversible.xml') # path to the .xml file
+path_sql = os.path.join(BASE_DIR, 'data/nasa_thermo.sqlite')  # path to the .sqlite file
+
+species, reactions_info = xml2dict().parse(path_xml).get_info()
+reactions = [Reaction(**info) for info in reactions_info]
+nasa_query = CoeffQuery(path_sql)
+
+temperature = 3000
+concentrations = dict(H=2, O=1, OH=0.5, H2=1, H2O=1, O2=1, HO2=0.5, H2O2=1)
+
+rs = ReactionSystem(
+    reactions, species, nasa_query, 
+    initial_concs=concentrations, initial_T=temperature)
+```
+Then we plot with `rs`:
+```
+import numpy as np
+import matplotlib.pyplot as plt
+from chemkin_CS207_G9.plotting.NonNetworkPlot import plot_concentration
+from chemkin_CS207_G9.plotting.NonNetworkPlot import plot_reaction_rate
+
+time_grid = np.arange(0, 5e-14, 1e-15)
+fig, axes = plt.subplots(2, 1, figsize=(8,12))
+plot_concentration(
+    reac_sys, time_grid, ax=axes[0], linestyle='dashed', 
+    species=['H','O'], logscale=True)
+plot_reaction_rate(
+    reac_sys, time_grid, ax=axes[1], alpha=0.7)
+plt.show()
+```
+![Alt text](pic/conc_rate_evo.png?raw=true "Title")
+
+The functions generate the legends automatically. The users may specify the species of interest, the scale of the y-axis, and other plotting parameters of matplotlib curves.
+
+## Modified Arrhenius Curves
+We also provide a function to help visualize the shape of modifiefied Arrhenius curves in relation to `b`:
+```
+import numpy as np
+import matplotlib.pyplot as plt
+from chemkin_CS207_G9.plotting.NonNetworkPlot import plot_modified_arrhenius
+
+T_grid = np.arange(0.01, 2, 0.01)
+b_grid = np.arange(-2, 2, 1)
+fig, ax = plt.subplots(figsize=(8,6))
+plot_modified_arrhenius(T_grid, b_grid, ax=ax)
+plt.show()
+```
+![Alt text](pic/modarr.png?raw=true "Title")
 
 # Organization
 
