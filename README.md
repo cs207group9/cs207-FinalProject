@@ -307,7 +307,7 @@ Last, you need to ask for your changes to be reviewed by our team (**Group 9** o
 your branch with your changes on it ("my-new-feature").    
 
 <p align="center">
-  <img width="200" height="80" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Switching.png">
+  <img width="200" height="40" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Switching.png">
 </p>
 
 - Click on the "pull request" button to send us your suggestion of new changes. Please enter as many details as possible
