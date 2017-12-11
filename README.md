@@ -301,7 +301,7 @@ plt.show()
   <img src="Illustrations/conc_rate_evo.png"/>
 </p>
 
-The functions generate the legends automatically. The users may specify the species of interest, the scale of the y-axis, and other plotting parameters of matplotlib curves.
+Both functions essentially call `matplotlib` functions to make the plot. The legends are generated automatically. Users may specify the species of interest, the scale of the y-axis, and other plotting parameters of matplotlib curves.
 
 ## Modified Arrhenius Curves
 We also provide a function to help visualize the shape of modifiefied Arrhenius curves in relation to `b`:
