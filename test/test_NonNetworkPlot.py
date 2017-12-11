@@ -30,14 +30,16 @@ rs = ReactionSystem(
     reactions, species, nasa_query, 
     initial_concs=concentrations, initial_T=temperature)
 
+_,axes = plt.subplots(3,1)
+
 def test_plot_concentration():
-    plot_concentration(rs, np.arange(0,1e-13,1e-15))
+    plot_concentration(rs, np.arange(0,1e-13,1e-15), ax=axes[0])
     assert( rs.get_concs()==concentrations )
 
 def test_plot_reaction_rate():
-    plot_reaction_rate(rs, np.arange(0,1e-13,1e-15), alpha=0.5)
+    plot_reaction_rate(rs, np.arange(0,1e-13,1e-15), ax=axes[1])
     assert( rs.get_concs()==concentrations )
 
 def test_plot_modified_arrhenius():
-    plot_modified_arrhenius(np.arange(0.01,2,0.01), np.arange(-2,2,1), alpha=0.7)
+    plot_modified_arrhenius(np.arange(0.01,2,0.01), np.arange(-2,2,1), ax=axes[3])
     assert( True )
