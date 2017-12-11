@@ -1,6 +1,6 @@
-
 import numpy as np
-from scipy.integrate import solve_ivp as scipy_ivp
+import scipy.integrate
+from chemkin_CS207_G9.math.ode_solver import solve_ivp as chemkin_ivp
 
 from more_itertools import unique_everseen
 from chemkin_CS207_G9.reaction.CoeffLaw import BackwardLaw
@@ -324,7 +324,7 @@ class ReactionSystem:
     def evolute(self, t_bound, method='LSODA', rtol=1e-3, atol=1e-6, **options):
 
         methods_scipy = ['LSODA', 'Radau', 'BDF']
-        methods_chemkin = []
+        methods_chemkin = ['SIE']
         methods_allowed = methods_scipy + methods_chemkin
         if method not in methods_allowed:
             raise ValueError(
@@ -364,7 +364,7 @@ class ReactionSystem:
             return jac
 
         if method in methods_scipy:
-            res_int = scipy_ivp(
+            res_int = scipy.integrate.solve_ivp(
                 method=method,
                 fun=fun_reac_rate, 
                 jac=jac_reac_rate, 
@@ -372,6 +372,16 @@ class ReactionSystem:
                 y0=self.get_concs_array(),
                 rtol=rtol, atol=atol, 
                 dense_output=True,
+                **options)
+
+        if method in methods_chemkin:
+            res_int = chemkin_ivp(
+                method=method,
+                fun=fun_reac_rate, 
+                jac=jac_reac_rate, 
+                t_span=(0, t_bound), 
+                y0=self.get_concs_array(),
+                rtol=rtol, atol=atol, 
                 **options)
         
         def solution(t):
