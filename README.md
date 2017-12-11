@@ -97,7 +97,7 @@ from chemkin_CS207_G9.parser.database_query import CoeffQuery
 
 To calculate a reaction coefficient of a particular system, first we must create the ReactionSystem object that represents this system. ReactionSystem needs a list of Reaction objects and some related informations. Let's first create those essential ingredients:
 ```
-# Reactions involving species A, B and C
+# Some reactions involving species H2, O2, OH, HO2 and H2O
 reaction1 = Reaction(
     reactants={'H2':2,'O2':1}, products = {'OH':2,'H2':1}, 
     coeffLaw = 'Constant', coeffParams = {'k':10}, 
@@ -118,7 +118,8 @@ concentrations = {'H2':1, 'O2':2, 'OH':2, 'HO2':1, 'H2O':1}
 temperature = 300
 
 # Database connection object to the nasa coefficients
-nasa_query = CoeffQuery('nasa_thermo.sqlite')
+# (this is just an example, you should specify your own path to the file)
+nasa_query = CoeffQuery('nasa_thermo_all.sqlite')
 ```
 We can now create our ReactionSystem object:
 ```
@@ -140,14 +141,12 @@ For most cases one may want to import the reactions from other files instead of 
 ```
 from chemkin_CS207_G9.parser.xml2dict import xml2dict
 
-reader = xml2dict()
-reader.parse('rxns_reversible.xml')
-info = reader.get_info()
+# (this is just an example, you should specify your own path to the file)
+species, reactions_info = xml2dict().parse('rxns_reversible.xml')
 ```
-`info` will be a well-organized python structure, from which you can retrieve the species and the reactions:
+Now `species` is a list of species names, and `reactions_info` is another list of dictionary which can be used to create the `Reaction` objects:
 ```
-species = info[0]
-reactions = [Reaction(**r) for r in info[1]]
+reactions = [Reaction(**info) for info in reaction_info]
 ```
 
 ## Organization
@@ -183,7 +182,7 @@ chemkin_CS207_G9/
 ```
 
 ## Additional Files
-Along with the package there are two additional files - one is `nasa_thermo.sqlite` which is the database containing all the nasa coefficients, and the other is `rxns_reversible.xml` which is the example `.xml` file of reactions and species. Users may access them by:
+Along with the package there are two additional files - one is `nasa_thermo_all.sqlite` which is the database containing all the nasa coefficients, and the other is `rxns_reversible.xml` which is the example `.xml` file of reactions and species. Users may access them by:
 ```
 import os
 import chemkin_CS207_G9
@@ -192,6 +191,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(chemkin_CS207_G9.data.__file__))
 path_xml = os.path.join(BASE_DIR, 'rxns_reversible.xml') # path to the .xml file
 path_sql = os.path.join(BASE_DIR, 'nasa_thermo.sqlite')  # path to the .sqlite file
 ```
+Then `path_xml` and `path_sql` can be fed to the above `xml2dict` object and `CoeffQuery` object directly.
 
 # Authors
 
