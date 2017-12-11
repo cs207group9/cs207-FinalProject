@@ -14,7 +14,7 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 This project aims to calculate reaction coefficients for a set of M chemical reactions involving N species. The reactions are of the form:  
 
 <p align="center">
-  <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Equation1.png">
+  <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Equation1.png">
 </p>
 
 where <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Si.png"> represents the species, <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/nuP.png"> is the stoichiometric coefficient matrix for reactants, and 
@@ -49,13 +49,17 @@ You can download and install these modules by using the following commande:
 
 One can download the package by using the following command:
 
+`pip3 install chemkin_CS207_G9`
+
+or
+
 `pip install chemkin_CS207_G9`
 
-However, to be able to enter the command `python setup.py test`, it may be preferred to download the entire release:
+One can also download and install the library from GitHub by entering the following commands:
 
-https://github.com/cs207group9/cs207-FinalProject/archive/v1.8.zip
-
-The root directory contains the file `setup.py` that can be used to run the test command.
+`git clone https://github.com/cs207group9/cs207-FinalProject.git`  
+`cd cs207-FinalProject`  
+`python setup.py install`  
 
 
 ## Test Coverage
