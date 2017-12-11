@@ -280,16 +280,16 @@ h_graph.save_evolution_movie(solver_step_size = 3e-16, timesteps = 30, path = 'R
 
 The output of the function is as follows. For reaction systems (`system=True`):
 <p align="center">
-<img src="RSGif-7.gif" width="280" height="300" />
-<img src="RSGif-2.gif" width="250" height="300" />
-<img src="RSGif-6.gif" width="530" height="320" />
+<img src="Nice Gifs/RSGif-7.gif" width="280" height="300" />
+<img src="Nice Gifs/RSGif-2.gif" width="250" height="300" />
+<img src="Nice Gifs/RSGif-6.gif" width="530" height="320" />
 </p>
 
 And for reactions as clusters (`system=False`):
 
 <p align="center">
-<img src="ReacGif-3.gif" width="500" height="200" />
-<img src="ReacGif-2.gif" width="500" height="200" />
+<img src="Nice Gifs/ReacGif-3.gif" width="500" height="200" />
+<img src="Nice Gifs/ReacGif-2.gif" width="500" height="200" />
 </p>
 
 ### Evolution curves
