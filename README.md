@@ -131,13 +131,18 @@ And call the get_reac_rate() function that returns the reaction rate value for e
 ```
 reac_rate = rs.get_reac_rate()
 ```
-It is also possible to obtain the progress rate for each reaction:
+It is also possible to directly ask the system to evolute:
 ```
-progress_rate = rs.get_progress_rate()
+time_evolute = 1e-10
+rs.evolute(time_evolute)
 ```
-This gives us a 1 dimensional list with one element per reaction.
+This calls the ode solvers to update the concentrations. The default solver is `LSODA` implemented in `scipy` library, and there are plenty of other options. The evolution progress can be monitored by applying:
+```
+rs.get_concs()
+```
+Furthermore, one can utlize the functions in the `chemkin_CS207_G9.plotting` module to get some more insights into the reaction systems on through quickly generated visualizations. Please refer to the `ModelDoc.md` for more details.
 
-For most cases one may want to import the reactions from other files instead of typing them in manually. We currently provide one method to allow users import from formatted `.xml` file:
+For most cases it would be much easier to import the reactions from other files instead of typing them in manually. We currently provide one method to allow users import from formatted `.xml` file:
 ```
 from chemkin_CS207_G9.parser.xml2dict import xml2dict
 
@@ -148,6 +153,19 @@ Now `species` is a list of species names, and `reactions_info` is another list o
 ```
 reactions = [Reaction(**info) for info in reaction_info]
 ```
+
+## Example Data
+Along with the package there are two additional files of example data - one is `nasa_thermo_all.sqlite`, the database containing all the nasa coefficients, and the other is `rxns_reversible.xml`, the `.xml` file of some reactions and species. Users may access them by:
+```
+import os
+import chemkin_CS207_G9
+BASE_DIR = os.path.dirname(os.path.abspath(chemkin_CS207_G9.data.__file__))
+
+path_xml = os.path.join(BASE_DIR, 'rxns_reversible.xml') # path to the .xml file
+path_sql = os.path.join(BASE_DIR, 'nasa_thermo.sqlite')  # path to the .sqlite file
+```
+Then `path_xml` and `path_sql` can be fed to the above `xml2dict` object and `CoeffQuery` object directly.
+
 
 ## Organization
 
@@ -180,18 +198,6 @@ chemkin_CS207_G9/
 		ReactionSystem.py
 						
 ```
-
-## Additional Files
-Along with the package there are two additional files - one is `nasa_thermo_all.sqlite` which is the database containing all the nasa coefficients, and the other is `rxns_reversible.xml` which is the example `.xml` file of reactions and species. Users may access them by:
-```
-import os
-import chemkin_CS207_G9
-BASE_DIR = os.path.dirname(os.path.abspath(chemkin_CS207_G9.data.__file__))
-
-path_xml = os.path.join(BASE_DIR, 'rxns_reversible.xml') # path to the .xml file
-path_sql = os.path.join(BASE_DIR, 'nasa_thermo.sqlite')  # path to the .sqlite file
-```
-Then `path_xml` and `path_sql` can be fed to the above `xml2dict` object and `CoeffQuery` object directly.
 
 # Authors
 
