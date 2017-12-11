@@ -25,7 +25,7 @@ To calculate the reaction rates, we use the following formula:
   <img width="300" height="60" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_2.png">
 </p>
 
-This is also the euation of evolution. Here <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omega.png">, the progress rate, is:
+This is also the equation of evolution. Here <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omega.png">, the progress rate, is:
 <p align="center">
   <img width="430" height="55" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_3.png">
 </p>
@@ -38,6 +38,10 @@ This is also the euation of evolution. Here <img width="13" height="8" src="http
 The equilibrium constant can be inferred from a set of NASA coefficients. Once we obtained the forward coefficient and the equilibrium constant, we have the backward coefficient, thus the specific equation of evolution.
 
 Note that the relation between reaction rate `f` and concentration `x` turns out to be quite simple. We can derive their jacobian mannually if we want.
+
+For practice, we would first build several classes to read in the reaction information and calculate the righthand side of the equation of evolution, then implement some methods to solve the evolution numerically, and finally provide some easy interfaces for reaction visuallization.
+
+
 
 ## Required modules
 
