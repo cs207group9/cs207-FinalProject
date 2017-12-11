@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module RSGraph</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>RSGraph</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Ccamilo%5Cdropbox%5Cgraduate%20studies%5Charvard%5Ccs207%5Ccs207-finalproject%5Cchemkin_cs207_g9%5Cplotting%5Crsgraph.py">c:\users\camilo\dropbox\graduate studies\harvard\cs207\cs207-finalproject\chemkin_cs207_g9\plotting\rsgraph.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="imageio.html">imageio</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="RSGraph.html#RSGraph">RSGraph</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="RSGraph.html#BipartiteRSGraph">BipartiteRSGraph</a>
+</font></dt><dt><font face="helvetica, arial"><a href="RSGraph.html#HierarchicalRSGraph">HierarchicalRSGraph</a>
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="BipartiteRSGraph">class <strong>BipartiteRSGraph</strong></a>(<a href="RSGraph.html#RSGraph">RSGraph</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;class&nbsp;generates&nbsp;a&nbsp;graph&nbsp;to&nbsp;visualize&nbsp;the&nbsp;whole&nbsp;reaction&nbsp;system.&nbsp;<br>
+It&nbsp;builds&nbsp;nodes&nbsp;for&nbsp;both&nbsp;species&nbsp;and&nbsp;id&nbsp;of&nbsp;equation&nbsp;and&nbsp;seperate&nbsp;them&nbsp;into&nbsp;two&nbsp;parts.<br>
+We&nbsp;construct&nbsp;a&nbsp;bipartite&nbsp;graph&nbsp;with&nbsp;species&nbsp;as&nbsp;nodes&nbsp;(u,1)&nbsp;in&nbsp;one&nbsp;side,&nbsp;and&nbsp;reactions&nbsp;as&nbsp;nodes&nbsp;(u,2)&nbsp;in&nbsp;another&nbsp;side.&nbsp;<br>
+Build&nbsp;directed&nbsp;edges&nbsp;(u,1)&nbsp;to&nbsp;(v,2)&nbsp;if&nbsp;edge&nbsp;u&nbsp;is&nbsp;the&nbsp;reactant&nbsp;of&nbsp;equation&nbsp;v.&nbsp;<br>
+Build&nbsp;directed&nbsp;edges&nbsp;(u,2)&nbsp;to&nbsp;(v,1)&nbsp;if&nbsp;edge&nbsp;v&nbsp;is&nbsp;the&nbsp;product&nbsp;of&nbsp;equation&nbsp;u.&nbsp;<br>
+Set&nbsp;edges&nbsp;to&nbsp;be&nbsp;dashed&nbsp;if&nbsp;the&nbsp;equation&nbsp;is&nbsp;reversible,&nbsp;otherwise&nbsp;filled.<br>
+From&nbsp;this&nbsp;graph,&nbsp;we&nbsp;could&nbsp;recompute&nbsp;the&nbsp;reaction&nbsp;equations.<br>
+The&nbsp;graph&nbsp;assigns&nbsp;a&nbsp;color&nbsp;to&nbsp;each&nbsp;equation&nbsp;(can&nbsp;be&nbsp;defined&nbsp;by&nbsp;the&nbsp;user)&nbsp;and&nbsp;can&nbsp;show&nbsp;concentration&nbsp;of&nbsp;a&nbsp;given&nbsp;specie&nbsp;in&nbsp;the&nbsp;set&nbsp;of&nbsp;reactions&nbsp;by&nbsp;size&nbsp;of&nbsp;the&nbsp;node.<br>
+The&nbsp;reactions&nbsp;can&nbsp;be&nbsp;plotted&nbsp;with&nbsp;different&nbsp;grouping&nbsp;options&nbsp;and&nbsp;style&nbsp;options.<br>
+&nbsp;<br>
+METHODS<br>
+=======<br>
+<a href="#BipartiteRSGraph-plot_system">plot_system</a>(self,&nbsp;method='jupyter',&nbsp;path=""):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;plot&nbsp;the&nbsp;bipartite&nbsp;graph&nbsp;for&nbsp;the&nbsp;whole&nbsp;reaction&nbsp;system&nbsp;with&nbsp;optional&nbsp;parameters&nbsp;method&nbsp;and&nbsp;path&nbsp;passed&nbsp;to&nbsp;plot&nbsp;function.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Inputs:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method:&nbsp;optional&nbsp;string,&nbsp;"jupyter"&nbsp;or&nbsp;"pdf",&nbsp;default&nbsp;to&nbsp;be&nbsp;"jupyter"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path:&nbsp;optional&nbsp;string,&nbsp;saved&nbsp;path,&nbsp;default&nbsp;to&nbsp;be&nbsp;the&nbsp;current&nbsp;directory.<br>
+&nbsp;<br>
+EXAMPLES<br>
+========<br>
+rs&nbsp;=&nbsp;ReactionSystem(reactions)<br>
+b_graph&nbsp;=&nbsp;<a href="#BipartiteRSGraph">BipartiteRSGraph</a>(rs)<br>
+b_graph.<a href="#BipartiteRSGraph-plot_system">plot_system</a>(method='jupyter')<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="RSGraph.html#BipartiteRSGraph">BipartiteRSGraph</a></dd>
+<dd><a href="RSGraph.html#RSGraph">RSGraph</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="BipartiteRSGraph-plot_system"><strong>plot_system</strong></a>(self, method='jupyter', path='')</dt></dl>
+
+<hr>
+Methods inherited from <a href="RSGraph.html#RSGraph">RSGraph</a>:<br>
+<dl><dt><a name="BipartiteRSGraph-__init__"><strong>__init__</strong></a>(self, reaction_sys, format='pdf', style=None)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="BipartiteRSGraph-apply_style"><strong>apply_style</strong></a>(self, style)</dt><dd><tt>Changes&nbsp;the&nbsp;style&nbsp;of&nbsp;the&nbsp;top&nbsp;graph.&nbsp;Input&nbsp;style&nbsp;should&nbsp;be&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;3&nbsp;sub-dictionaries:<br>
+one&nbsp;for&nbsp;graph,&nbsp;one&nbsp;for&nbsp;nodes&nbsp;and&nbsp;one&nbsp;for&nbsp;edges.</tt></dd></dl>
+
+<dl><dt><a name="BipartiteRSGraph-get_random_color"><strong>get_random_color</strong></a>(self)</dt><dd><tt>Generates&nbsp;a&nbsp;random&nbsp;hexadecimal&nbsp;color.</tt></dd></dl>
+
+<dl><dt><a name="BipartiteRSGraph-initialize_top_graph"><strong>initialize_top_graph</strong></a>(self, format='pdf')</dt></dl>
+
+<dl><dt><a name="BipartiteRSGraph-modify_current_style"><strong>modify_current_style</strong></a>(self, style)</dt></dl>
+
+<dl><dt><a name="BipartiteRSGraph-plot"><strong>plot</strong></a>(self, method='jupyter', path='RSGraph')</dt><dd><tt>Displays&nbsp;current&nbsp;top&nbsp;graph&nbsp;in&nbsp;jupyter&nbsp;or&nbsp;pdf/png/jpeg&nbsp;version.&nbsp;If&nbsp;jupyter&nbsp;is&nbsp;not&nbsp;selected,&nbsp;also&nbsp;saves&nbsp;the&nbsp;image.&nbsp;<br>
+If&nbsp;no&nbsp;path&nbsp;has&nbsp;been&nbsp;specified,&nbsp;the&nbsp;image&nbsp;is&nbsp;saved&nbsp;in&nbsp;the&nbsp;current&nbsp;directory.</tt></dd></dl>
+
+<dl><dt><a name="BipartiteRSGraph-reset_default_style"><strong>reset_default_style</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="RSGraph.html#RSGraph">RSGraph</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="HierarchicalRSGraph">class <strong>HierarchicalRSGraph</strong></a>(<a href="RSGraph.html#RSGraph">RSGraph</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;class&nbsp;generates&nbsp;a&nbsp;graph&nbsp;to&nbsp;visualize&nbsp;one&nbsp;or&nbsp;multiple&nbsp;reactions.&nbsp;The&nbsp;graph&nbsp;assigns&nbsp;a&nbsp;color&nbsp;to&nbsp;each&nbsp;equation&nbsp;<br>
+(can&nbsp;be&nbsp;defined&nbsp;by&nbsp;the&nbsp;user)&nbsp;and&nbsp;can&nbsp;show&nbsp;concentration&nbsp;of&nbsp;a&nbsp;given&nbsp;specie&nbsp;in&nbsp;the&nbsp;set&nbsp;of&nbsp;reactions&nbsp;by&nbsp;size&nbsp;of&nbsp;the&nbsp;node.<br>
+The&nbsp;reactions&nbsp;can&nbsp;be&nbsp;plotted&nbsp;all&nbsp;at&nbsp;once&nbsp;or&nbsp;separately,&nbsp;with&nbsp;different&nbsp;grouping&nbsp;options&nbsp;and&nbsp;style&nbsp;options.<br>
+&nbsp;<br>
+ATTRIBUTES<br>
+==========<br>
+reac_system:&nbsp;ReactionSystem&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;represent.<br>
+target_file:&nbsp;Optional.&nbsp;File&nbsp;path&nbsp;indicating&nbsp;where&nbsp;to&nbsp;save&nbsp;the&nbsp;generated&nbsp;graph.<br>
+&nbsp;<br>
+METHODS<br>
+=======<br>
+<a href="#HierarchicalRSGraph-build_reaction_graph">build_reaction_graph</a>(self,&nbsp;reaction,&nbsp;prefix&nbsp;=&nbsp;"cluster",&nbsp;color&nbsp;=&nbsp;None):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;graph&nbsp;for&nbsp;one&nbsp;reaction.&nbsp;If&nbsp;the&nbsp;prefix&nbsp;cluster&nbsp;is&nbsp;sent,&nbsp;the&nbsp;reaction&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gets&nbsp;plotted&nbsp;in&nbsp;its&nbsp;own&nbsp;cluster,&nbsp;and&nbsp;is&nbsp;a&nbsp;subgraph&nbsp;of&nbsp;the&nbsp;main&nbsp;plot.&nbsp;Color<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sets&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;edges.<br>
+&nbsp;<br>
+<a href="#HierarchicalRSGraph-plot_reactions">plot_reactions</a>(self,&nbsp;method&nbsp;=&nbsp;'jupyter',&nbsp;path&nbsp;=&nbsp;"<a href="#RSGraph">RSGraph</a>",&nbsp;idxs&nbsp;=&nbsp;[]):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Plots&nbsp;all&nbsp;the&nbsp;reactions&nbsp;on&nbsp;the&nbsp;current&nbsp;ReactionSystem&nbsp;on&nbsp;different&nbsp;clusters.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;varibale&nbsp;idxs&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;plot&nbsp;certain&nbsp;reactions&nbsp;and&nbsp;not&nbsp;others.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;For&nbsp;example,&nbsp;idxs=[2,3]&nbsp;only&nbsp;plots&nbsp;the&nbsp;reactions&nbsp;with&nbsp;index&nbsp;2&nbsp;and&nbsp;3&nbsp;in&nbsp;the&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reaction&nbsp;list&nbsp;of&nbsp;the&nbsp;ReactionSystem.<br>
+&nbsp;<br>
+<a href="#HierarchicalRSGraph-plot_system">plot_system</a>(self,method='jupyter',path="<a href="#RSGraph">RSGraph</a>",colors=None):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Plots&nbsp;the&nbsp;Reaction&nbsp;system&nbsp;as&nbsp;a&nbsp;whole,&nbsp;without&nbsp;separation&nbsp;between&nbsp;reactions.&nbsp;Shows&nbsp;how&nbsp;each&nbsp;specie&nbsp;interacts&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;In&nbsp;the&nbsp;full&nbsp;reaction&nbsp;system.&nbsp;If&nbsp;the&nbsp;amount&nbsp;of&nbsp;reactions&nbsp;in&nbsp;the&nbsp;system&nbsp;is&nbsp;less&nbsp;than&nbsp;4,&nbsp;the&nbsp;plot&nbsp;will&nbsp;be&nbsp;generated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;With&nbsp;2&nbsp;columns&nbsp;of&nbsp;species,&nbsp;representing&nbsp;on&nbsp;the&nbsp;left&nbsp;the&nbsp;species&nbsp;that&nbsp;are&nbsp;more&nbsp;reactant&nbsp;than&nbsp;product,&nbsp;and&nbsp;on&nbsp;the&nbsp;right<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;species&nbsp;that&nbsp;are&nbsp;more&nbsp;product&nbsp;than&nbsp;reactant.&nbsp;If&nbsp;the&nbsp;system&nbsp;has&nbsp;more&nbsp;than&nbsp;4&nbsp;reactions,&nbsp;an&nbsp;automatic&nbsp;organization<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;nodes&nbsp;is&nbsp;performed&nbsp;instead.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<a href="#HierarchicalRSGraph-set_edges">set_edges</a>(self,&nbsp;g,&nbsp;reaction,&nbsp;color,&nbsp;node_prefix&nbsp;=&nbsp;""):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Generates&nbsp;the&nbsp;edges&nbsp;for&nbsp;a&nbsp;reaction.&nbsp;Edges&nbsp;are&nbsp;dotted&nbsp;for&nbsp;Reactant&nbsp;to&nbsp;Product&nbsp;and&nbsp;filled&nbsp;for&nbsp;product&nbsp;to&nbsp;reactant.<br>
+&nbsp;<br>
+<a href="#HierarchicalRSGraph-save_evolution_mp4">save_evolution_mp4</a>(self,&nbsp;solver_step_size&nbsp;=&nbsp;1e-14,&nbsp;timesteps=5,&nbsp;path="HGRSVideo")L:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Generates&nbsp;and&nbsp;saves&nbsp;and&nbsp;mp4&nbsp;with&nbsp;the&nbsp;evolution&nbsp;of&nbsp;the&nbsp;system&nbsp;on&nbsp;n&nbsp;timesteps,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;an&nbsp;ODE&nbsp;step&nbsp;size&nbsp;defined&nbsp;by&nbsp;the&nbsp;user.&nbsp;<br>
+&nbsp;<br>
+EXAMPLES<br>
+========<br>
+rs&nbsp;=&nbsp;ReactionSystem([Reaction(),&nbsp;Reaction()])<br>
+h_graph&nbsp;=&nbsp;<a href="#HierarchicalRSGraph">HierarchicalRSGraph</a>(rs)<br>
+h_graph.<a href="#HierarchicalRSGraph-plot_system">plot_system</a>(method='jupyter')&nbsp;&nbsp;&nbsp;#&nbsp;Displays&nbsp;on&nbsp;a&nbsp;jupyter&nbsp;notebook&nbsp;without&nbsp;saving&nbsp;to&nbsp;pdf<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="RSGraph.html#HierarchicalRSGraph">HierarchicalRSGraph</a></dd>
+<dd><a href="RSGraph.html#RSGraph">RSGraph</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="HierarchicalRSGraph-build_reaction_graph"><strong>build_reaction_graph</strong></a>(self, reaction, prefix='cluster', color=None)</dt><dd><tt>Creates&nbsp;a&nbsp;graph&nbsp;for&nbsp;one&nbsp;reaction.&nbsp;If&nbsp;the&nbsp;prefix&nbsp;cluster&nbsp;is&nbsp;sent,&nbsp;the&nbsp;reaction&nbsp;<br>
+gets&nbsp;plotted&nbsp;in&nbsp;its&nbsp;own&nbsp;cluster,&nbsp;and&nbsp;is&nbsp;a&nbsp;subgraph&nbsp;of&nbsp;the&nbsp;main&nbsp;plot.&nbsp;Color<br>
+sets&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;edges.</tt></dd></dl>
+
+<dl><dt><a name="HierarchicalRSGraph-plot_reactions"><strong>plot_reactions</strong></a>(self, method='jupyter', path='RSGraph', idxs=[])</dt><dd><tt>Plots&nbsp;individual&nbsp;graphs&nbsp;for&nbsp;each&nbsp;reaction&nbsp;in&nbsp;the&nbsp;ReactionSystem.&nbsp;The&nbsp;variable&nbsp;idxs&nbsp;allows&nbsp;the&nbsp;user<br>
+to&nbsp;select&nbsp;specific&nbsp;reactions&nbsp;from&nbsp;the&nbsp;RS&nbsp;system&nbsp;to&nbsp;plot.</tt></dd></dl>
+
+<dl><dt><a name="HierarchicalRSGraph-plot_system"><strong>plot_system</strong></a>(self, method='jupyter', path='RSGraph', colors=None)</dt><dd><tt>Plots&nbsp;the&nbsp;Reaction&nbsp;system&nbsp;as&nbsp;a&nbsp;whole,&nbsp;without&nbsp;separation&nbsp;between&nbsp;reactions.&nbsp;Shows&nbsp;how&nbsp;each&nbsp;specie&nbsp;interacts&nbsp;<br>
+In&nbsp;the&nbsp;full&nbsp;reaction&nbsp;system.&nbsp;If&nbsp;the&nbsp;amount&nbsp;of&nbsp;reactions&nbsp;in&nbsp;the&nbsp;system&nbsp;is&nbsp;less&nbsp;than&nbsp;4,&nbsp;the&nbsp;plot&nbsp;will&nbsp;be&nbsp;generated<br>
+With&nbsp;2&nbsp;columns&nbsp;of&nbsp;species,&nbsp;representing&nbsp;on&nbsp;the&nbsp;left&nbsp;the&nbsp;species&nbsp;that&nbsp;are&nbsp;more&nbsp;reactant&nbsp;than&nbsp;product,&nbsp;and&nbsp;on&nbsp;the&nbsp;right<br>
+the&nbsp;species&nbsp;that&nbsp;are&nbsp;more&nbsp;product&nbsp;than&nbsp;reactant.&nbsp;If&nbsp;the&nbsp;system&nbsp;has&nbsp;more&nbsp;than&nbsp;4&nbsp;reactions,&nbsp;an&nbsp;automatic&nbsp;organization<br>
+of&nbsp;nodes&nbsp;is&nbsp;performed&nbsp;instead.</tt></dd></dl>
+
+<dl><dt><a name="HierarchicalRSGraph-save_evolution_mp4"><strong>save_evolution_mp4</strong></a>(self, solver_step_size=1e-14, timesteps=5, path='HGRSVideo')</dt><dd><tt>Generates&nbsp;and&nbsp;saves&nbsp;and&nbsp;mp4&nbsp;with&nbsp;the&nbsp;evolution&nbsp;of&nbsp;the&nbsp;system&nbsp;on&nbsp;n&nbsp;timesteps,&nbsp;<br>
+with&nbsp;an&nbsp;ODE&nbsp;step&nbsp;size&nbsp;defined&nbsp;by&nbsp;the&nbsp;user.</tt></dd></dl>
+
+<dl><dt><a name="HierarchicalRSGraph-set_edges"><strong>set_edges</strong></a>(self, g, reaction, color, node_prefix='')</dt><dd><tt>Generates&nbsp;the&nbsp;edges&nbsp;for&nbsp;a&nbsp;reaction.&nbsp;Edges&nbsp;are&nbsp;dottes&nbsp;for&nbsp;Reactant&nbsp;to&nbsp;Product&nbsp;and&nbsp;filled&nbsp;for&nbsp;product&nbsp;to&nbsp;reactant.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="RSGraph.html#RSGraph">RSGraph</a>:<br>
+<dl><dt><a name="HierarchicalRSGraph-__init__"><strong>__init__</strong></a>(self, reaction_sys, format='pdf', style=None)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="HierarchicalRSGraph-apply_style"><strong>apply_style</strong></a>(self, style)</dt><dd><tt>Changes&nbsp;the&nbsp;style&nbsp;of&nbsp;the&nbsp;top&nbsp;graph.&nbsp;Input&nbsp;style&nbsp;should&nbsp;be&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;3&nbsp;sub-dictionaries:<br>
+one&nbsp;for&nbsp;graph,&nbsp;one&nbsp;for&nbsp;nodes&nbsp;and&nbsp;one&nbsp;for&nbsp;edges.</tt></dd></dl>
+
+<dl><dt><a name="HierarchicalRSGraph-get_random_color"><strong>get_random_color</strong></a>(self)</dt><dd><tt>Generates&nbsp;a&nbsp;random&nbsp;hexadecimal&nbsp;color.</tt></dd></dl>
+
+<dl><dt><a name="HierarchicalRSGraph-initialize_top_graph"><strong>initialize_top_graph</strong></a>(self, format='pdf')</dt></dl>
+
+<dl><dt><a name="HierarchicalRSGraph-modify_current_style"><strong>modify_current_style</strong></a>(self, style)</dt></dl>
+
+<dl><dt><a name="HierarchicalRSGraph-plot"><strong>plot</strong></a>(self, method='jupyter', path='RSGraph')</dt><dd><tt>Displays&nbsp;current&nbsp;top&nbsp;graph&nbsp;in&nbsp;jupyter&nbsp;or&nbsp;pdf/png/jpeg&nbsp;version.&nbsp;If&nbsp;jupyter&nbsp;is&nbsp;not&nbsp;selected,&nbsp;also&nbsp;saves&nbsp;the&nbsp;image.&nbsp;<br>
+If&nbsp;no&nbsp;path&nbsp;has&nbsp;been&nbsp;specified,&nbsp;the&nbsp;image&nbsp;is&nbsp;saved&nbsp;in&nbsp;the&nbsp;current&nbsp;directory.</tt></dd></dl>
+
+<dl><dt><a name="HierarchicalRSGraph-reset_default_style"><strong>reset_default_style</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="RSGraph.html#RSGraph">RSGraph</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="RSGraph">class <strong>RSGraph</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>THIS&nbsp;IS&nbsp;A&nbsp;BASE&nbsp;CLASS<br>
+&nbsp;<br>
+<a href="#RSGraph">RSGraph</a>&nbsp;is&nbsp;basically&nbsp;the&nbsp;parent&nbsp;class&nbsp;of&nbsp;two&nbsp;types&nbsp;of&nbsp;network&nbsp;graph:&nbsp;<a href="#BipartiteRSGraph">BipartiteRSGraph</a>&nbsp;and&nbsp;<a href="#HierarchicalRSGraph">HierarchicalRSGraph</a>,&nbsp;which&nbsp;are&nbsp;to&nbsp;generate&nbsp;a&nbsp;graph&nbsp;to&nbsp;visualize&nbsp;one&nbsp;or&nbsp;multiple&nbsp;reactions.<br>
+The&nbsp;base&nbsp;class&nbsp;<a href="#RSGraph">RSGraph</a>&nbsp;builds&nbsp;some&nbsp;basic&nbsp;settings&nbsp;of&nbsp;the&nbsp;graph&nbsp;plot.<br>
+&nbsp;<br>
+ATTRIBUTES<br>
+===========<br>
+rs:&nbsp;ReactionSystem&nbsp;<a href="builtins.html#object">object</a>,&nbsp;pass&nbsp;in&nbsp;the&nbsp;reaction&nbsp;system&nbsp;to&nbsp;be&nbsp;built&nbsp;graph<br>
+top:&nbsp;graphviz&nbsp;Digraph,&nbsp;dot&nbsp;graph&nbsp;to&nbsp;be&nbsp;plotted&nbsp;graph<br>
+default_style:&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;3&nbsp;sub-dictionaries&nbsp;of&nbsp;"graph",&nbsp;"node",&nbsp;"edge",&nbsp;default&nbsp;setting&nbsp;of&nbsp;graph<br>
+&nbsp;<br>
+INITIALIZATION<br>
+===============<br>
+<a href="#RSGraph-__init__">__init__</a>(self,&nbsp;reaction_sys,&nbsp;format="pdf",style=None)<br>
+&nbsp;<br>
+&nbsp;<br>
+INPUTS:&nbsp;<br>
+---------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reaction_sys:&nbsp;ReactionSystem&nbsp;<a href="builtins.html#object">object</a>,&nbsp;reaction&nbsp;system&nbsp;to&nbsp;build&nbsp;network&nbsp;graph<br>
+&nbsp;&nbsp;&nbsp;&nbsp;format:&nbsp;Optional&nbsp;string,&nbsp;graph&nbsp;format&nbsp;to&nbsp;be&nbsp;expected&nbsp;to&nbsp;show,&nbsp;initilizaed&nbsp;to&nbsp;be&nbsp;"pdf"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;style:&nbsp;Optional,&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;3&nbsp;sub-dictionaries&nbsp;of&nbsp;"graph",&nbsp;"node",&nbsp;"edge",&nbsp;initialized&nbsp;to&nbsp;default_style&nbsp;as&nbsp;follows.<br>
+&nbsp;<br>
+METHODS<br>
+=======<br>
+<a href="#RSGraph-modify_current_style">modify_current_style</a>(self,&nbsp;style):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;the&nbsp;current&nbsp;style&nbsp;of&nbsp;graph<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Inputs:&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style:&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;3&nbsp;sub-dictionaries&nbsp;of&nbsp;"graph",&nbsp;"node",&nbsp;"edge",&nbsp;initialized&nbsp;to&nbsp;default_style&nbsp;as&nbsp;follows.<br>
+&nbsp;<br>
+<a href="#RSGraph-reset_default_style">reset_default_style</a>(self):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reset&nbsp;the&nbsp;style&nbsp;(self.<strong>current_style</strong>)&nbsp;to&nbsp;be&nbsp;default&nbsp;(self.<strong>default_style</strong>)<br>
+&nbsp;<br>
+<a href="#RSGraph-plot">plot</a>(self,method='jupyter',path=""):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Displays&nbsp;current&nbsp;top&nbsp;graph&nbsp;in&nbsp;jupyter&nbsp;or&nbsp;pdf&nbsp;version.&nbsp;If&nbsp;pdf&nbsp;selected,&nbsp;also&nbsp;saves&nbsp;the&nbsp;image.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;no&nbsp;path&nbsp;has&nbsp;been&nbsp;specified,&nbsp;the&nbsp;image&nbsp;is&nbsp;saved&nbsp;in&nbsp;the&nbsp;current&nbsp;directory.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Inputs:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method:&nbsp;optional&nbsp;string,&nbsp;"jupyter"&nbsp;or&nbsp;"pdf",&nbsp;default&nbsp;to&nbsp;be&nbsp;"jupyter"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path:&nbsp;optional&nbsp;string,&nbsp;saved&nbsp;path,&nbsp;default&nbsp;to&nbsp;be&nbsp;the&nbsp;current&nbsp;directory.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+EXAMPLE<br>
+========<br>
+rs&nbsp;=&nbsp;ReactionSystem(reactions)<br>
+graph&nbsp;=&nbsp;<a href="#RSGraph">RSGraph</a>(rs)<br>
+graph.<a href="#RSGraph-plot">plot</a>()&nbsp;&nbsp;&nbsp;#&nbsp;Displays&nbsp;a&nbsp;graph&nbsp;with&nbsp;customized&nbsp;setting&nbsp;on&nbsp;a&nbsp;jupyter&nbsp;notebook&nbsp;without&nbsp;saving&nbsp;to&nbsp;pdf<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="RSGraph-__init__"><strong>__init__</strong></a>(self, reaction_sys, format='pdf', style=None)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="RSGraph-apply_style"><strong>apply_style</strong></a>(self, style)</dt><dd><tt>Changes&nbsp;the&nbsp;style&nbsp;of&nbsp;the&nbsp;top&nbsp;graph.&nbsp;Input&nbsp;style&nbsp;should&nbsp;be&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;3&nbsp;sub-dictionaries:<br>
+one&nbsp;for&nbsp;graph,&nbsp;one&nbsp;for&nbsp;nodes&nbsp;and&nbsp;one&nbsp;for&nbsp;edges.</tt></dd></dl>
+
+<dl><dt><a name="RSGraph-get_random_color"><strong>get_random_color</strong></a>(self)</dt><dd><tt>Generates&nbsp;a&nbsp;random&nbsp;hexadecimal&nbsp;color.</tt></dd></dl>
+
+<dl><dt><a name="RSGraph-initialize_top_graph"><strong>initialize_top_graph</strong></a>(self, format='pdf')</dt></dl>
+
+<dl><dt><a name="RSGraph-modify_current_style"><strong>modify_current_style</strong></a>(self, style)</dt></dl>
+
+<dl><dt><a name="RSGraph-plot"><strong>plot</strong></a>(self, method='jupyter', path='RSGraph')</dt><dd><tt>Displays&nbsp;current&nbsp;top&nbsp;graph&nbsp;in&nbsp;jupyter&nbsp;or&nbsp;pdf/png/jpeg&nbsp;version.&nbsp;If&nbsp;jupyter&nbsp;is&nbsp;not&nbsp;selected,&nbsp;also&nbsp;saves&nbsp;the&nbsp;image.&nbsp;<br>
+If&nbsp;no&nbsp;path&nbsp;has&nbsp;been&nbsp;specified,&nbsp;the&nbsp;image&nbsp;is&nbsp;saved&nbsp;in&nbsp;the&nbsp;current&nbsp;directory.</tt></dd></dl>
+
+<dl><dt><a name="RSGraph-reset_default_style"><strong>reset_default_style</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

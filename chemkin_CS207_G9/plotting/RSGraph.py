@@ -2,8 +2,15 @@ import imageio
 imageio.plugins.ffmpeg.download()
 from moviepy.editor import ImageClip, concatenate_videoclips
 import random
+import graphviz 
 from graphviz import Digraph
+from chemkin_CS207_G9.parser.database_query import CoeffQuery
+from chemkin_CS207_G9.parser.xml2dict import xml2dict
+from chemkin_CS207_G9.reaction.Reaction import Reaction
+from chemkin_CS207_G9.reaction.ReactionSystem import ReactionSystem
 import numpy as np
+import random
+import os
 
 
 class RSGraph():
@@ -53,6 +60,7 @@ class RSGraph():
     rs = ReactionSystem(reactions)
     graph = RSGraph(rs)
     graph.plot()   # Displays a graph with customized setting on a jupyter notebook without saving to pdf
+    
     """
     
     def __init__(self, reaction_sys, format="pdf",style=None):
@@ -84,17 +92,19 @@ class RSGraph():
         }
         }
         
-        self.color_list = ['#4285f4', '#ea4335','#fbbc05','#34a853','#ffffff',
-                           '#ff9300','#fb5f02','#b83709','#fbf23d','#ffaf04']
+        self.color_list = ['#feff6f', '#d2ff6f', '#b5ff6f', '#98ff6f', '#6fff71',
+                            '#ff9300','#fb5f02','#b83709','#fbf23d','#ffaf04',
+                            '#4285f4', '#ea4335','#fbbc05','#34a853','#ffffff']
         
         
         self.current_style = self.default_style
         self.initialize_top_graph(format)
     
     
-    def initialize_top_graph(self, format="pdf"):
+    def initialize_top_graph(self, format="pdf", label=''):
         self.top = Digraph(format = format)
         self.apply_style(self.current_style)
+        self.top.graph_attr.update(label = label)
     
 
     def apply_style(self, style):
@@ -105,7 +115,8 @@ class RSGraph():
         self.top.graph_attr.update(('graph' in style and style['graph']) or {})
         self.top.node_attr.update(('nodes' in style and style['nodes']) or {})
         self.top.edge_attr.update(('edges' in style and style['edges']) or {})
-       
+        self.bg_color = ('bgcolor' in style['graph'] and style['graph']['bgcolor']) or '#333333'
+        self.node_color = ('fillcolor' in style['graph'] and style['graph']['fillcolor']) or '#667766'
     
     def get_random_color(self):
         """
@@ -119,7 +130,7 @@ class RSGraph():
     def modify_current_style(self, style):
         self.current_style = style
     
-    def plot(self,method = 'jupyter',path="RSGraph"):
+    def plot(self,method = 'jupyter',path="RSGraph", view=True):
         """
         Displays current top graph in jupyter or pdf/png/jpeg version. If jupyter is not selected, also saves the image. 
         If no path has been specified, the image is saved in the current directory.
@@ -127,22 +138,8 @@ class RSGraph():
         if method == 'jupyter':
             return self.top
         else:
-            self.top.view(filename=path)
+            self.top.render(filename=path, view=view)
     
-#    def plot_reactions(self, method = 'jupyter', path = "", idxs = []):
-#        raise NotImplementedError
-#        
-#    def plot_system(self,method='pdf',path=""):
-#        raise NotImplementedError
-#        
-#    def save_evolution_mp4(self,system,reactions,timesteps=5, path = ""):
-#        raise NotImplementedError
-#        
-#    def set_edges(self, reaction, color):
-#        raise NotImplementedError
-#        
-#    def save_mp4(self,imgs, path):
-#        raise NotImplementedError
 
         
 class BipartiteRSGraph(RSGraph):
@@ -170,10 +167,11 @@ class BipartiteRSGraph(RSGraph):
     rs = ReactionSystem(reactions)
     b_graph = BipartiteRSGraph(rs)
     b_graph.plot_system(method='jupyter') 
+
     
     """
     
-    def plot_system(self, method='jupyter', path=""):
+    def plot_system(self, method='jupyter', path="", view =True):
         self.initialize_top_graph()
         
         self.top.graph_attr.update(rankdir='LR')
@@ -206,7 +204,7 @@ class BipartiteRSGraph(RSGraph):
                 for k2 in r.getProducts():
                     self.top.edge(str(idx), k2, color = c, style = "filled")
         
-        return self.plot(method=method, path=path)    
+        return self.plot(method=method, path=path,view=view)    
     
 
 
@@ -252,10 +250,12 @@ class HierarchicalRSGraph(RSGraph):
     
     EXAMPLES
     ========
-    rs = ReactionSystem([Reaction(), Reaction()])
-    h_graph = HierarchicalRSGraph(rs)
-    h_graph.plot_system(method='jupyter')   # Displays on a jupyter notebook without saving to pdf
+    >>> rs = ReactionSystem([Reaction(), Reaction()])
+    >>> h_graph = HierarchicalRSGraph(rs)
+    >>> h_graph.plot_system(method='jupyter')   # Displays on a jupyter notebook without saving to pdf
+    
     """
+    
     
            
     def build_reaction_graph(self, reaction, prefix = "cluster", color = None):
@@ -283,29 +283,30 @@ class HierarchicalRSGraph(RSGraph):
 
             
             
-    def plot_reactions(self, method = 'jupyter', path = "RSGraph", idxs = []):
+    def plot_reactions(self, method = 'jupyter', path = "RSGraph", idxs = [], view=True):
         """
         Plots individual graphs for each reaction in the ReactionSystem. The variable idxs allows the user
         to select specific reactions from the RS system to plot.
         """
+        
+        if not idxs:
+            idxs = list(range(len(self.rs.get_reactions())))
         
         if method != 'jupyter':
             self.initialize_top_graph(format=method)
         else:
             self.initialize_top_graph()
         
-        if not idxs:
-            idxs = list(range(len(self.rs.get_reactions())))
             
         r_graph = []
         for i,r in enumerate([self.rs.get_reactions()[i] for i in idxs]):
             r_graph.append( self.build_reaction_graph(r, prefix = 'cluster'+str(i)) )
             self.top.subgraph(r_graph[i])
         
-        return self.plot(method = method, path=path) 
+        return self.plot(method = method, path=path,view=view) 
 
         
-    def plot_system(self,method='jupyter',path="RSGraph",colors=None):
+    def plot_system(self,method='jupyter',path="RSGraph",colors=None,view=True):
         """
         Plots the Reaction system as a whole, without separation between reactions. Shows how each specie interacts 
         In the full reaction system. If the amount of reactions in the system is less than 4, the plot will be generated
@@ -314,19 +315,23 @@ class HierarchicalRSGraph(RSGraph):
         of nodes is performed instead.
         """
         if method != 'jupyter':
-            self.initialize_top_graph(format=method)
+            self.initialize_top_graph(format=method, 
+            label='Reaction System Graph\n'+str(len(self.rs.get_reactions()))+' Reactions')
         else:
-            self.initialize_top_graph()
+            self.initialize_top_graph(label='Reaction System Graph\n'+str(len(self.rs.get_reactions()))+' Reactions')
+        if colors == None:
+            colors = self.color_list        
         self.top.graph_attr.update(rankdir='LR')
         concs = self.rs.get_concs()
         init_concs = self.rs.get_init_concs()
-#         print('init_concs',init_concs)
         suffix={}
         concs_dev={}
         for s in self.rs.get_species():
             if concs and init_concs:
                 suffix[s]='\n'+"{0:.2f}".format(concs[s])
                 concs_dev[s] = 1 / (1 + np.exp(-4*(concs[s]-init_concs[s])))
+                if concs_dev[s] < 0.01:
+                    concs_dev[s] = 0.01
             else:
                 suffix[s]=''
                 concs_dev[s] = 0.01
@@ -351,17 +356,17 @@ class HierarchicalRSGraph(RSGraph):
             for s in self.rs.get_species(): 
                 if reactant_count[s] >= product_count[s]:
                     reac.node(s, label = s+suffix[s], style='filled', 
-                              fillcolor='#997777;'+'{0:.2f}'.format(concs_dev[s])+':#333333', gradientangle='90')
+                              fillcolor=self.fillcolor_string(concs_dev[s],self.bg_color, self.node_color),gradientangle='90')
                 elif reactant_count[s] < product_count[s]:
                     prod.node(s, label = s+suffix[s], style='filled', 
-                              fillcolor='#997777;'+'{0:.2f}'.format(concs_dev[s])+':#333333', gradientangle='90')
+                              fillcolor=self.fillcolor_string(concs_dev[s],self.bg_color, self.node_color),gradientangle='90')
             self.top.subgraph(reac)
             self.top.subgraph(prod)
         else:
             self.top.graph_attr.update(splines = 'ortho')
             for s in self.rs.get_species():
                 self.top.node(s, label = s+suffix[s], style='filled', 
-                              fillcolor='#997777;'+'{0:.2f}'.format(concs_dev[s])+':#333333', gradientangle='90')
+                              fillcolor=self.fillcolor_string(concs_dev[s],self.bg_color, self.node_color),gradientangle='90')
         
         
         for i,reaction in enumerate(self.rs.get_reactions()):
@@ -371,11 +376,15 @@ class HierarchicalRSGraph(RSGraph):
                 color = colors[i%len(colors)]
             self.top = self.set_edges(self.top, reaction, color)
     
-        return self.plot(method=method, path=path)
+        return self.plot(method=method, path=path,view=view)
+   
+    
+    def fillcolor_string(self, th, bg_color, node_color):
+        return node_color+';'+'{0:.2f}'.format(th)+':'+bg_color
     
     def set_edges(self, g, reaction, color, node_prefix = ""):
         """
-        Generates the edges for a reaction. Edges are dottes for Reactant to Product and filled for product to reactant.
+        Generates the edges for a reaction. Edges are dotted for Reactant to Product and filled for product to reactant.
         """
         for idx, s1 in enumerate(reaction.getReactants().keys()):
             for s2 in reaction.getProducts().keys():
@@ -389,16 +398,29 @@ class HierarchicalRSGraph(RSGraph):
         return g
                     
     
-    def save_evolution_mp4(self, solver_step_size = 1e-14, timesteps=5, path="HGRSVideo"):
+    def save_evolution_movie(self, solver_step_size = 1e-14, timesteps=5, path="HGRSVideo", format = 'gif', colors = None, system=True):
         """
-        Generates and saves and mp4 with the evolution of the system on n timesteps, 
+        Generates and saves an mp4 with the evolution of the system on n timesteps, 
         with an ODE step size defined by the user. 
         """
         clip_paths = []        
         for n in range(timesteps):
             self.rs.evolute(solver_step_size)
-            self.plot_system(method = 'png', path = path + "_img"+str(n), colors=self.color_list)
+            if system:
+                self.plot_system(method = 'png', path = path + "_img"+str(n), colors=self.color_list,view=False)
+            else:
+                self.plot_reactions( method = 'png', path = path + "_img"+str(n), view=False)
             clip_paths.append(path + "_img"+str(n)+'.png')
         frames = [ImageClip(img).set_duration(0.1) for img in clip_paths]
         movie = concatenate_videoclips(frames, method="compose")
-        movie.write_videofile(path+".mp4", fps=30)
+        if format == 'gif':
+            movie.write_gif(path+".gif", fps=30)
+        elif format == 'mp4':
+            movie.write_videofile(path+".mp4", fps=30)
+        else:
+            raise ValueError('Wrong format. Formats accepted are gif and mp4.')
+        
+        
+        for n in range(timesteps):
+            os.remove( path + "_img"+str(n))
+            os.remove( path + "_img"+str(n)+'.png')
