@@ -219,7 +219,7 @@ Build undirected edges/line (u,v) if u and v are reactants in an equation.
 Build directed dashed edges/arrow (u,v) if v is u’s product in an equation.  If it is reversible, then we use a double sided arrow.
 
 <p align="center">
-  <img src="Illustrations/h_graph_system.jpg"/>
+  <img width="350" height="200"  src="Illustrations/h_graph_system.jpg"/>
 </p>
 
 ```
@@ -238,7 +238,7 @@ We could also plots individual graphs for each reaction in the ReactionSystem  `
 h_graph.plot_reactions(method = 'jupyter', path = "RSGraph", idxs = [])
 ```
 <p align="center">
-<img src="Illustrations/h_graph_reaction.jpg"/>
+<img width="400" height="300"  src="Illustrations/h_graph_reaction.jpg"/>
 </p>
 
 
