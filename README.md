@@ -219,12 +219,13 @@ Build undirected edges/line (u,v) if u and v are reactants in an equation.
 Build directed dashed edges/arrow (u,v) if v is u’s product in an equation.  If it is reversible, then we use a double sided arrow.
 
 <p align="center">
-  <img src="Illustrations/demo2.png"/>
+  <img src="Illustrations/h_graph_system.png"/>
 </p>
 
 ```
 Example 2: Reaction for Hierarchical graph
-A + B = C + D
+0: H + O2 = O + OH
+1: O + H2 = H + OH
 ```
 We initialize the  `BipartiteRSGraph` object by passing the  `ReactoinSystem` object in it, and plot the hierarchical graph of the whole system using `plot_system`.
 ```
@@ -236,11 +237,16 @@ We could also plots individual graphs for each reaction in the ReactionSystem  `
 ```
 h_graph.plot_reactions(method = 'jupyter', path = "RSGraph", idxs = [])
 ```
+<p align="center">
+<img src="Illustrations/h_graph_reaction.png"/>
+</p>
+
+
 The variable `idxs` is a list of integers that allows the user to select specific reactions from the reaction system to plot.
 
 There is another amazing feature: `save_evolution_mp4` generates and saves and mp4 with the evolution of the system on n timesteps, with an ODE step size defined by the user. 
 ```
-save_evolution_mp4(solver_step_size = 1e-14, timesteps=5, path="HGRSVideo")
+h_graph.save_evolution_mp4(solver_step_size = 1e-14, timesteps=5, path="HGRSVideo")
 ```
 
 ## Time Evolution
