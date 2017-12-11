@@ -329,9 +329,12 @@ chemkin_CS207_G9/
 	__init__.py
 	auxiliary/
 		__init__.py
-		check_and_response.py		-> Classes: ValueCheck
-		mathematical_science.py		-> Classes: MathModel
-		useful_structure.py			-> Classes: PartialLockedDict
+		check_and_response.py
+			Classes: ValueCheck
+		mathematical_science.py
+			Classes: MathModel
+		useful_structure.py
+			Classes: PartialLockedDict
 	data/
 		__init__.py
 		nasa_thermo_all.sqlite
@@ -339,23 +342,30 @@ chemkin_CS207_G9/
 		rxns_reversible.xml
 	math/
 		__init__.py
-		ode_solver.py				-> Classes: solve_ivp, SemiImplicitExtrapolation,
-												DenseOutput
+		ode_solver.py
+			Classes: solve_ivp, SemiImplicitExtrapolation, DenseOutput
 	parser/
 		__init__.py
-		database_query.py			-> Classes: CoeffQuery
-		Reaction_Creator.py			-> Classes: Reaction_Creator
-		xml2dict.py					-> Classes: xml2dict
+		database_query.py
+			Classes: CoeffQuery
+		Reaction_Creator.py
+			Classes: Reaction_Creator
+		xml2dict.py
+			Classes: xml2dict
 	plotting/
 		__init__.py
-		NonNetworkPlot.py			-> Functions: plot_concentration, plot_reaction_rate,
-												  plot_modified_arrhenius 
-		RSGraph.py					-> Classes: RSGraph, BipartiteRSGraph, HierarchicalRSGraph
+		NonNetworkPlot.py
+			Functions: plot_concentration, plot_reaction_rate, plot_modified_arrhenius 
+		RSGraph.py
+			Classes: RSGraph, BipartiteRSGraph, HierarchicalRSGraph
 	reaction/
 		__init__.py
-		CoeffLaw.py					-> Classes: Constant, Arrhenius, modArrhenius, BackwardLaw
-		Reaction.py					-> Classes: Reaction
-		ReactionSystem.py			-> Classes: ReactionSystem
+		CoeffLaw.py
+			Classes: Constant, Arrhenius, modArrhenius, BackwardLaw
+		Reaction.py
+			Classes: Reaction
+		ReactionSystem.py
+			Classes: ReactionSystem
 						
 ```
 
