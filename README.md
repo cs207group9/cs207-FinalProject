@@ -197,7 +197,7 @@ Set edges to be dashed if the equation is reversible, otherwise filled.
 From this graph, we could recompute the reaction equations.
 
 <p align="center">
-![Alt text](pic/demo1.png?raw=true "Title")
+  <img src="pic/demo1.png"/>
 </p>
 
 ```
