@@ -234,9 +234,14 @@ h_graph.plot_system(method='jupyter',path="")
 ```
 We could also plots individual graphs for each reaction in the ReactionSystem  `plot_reactions`.
 ```
-h_graph.plot_reactions(self, method = 'jupyter', path = "RSGraph", idxs = [])
+h_graph.plot_reactions(method = 'jupyter', path = "RSGraph", idxs = [])
 ```
 The variable `idxs` is a list of integers that allows the user to select specific reactions from the reaction system to plot.
+
+There is another amazing feature: `save_evolution_mp4` generates and saves and mp4 with the evolution of the system on n timesteps, with an ODE step size defined by the user. 
+```
+save_evolution_mp4(solver_step_size = 1e-14, timesteps=5, path="HGRSVideo")
+```
 
 ## Time Evolution
 As shown in previous section, we have the `evolute` method to update the `ReactionSystem` through some time interval. The `evolute` method calculates the reaction rate and the corresponding jacobian automatically, and calls an ode solver to solve the evolution. A user may specify the solver explicitly, by default it is the `LSODA` method from `scipy` package:
