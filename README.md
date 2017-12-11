@@ -31,9 +31,9 @@ This is also the equation of evolution. Here <img width="13" height="8" src="htt
 </p>
 
 `kf` and `kb` denote for the forward reaction rate coefficient and the backward reaction rate coefficient, respectively. Their ratio should be fixed as the equilibrium constant. For irreversible reactions, the equilibrium constant is theoretically very large so that one can mannually set `kb=0`. The forward coefficient `kf` can be obtained in multiple ways. Implemented forward coefficients are:
-- Constant coefficient
-- Coefficient for Arrhenius reaction
-- Coefficient for modified Arrhenius reaction
+- Constant coefficient (`Constant`)
+- Coefficient for Arrhenius reaction (`Arrhenius`)
+- Coefficient for modified Arrhenius reaction (`modArrhenius`)
 
 The equilibrium constant can be inferred from a set of NASA coefficients. Once we obtained the forward coefficient and the equilibrium constant, we have the backward coefficient, thus the specific equation of evolution.
 
