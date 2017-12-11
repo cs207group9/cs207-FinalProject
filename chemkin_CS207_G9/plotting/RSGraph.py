@@ -262,7 +262,6 @@ class HierarchicalRSGraph(RSGraph):
     ========
     >>> rs = ReactionSystem([Reaction(), Reaction()])
     >>> h_graph = HierarchicalRSGraph(rs)
-    >>> h_graph.view(method='jupyter')   # Displays on a jupyter notebook without saving to pdf
     
     """
     
