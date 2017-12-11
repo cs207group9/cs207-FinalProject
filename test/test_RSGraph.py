@@ -39,10 +39,6 @@ def test_plot_BRSG_notebook():
     assert(type(g) == Digraph)
     return g
 
-def test_plot_BRSG_pdf():
-    h_graph = BipartiteRSGraph(rs2)
-    h_graph.plot_system(method = 'pdf')
-
 def test_wrong_plot_method():
     graph = RSGraph(rs2)
     try:
@@ -129,16 +125,20 @@ def test_changing_styles():
     
 def test_plot_system_pdf():
     h_graph = HierarchicalRSGraph(rs1)
-    h_graph.plot_system(method = 'format', path = 'test_HRSG_system_pdf')
+    h_graph.plot_system(method = 'pdf', path = 'test_HRSG_system_pdf')
     
 def test_plot_system_png():
     h_graph = HierarchicalRSGraph(rs1, format = 'png')
-    h_graph.plot_system(method = 'format', path = 'test_HRSG_system_png')
+    h_graph.plot_system(method = 'pdf', path = 'test_HRSG_system_png')
     
 def test_plot_reactions_pdf():
     h_graph = HierarchicalRSGraph(rs1)
-    h_graph.plot_reactions(method = 'format', path = 'test_HRSG_reactions_pdf')
+    h_graph.plot_reactions(method = 'pdf', path = 'test_HRSG_reactions_pdf')
 
 def test_evolution_mp4():
     h_graph = HierarchicalRSGraph(rs1)
     h_graph.save_evolution_mp4(solver_step_size = 7e-16, timesteps = 30)
+    
+def test_plot_BRSG_pdf():
+    h_graph = BipartiteRSGraph(rs2)
+    h_graph.plot_system(method = 'pdf')
