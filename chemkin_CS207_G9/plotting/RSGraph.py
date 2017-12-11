@@ -2,14 +2,8 @@ import imageio
 imageio.plugins.ffmpeg.download()
 from moviepy.editor import ImageClip, concatenate_videoclips
 import random
-import graphviz 
 from graphviz import Digraph
-from chemkin_CS207_G9.parser.database_query import CoeffQuery
-from chemkin_CS207_G9.parser.xml2dict import xml2dict
-from chemkin_CS207_G9.reaction.Reaction import Reaction
-from chemkin_CS207_G9.reaction.ReactionSystem import ReactionSystem
 import numpy as np
-import random
 
 
 class RSGraph():
@@ -262,7 +256,7 @@ class HierarchicalRSGraph(RSGraph):
     ========
     >>> rs = ReactionSystem([Reaction(), Reaction()])
     >>> h_graph = HierarchicalRSGraph(rs)
-    >>> h_graph.view(method='jupyter')   # Displays on a jupyter notebook without saving to pdf
+    >>> h_graph.plot_system(method='jupyter')   # Displays on a jupyter notebook without saving to pdf
     
     """
     
@@ -338,7 +332,7 @@ class HierarchicalRSGraph(RSGraph):
                 concs_dev[s] = 1 / (1 + np.exp(-4*(concs[s]-init_concs[s])))
             else:
                 suffix[s]=''
-                concs_dev[s] = 0
+                concs_dev[s] = 0.01
         
         
         if len(self.rs.get_reactions()) <=4:
@@ -367,6 +361,7 @@ class HierarchicalRSGraph(RSGraph):
             self.top.subgraph(reac)
             self.top.subgraph(prod)
         else:
+            self.top.graph_attr.update(splines = 'ortho')
             for s in self.rs.get_species():
                 self.top.node(s, label = s+suffix[s], style='filled', 
                               fillcolor='#997777;'+'{0:.2f}'.format(concs_dev[s])+':#333333', gradientangle='90')
@@ -388,7 +383,7 @@ class HierarchicalRSGraph(RSGraph):
         for idx, s1 in enumerate(reaction.getReactants().keys()):
             for s2 in reaction.getProducts().keys():
                 if reaction.is_reversible():
-                    g.edge(node_prefix+s1, node_prefix+s2, dirtype='both', color = color, penwidth='2')
+                    g.edge(node_prefix+s1, node_prefix+s2, dir='both', color = color, penwidth='2')
                 else:
                     g.edge(node_prefix+s1, node_prefix+s2, color = color)
             for jdx, s2 in enumerate(reaction.getReactants().keys()):

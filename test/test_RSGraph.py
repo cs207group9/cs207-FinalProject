@@ -39,9 +39,9 @@ def test_plot_BRSG_notebook():
     return g
 
 def test_wrong_plot_method():
-    graph = RSGraph(rs2)
+    h_graph = HierarchicalRSGraph(rs1)
     try:
-        graph.plot(method = 'wrong_format')
+        h_graph.plot_system(method = 'wrong_format')
     except Exception as err:
         assert(type(err) == ValueError)
 
@@ -122,22 +122,22 @@ def test_changing_styles():
     assert(type(g)==Digraph)
     return g
     
-def test_plot_system_pdf():
-    h_graph = HierarchicalRSGraph(rs1)
-    h_graph.plot_system(method = 'pdf', path = 'test_HRSG_system_pdf')
-    
-def test_plot_system_png():
-    h_graph = HierarchicalRSGraph(rs1, format = 'png')
-    h_graph.plot_system(method = 'pdf', path = 'test_HRSG_system_png')
-    
-def test_plot_reactions_pdf():
-    h_graph = HierarchicalRSGraph(rs1)
-    h_graph.plot_reactions(method = 'pdf', path = 'test_HRSG_reactions_pdf')
-
-def test_evolution_mp4():
-    h_graph = HierarchicalRSGraph(rs1)
-    h_graph.save_evolution_mp4(solver_step_size = 7e-16, timesteps = 30)
-    
-def test_plot_BRSG_pdf():
-    h_graph = BipartiteRSGraph(rs2)
-    h_graph.plot_system(method = 'pdf')
+#def test_plot_system_pdf():
+#    h_graph = HierarchicalRSGraph(rs1)
+#    h_graph.plot_system(method = 'pdf', path = 'test_HRSG_system_pdf')
+#    
+#def test_plot_system_png():
+#    h_graph = HierarchicalRSGraph(rs1, format = 'png')
+#    h_graph.plot_system(method = 'pdf', path = 'test_HRSG_system_png')
+#    
+#def test_plot_reactions_pdf():
+#    h_graph = HierarchicalRSGraph(rs1)
+#    h_graph.plot_reactions(method = 'pdf', path = 'test_HRSG_reactions_pdf')
+#
+#def test_evolution_mp4():
+#    h_graph = HierarchicalRSGraph(rs1)
+#    h_graph.save_evolution_mp4(solver_step_size = 7e-16, timesteps = 30)
+#    
+#def test_plot_BRSG_pdf():
+#    h_graph = BipartiteRSGraph(rs2)
+#    h_graph.plot_system(method = 'pdf')
