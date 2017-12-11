@@ -11,18 +11,35 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
 ## Problem Solving
 
-**Theorem**: The translation $[\![e]\!]$ given by
-\begin{align*}
-\alpha
-\end{align*}
+This project aims to calculate reaction coefficients for a set of M chemical reactions involving N species. The reactions are of the form:  
 
+<p align="center">
+  <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Equation1.png">
+</p>
 
+where <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Si.png"> represents the species, <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/nuP.png"> is the stoichiometric coefficient matrix for reactants, and 
+<img width="16" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/nuPP.png"> is the stoichiometric matrix for products. To calculate the reaction coefficients, we use the following equation:
+
+<p align="center">
+  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/Equation2.png">
+</p>
+
+were <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omega.png">, the progress rate, is:
+
+<p align="center">
+  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/omegaDef.png">
+</p>
+
+And <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/kj.png"> is the forward reaction rate coefficient. This coefficient can be obtained in multiple ways. Implemented coefficients are:
+- Constant coefficient
+- Coefficient for Arrhenius reaction
+- Coefficient for modified Arrhenius reaction
 
 ## Required modules
 
 To run this library, you will need to download and install (if not installed yet) the following modules:
 
-```numpy, xml, sqlite3, copy, more_itertools, scipy``` .
+```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz ``` .
 
 You can download and install these modules by using the following commande:
 
@@ -115,6 +132,38 @@ info = reader.get_info()
 ```
 species = info[0]
 reactions = [Reaction(**r) for r in info[1]]
+```
+
+## Organization
+
+Our library is structured as followed:
+
+``` 
+chemkin_CS207_G9/
+	__init__.py
+	auxiliary/
+		__init__.py
+		check_and_response.py
+		mathematical_science.py
+		useful_structure.py
+	data/
+		__init__.py
+		nasa_thermo_all.sqlite
+		nasa_thermo.sqlite
+		rxns_reversible.xml
+	parser/
+		__init__.py
+		database_query.py
+		xml2dict.py
+	plotting/
+		__init__.py
+		NonNetworkPlot.py
+	reaction/
+		__init__.py
+		CoeffLaw.py
+		Reaction.py
+		ReactionSystem.py
+						
 ```
 
 ## Additional Files
