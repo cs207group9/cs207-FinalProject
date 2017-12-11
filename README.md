@@ -200,7 +200,7 @@ From this graph, we could recompute the reaction equations.
 </p>
 
 ```
-Example 1: Reaction System for Birpartite graph
+Example 1: Reaction System for Birpartite graph (irreversible)
 #1: A + B = C
 #2: C + D = A
 #3: A + D = B
@@ -223,7 +223,7 @@ Build directed dashed edges/arrow (u,v) if v is u’s product in an equation.  I
 </p>
 
 ```
-Example 2: Reaction for Hierarchical graph
+Example 2: Reaction for Hierarchical graph (reversible)
 0: H + O2 = O + OH
 1: O + H2 = H + OH
 ```
