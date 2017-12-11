@@ -96,7 +96,7 @@ class RSGraph():
         
         
         self.current_style = self.default_style
-        self.initialize_top_graph(format,style)
+        self.initialize_top_graph(format)
     
     
     def initialize_top_graph(self, format="pdf"):
