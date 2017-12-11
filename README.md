@@ -275,7 +275,7 @@ If a user wants to contribute to our package, contribution is possible by follow
 - Click on the fork button (upper right corner) and choose your own repository.
 - Create a local copy of your fork of chemkin_CS207_G9 on your computer: on your fork page of chemkin_CS207_G9 on GitHub, 
 click on the green button "Clone or download" and copy the link. On your terminal, enter the following command:
-```git clone CLONE_OR_DOWNLOAD_LINK``
+```git clone CLONE_OR_DOWNLOAD_LINK```
 - Then get inside this new repo, enter the following command to keep up with the changes on the original chemkin_CS207_G9 repo:
 ```git remote add chemkin_G9 git://github.com/cs207group9/cs207-FinalProject```
 - To make it explicit that the "origin" remote is actually your own fork repo, you are advised to enter the following command:
