@@ -260,6 +260,37 @@ rs.evolute(time_evolute, method='LSODA')
 ```
 Other feasible `scipy` solvers are `Radau` and `BDF`. All of them are implicit methods. We also implemented a semi-implicit extrapolation method, `SIE`, as an option. We made this `SIE` stepsize adaptive, but in general `scipy` solvers are faster and stabler. For all the solvers, the default error tolerance is `1e-3` for relative error and `1e-6` for absolute error. There are also other common parameters like `max_step`, and users are free to adjust them with keywords. 
 
+### Animated gifs
+
+The possibility of computing the evolution allows us to generate gifs based on the graphs presented earlier. The HierarchicalRSGraph implements a function called `save_evolution_movie(self, solver_step_size = 1e-14, timesteps=5, path="HGRSVideo", format = 'gif', colors = None, system=True)` that generates an animation of the evolution of the system with a given solver step and number of time steps to compute. The path, format (gif or mp4) and colors of the movie can be defined with the corresponding parameters. If the style of the graph is previously determined, that style will be applied as well. The function can plot both full system gifs as well as gifs of each reaction in a cluster (determined by the system=True parameter).
+
+Let's look at an example:
+```
+# Getting 3 reactions
+rs = Reaction_Creator(path_xml, path_sql, start=0,end=3)
+
+# Assume we have T and our initial concentrations
+rs.set_temp(T)
+rs.set_concs(concentrations, initial=True)
+
+# We create our graph and call the gif function
+h_graph = HierarchicalRSGraph(rs)
+h_graph.save_evolution_movie(solver_step_size = 3e-16, timesteps = 30, path = 'RSGif-'+str(n),system=True)
+```
+
+The output of the function is as follows. For reaction systems (`system=True`):
+
+<img src="RSGif-7.gif" width="280" height="300" />
+<img src="RSGif-2.gif" width="250" height="300" />
+<img src="RSGif-6.gif" width="530" height="320" />
+
+And for reactions as clusters (`system=False`):
+
+<img src="ReacGif-3.gif" width="500" height="200" />
+<img src="ReacGif-2.gif" width="500" height="200" />
+
+### Evolution curves
+
 With the `evolution` method we can pass the `ReactionSystem` objects as the input arguments of evolution-plotting funtions. There are two functions of such kind, `plot_concentration` and `plot_reaction_rate`. Here is an example of their usage. First we load the `ReactionSystem` as usual:
 ```
 from chemkin_CS207_G9.reaction.Reaction import Reaction
