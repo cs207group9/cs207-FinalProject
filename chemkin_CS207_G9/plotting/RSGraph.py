@@ -333,7 +333,7 @@ class HierarchicalRSGraph(RSGraph):
         suffix={}
         concs_dev={}
         for s in self.rs.get_species():
-            if concs:
+            if concs and init_concs:
                 suffix[s]='\n'+"{0:.2f}".format(concs[s])
                 concs_dev[s] = 1 / (1 + np.exp(-4*(concs[s]-init_concs[s])))
             else:

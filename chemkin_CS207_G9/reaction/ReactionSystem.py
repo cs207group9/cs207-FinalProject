@@ -142,6 +142,7 @@ class ReactionSystem:
         if initial_concs:
             self.set_concs(initial_concs, initial = True)    
         else:
+            self._init_concs = {}
             self._concs = {}
 
        
