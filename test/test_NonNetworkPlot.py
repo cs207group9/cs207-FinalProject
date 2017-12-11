@@ -1,6 +1,6 @@
 from chemkin_CS207_G9.plotting.NonNetworkPlot import *
 import matplotlib
-import matplotlib.plt as plt
+import matplotlib.pyplot as plt
 matplotlib.use('Agg')
 
 from chemkin_CS207_G9.parser.xml2dict import xml2dict
