@@ -250,6 +250,9 @@ chemkin_CS207_G9/
 		nasa_thermo_all.sqlite
 		nasa_thermo.sqlite
 		rxns_reversible.xml
+	math/
+		__init__.py
+		ode_solver.py
 	parser/
 		__init__.py
 		database_query.py
@@ -257,6 +260,7 @@ chemkin_CS207_G9/
 	plotting/
 		__init__.py
 		NonNetworkPlot.py
+		RSGraph.py
 	reaction/
 		__init__.py
 		CoeffLaw.py
