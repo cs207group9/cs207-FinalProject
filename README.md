@@ -1,4 +1,4 @@
-﻿[![Build Status](https://travis-ci.org/cs207group9/cs207-FinalProject.svg?branch=master)](https://travis-ci.org/cs207group9/cs207-FinalProject.svg?branch=master)
+[![Build Status](https://travis-ci.org/cs207group9/cs207-FinalProject.svg?branch=master)](https://travis-ci.org/cs207group9/cs207-FinalProject.svg?branch=master)
 
 [![Coverage Status](https://coveralls.io/repos/github/cs207group9/cs207-FinalProject/badge.svg?branch=master)](https://coveralls.io/github/cs207group9/cs207-FinalProject?branch=master&service=github)
 
@@ -47,7 +47,7 @@ For practice, we built several classes to read in the reaction information and c
 
 To run this library, you will need to download and install (if not installed yet) the following modules:
 
-```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz, moviepy, imageio``` .
+```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz, moviepy, imageio, pydotplus``` .
 
 You can download and install these modules by using the following commande:
 
@@ -173,7 +173,7 @@ We will also provide functions for concentration / reaction rate visualization o
 
 
 ## Implementation of Network Graph
-`RSGraph` is a base class of network visualization, which have some common basic function for plotting and changing the style of graphs. The graph assigns a color to each equation (can be defined by the user) and can show concentration of a given specie in the set of reactions by size of the node.
+`RSGraph` is a base class of network visualization, which have some common basic function for plotting and changing the style of graphs. The graph assigns a color to each equation (can be defined by the user) and can show the change of concentration of a given specie in the set of reactions by color of the node.
 There are two types of graphs derived from the network visulization class `RSGraph`: `BipartiteRSGraph` and `HierarchicalRSGraph`.
 
 We could plot the graph with function `plot`, and set the method as `jupyter` (shown in jupyter notebook directly), or `pdf` (opened in pdf) and the path to saved.
@@ -181,7 +181,7 @@ We could plot the graph with function `plot`, and set the method as `jupyter` (s
 graph.plot(method='jupyter',path="")
 ```
 
-We would also like to change the settings of the graph, with function `change_style` ,
+We would also like to change the settings of the graph, with function `modify_current_style` ,
 ```
 graph.modify_current_style(style)
 ```
