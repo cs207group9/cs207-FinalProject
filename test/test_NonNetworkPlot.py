@@ -31,13 +31,16 @@ rs = ReactionSystem(
     initial_concs=concentrations, initial_T=temperature)
 
 def test_plot_concentration():
-    plot_concentration(rs, np.arange(0,1e-13,1e-15))
+    ax = plot_concentration(rs, np.arange(0,1e-13,1e-15))
+    del ax
     assert( rs.get_concs()==concentrations )
 
 def test_plot_reaction_rate():
-    plot_reaction_rate(rs, np.arange(0,1e-13,1e-15))
+    ax = plot_reaction_rate(rs, np.arange(0,1e-13,1e-15))
+    del ax
     assert( rs.get_concs()==concentrations )
 
 def test_plot_modified_arrhenius():
-    plot_modified_arrhenius(np.arange(0.01,2,0.01), np.arange(-2,2,1))
+    ax = plot_modified_arrhenius(np.arange(0.01,2,0.01), np.arange(-2,2,1))
+    del ax
     assert( True )
