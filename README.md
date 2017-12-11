@@ -67,7 +67,7 @@ or
 
 `pip install chemkin_CS207_G9`
 
-One can also download and install the library from GitHub by entering the following commands:
+However, we recommend that one downloads and installs the library from GitHub by entering the following commands:
 
 `git clone https://github.com/cs207group9/cs207-FinalProject.git`  
 `cd cs207-FinalProject`  
