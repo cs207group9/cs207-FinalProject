@@ -8,8 +8,7 @@ from chemkin_CS207_G9.reaction.Reaction import Reaction
 from chemkin_CS207_G9.reaction.ReactionSystem import ReactionSystem
 import numpy as np
 import random
-import imageio
-from moviepy.editor import *
+from moviepy.editor import ImageClip, concatenate_videoclips
 
 class RSGraph():
     """
