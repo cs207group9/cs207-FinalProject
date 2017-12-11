@@ -30,6 +30,12 @@ were <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalP
   <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omegaDef.png">
 </p>
 
+For a reversible reaction, we want to solve:
+
+<p align="center">
+  <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_1.png">
+</p>
+
 And <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/kj.png"> is the forward reaction rate coefficient. This coefficient can be obtained in multiple ways. Implemented coefficients are:
 - Constant coefficient
 - Coefficient for Arrhenius reaction
