@@ -1,15 +1,13 @@
 import imageio
 imageio.plugins.ffmpeg.download()
 from moviepy.editor import ImageClip, concatenate_videoclips
-import random
-import graphviz 
+import random 
 from graphviz import Digraph
 from chemkin_CS207_G9.parser.database_query import CoeffQuery
 from chemkin_CS207_G9.parser.xml2dict import xml2dict
 from chemkin_CS207_G9.reaction.Reaction import Reaction
 from chemkin_CS207_G9.reaction.ReactionSystem import ReactionSystem
 import numpy as np
-import random
 import os
 
 
@@ -250,9 +248,9 @@ class HierarchicalRSGraph(RSGraph):
     
     EXAMPLES
     ========
-    >>> rs = ReactionSystem([Reaction(), Reaction()])
-    >>> h_graph = HierarchicalRSGraph(rs)
-    >>> h_graph.plot_system(method='jupyter')   # Displays on a jupyter notebook without saving to pdf
+    rs = ReactionSystem([Reaction(), Reaction()])
+    h_graph = HierarchicalRSGraph(rs)
+    h_graph.plot_system(method='jupyter')   # Displays on a jupyter notebook without saving to pdf
     
     """
     
