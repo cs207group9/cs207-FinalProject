@@ -285,7 +285,7 @@ Now, you are almost ready to work on your contribution:
 - Fetch the latest changes made on chemkin_CS207_G9 on Github:
 ```git fetch chemkin_G9```
 - Make a new feature branch, where you will actually make your suggestions of new changes:
-```git branch my-new-feature chemkin_G9/master``
+```git branch my-new-feature chemkin_G9/master```
 ```git checkout my-new-feature```
 - Connect the branch to GitHub:
 ```git push --set-upstream your-github-username my-new-feature```
