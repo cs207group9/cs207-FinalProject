@@ -5,6 +5,70 @@ Our feature is a visualization module that allows the user to observe different 
 We will also provide functions for reaction rate visualization over time and over a range of temperatures, evolution of arrhenius coefficients, as well as plots of concentrations as a function of time. For that last element, we will implement an ODE solver to compute the concentrations. The plots will have multiple parameters for user customization, such as log scale options, selection of one or multiple species, visualization of several curves on one graph, real time visualization, etc.
 As a bonus feature, we will also try to provide an easy to use GUI to visualize the different elements.
 
+
+## Implementation of Network Graph
+`RSGraph` is a base class of network visualization, which have some common basic function for plotting and changing the style of graphs. The graph assigns a color to each equation (can be defined by the user) and can show concentration of a given specie in the set of reactions by size of the node.
+There are two types of graphs derived from the network visulization class `RSGraph`: `BipartiteRSGraph` and `HierarchicalRSGraph`.
+
+We could plot the graph with function `plot`, and set the method as `jupyter` (shown in jupyter notebook directly), or `pdf` (opened in pdf) and the path to saved.
+```
+graph.plot(method='jupyter',path="")
+```
+
+We would also like to change the settings of the graph, with function `change_style` ,
+```
+graph.modify_current_style(style)
+```
+where input is a a dictionary with 3 sub-dictionaries: one for graph, one for nodes and one for edges.
+
+
+`BipartiteRSGraph` is a bipartite graph of species and IDs of equation, which help us to recompute the reaction equations.
+We construct a bipartite graph with species as nodes (u,1) in one side, and reactions as nodes (u,2) in another side.
+Build directed edges (u,1) to (v,2) if edge u is the reactant of equation v.
+Build directed edges (u,2) to (v,1) if edge v is the product of equation u.
+Set edges to be dashed if the equation is reversible, otherwise filled.
+From this graph, we could recompute the reaction equations.
+
+![Alt text](pic/demo1.png?raw=true "Title")
+```
+Example 1: Reaction System for Birpartite graph
+#1: A + B = C
+#2: C + D = A
+#3: A + D = B
+```
+
+We initialize the  `BipartiteRSGraph` object by passing the  `ReactoinSystem` object in it, and plot the bipartite graph of the whole system using `plot_system`.
+```
+rs = ReactionSystem(reactions)
+b_graph = BipartiteRSGraph(rs)
+b_graph.plot_system(method='jupyter',path="")
+```
+
+`HierarchicalRSGraph` is a network graph with only species as nodes. The network of reactions can be plotted all at once or separately, with different grouping options and style options.
+From this graph, we could have a basic understanding of the relationships among reactions.
+Build undirected edges/line (u,v) if u and v are reactants in an equation.
+Build directed edges/arrow (u,v) if v is u’s product in an equation.
+
+![Alt text](pic/demo2.png?raw=true "Title")
+```
+Example 2: Reaction for Hierarchical graph
+A + B = C + D
+```
+We initialize the  `BipartiteRSGraph` object by passing the  `ReactoinSystem` object in it, and plot the hierarchical graph of the whole system using `plot_system`.
+```
+rs = ReactionSystem(reactions)
+h_graph = HierarchicalRSGraph(rs)
+h_graph.plot_system(method='jupyter',path="")
+```
+We could also plots individual graphs for each reaction in the ReactionSystem  `plot_reactions`.
+```
+h_graph.plot_reactions(self, method = 'jupyter', path = "RSGraph", idxs = [])
+```
+The variable `idxs` is a list of integers that allows the user to select specific reactions from the reaction system to plot.
+
+
+
+
 ## How will the feature fit in our code
 The feature will integrate with the Reaction and ReactionSystem class seamlessly, and will allow the user to input and XML file, generate ReactionSystem objects, and compute all the necessary visualizations with those.
 

@@ -7,8 +7,7 @@ class RSGraph():
     """
     THIS IS A BASE CLASS
     
-    RSGraph is basically the parent class of two types of network graph: BipartiteRSGraph and HierarchicalRSGraph,
-    which are to generate a graph to visualize one or multiple reactions.
+    RSGraph is basically the parent class of two types of network graph: BipartiteRSGraph and HierarchicalRSGraph, which are to generate a graph to visualize one or multiple reactions.
     The base class RSGraph builds some basic settings of the graph plot.
     
     ATTRIBUTES
@@ -25,15 +24,26 @@ class RSGraph():
     INPUTS: 
     ---------------
         reaction_sys: ReactionSystem object, reaction system to build network graph
-        format: string, graph format to be expected to show, initilizaed to be "pdf"
-        style: a dictionary with 3 sub-dictionaries of "graph", "node", "edge",
-                initialized to default_style as follows.
+        format: Optional string, graph format to be expected to show, initilizaed to be "pdf"
+        style: Optional, a dictionary with 3 sub-dictionaries of "graph", "node", "edge", initialized to default_style as follows.
     
     METHODS
     =======
-    plot_system(self, method='jupyter', path=""):
-        plot the bipartite graph for the whole reaction system
+    modify_current_style(self, style):
+        modify the current style of graph
+        Inputs: 
+            style: a dictionary with 3 sub-dictionaries of "graph", "node", "edge", initialized to default_style as follows.
     
+    reset_default_style(self):
+        reset the style (self.current_style) to be default (self.default_style)
+    
+    plot(self,method='jupyter',path=""):
+        Displays current top graph in jupyter or pdf version. If pdf selected, also saves the image. 
+        If no path has been specified, the image is saved in the current directory.
+        Inputs:
+            method: optional string, "jupyter" or "pdf", default to be "jupyter"
+            path: optional string, saved path, default to be the current directory.
+        
     
     EXAMPLE
     ========
@@ -107,30 +117,20 @@ class RSGraph():
         self.current_style = style
     
     def plot(self,method='jupyter',path=""):
-        """
-        Displays current top graph in jupyter or pdf version. If pdf selected, also saves the image. 
-        If no path has been specified, the image is saved in the current directory.
-        """
         if method == 'jupyter':
             return self.top
         
-        elif method == 'format':
-            self.top.view(filename='/Images/RSGraph')
+        elif method == 'pdf':
+            self.top.view()
         
         else:
             raise ValueError('Unknown method. Valid methods are "jupyter" or "pdf".')
     
     
     def plot_reactions(self, method = 'jupyter', path = "", idxs = []):
-        """
-        Plots individual graphs for each reaction in the ReactionSystem.
-        """
         raise NotImplementedError
         
-    def plot_system(self,method='format',path=""):
-        """
-        Plots the Reaction system as a whole, without separation between reactions. Shows how each specie interacts 
-        """
+    def plot_system(self,method='pdf',path=""):
         raise NotImplementedError
         
     def save_evolution_mp4(self,system,reactions,timesteps=5, path = ""):
@@ -158,14 +158,16 @@ class BipartiteRSGraph(RSGraph):
     METHODS
     =======
     plot_system(self, method='jupyter', path=""):
-        plot the bipartite graph for the whole reaction system
+        plot the bipartite graph for the whole reaction system with optional parameters method and path passed to plot function.
+        Inputs:
+            method: optional string, "jupyter" or "pdf", default to be "jupyter"
+            path: optional string, saved path, default to be the current directory.
 
-    
     EXAMPLES
     ========
     rs = ReactionSystem(reactions)
     b_graph = BipartiteRSGraph(rs)
-    b_graph.plot_system(method='jupyter')   # Displays on a jupyter notebook without saving to pdf
+    b_graph.plot_system(method='jupyter') 
 
     
     """
@@ -207,9 +209,40 @@ class BipartiteRSGraph(RSGraph):
     
     
 class HierarchicalRSGraph(RSGraph):
+    """
+    This class generates a graph to visualize one or multiple reactions. The graph assigns a color to each equation 
+    (can be defined by the user) and can show concentration of a given specie in the set of reactions by size of the node.
+    The reactions can be plotted all at once or separately, with different grouping options and style options.
+    
+    METHODS
+    =======
+    plot_reactions(self, method = 'jupyter', path = "RSGraph", idxs = []):
+        Plots individual graphs for each reaction in the ReactionSystem. The variable idxs allows the user
+        to select specific reactions from the RS system to plot.
+        Input:
+            method: optional string, "jupyter" or "pdf", default to be "jupyter"
+            path: optional string, saved path, default to be the current directory.
+            idxs: optional list of int, default to plot all the equations
+    
+    plot_system(self,method='jupyter',path="RSGraph"):
+        Plots the Reaction system as a whole, without separation between reactions. Shows how each specie interacts 
+        In the full reaction system. If the amount of reactions in the system is less than 4, the plot will be generated
+        With 2 columns of species, representing on the left the species that are more reactant than product, and on the right
+        the species that are more product than reactant. If the system has more than 4 reactions, an automatic organization
+        of nodes is performed instead.
+        
+    
+    EXAMPLES
+    ========
+    rs = ReactionSystem(reactions)
+    h_graph = HierarchicalRSGraph(rs)
+    h_graph.view(method='jupyter')
+    
+    """
+    
     def build_reaction_graph(self, reaction, prefix = "cluster", color = None):
         """
-        Builds a graph for one reaction.
+        Builds a hierarchical graph for one reaction.
         """
         
         if color == None:
@@ -248,13 +281,6 @@ class HierarchicalRSGraph(RSGraph):
         
     
     def plot_system(self,method='jupyter',path="RSGraph"):
-        """
-        Plots the Reaction system as a whole, without separation between reactions. Shows how each specie interacts 
-        In the full reaction system. If the amount of reactions in the system is less than 4, the plot will be generated
-        With 2 columns of species, representing on the left the species that are more reactant than product, and on the right
-        the species that are more product than reactant. If the system has more than 4 reactions, an automatic organization
-        of nodes is performed instead.
-        """
         self.initialize_top_graph()
         self.top.graph_attr.update(rankdir='LR')
         
@@ -281,8 +307,6 @@ class HierarchicalRSGraph(RSGraph):
                     prod.node(s)
             self.top.subgraph(reac)
             self.top.subgraph(prod)
-#             reac.node_attr.update(rank = 'same')
-#             prod.node_attr.update(rank = 'same')
             
         else:
             for s in self.rs.get_species():
@@ -302,6 +326,9 @@ class HierarchicalRSGraph(RSGraph):
         self.save_gif(imgs)
     
     def set_edges(self, g, reaction, color, node_prefix = ""):
+        """
+        build edges for the functions plot_system and build_reaction_graph
+        """
         for idx, s1 in enumerate(reaction.getReactants().keys()):
             for s2 in reaction.getProducts().keys():
                 if reaction.is_reversible():
