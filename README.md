@@ -196,14 +196,13 @@ Set edges to be dashed if the equation is reversible, otherwise filled.
 From this graph, we could recompute the reaction equations.
 
 <p align="center">
-  <img src="Illustrations/demo1.png"/>
+  <img src="Illustrations/b_graph.jpg"/>
 </p>
 
 ```
-Example 1: Reaction System for Birpartite graph (irreversible)
-#1: A + B = C
-#2: C + D = A
-#3: A + D = B
+Example 2: Reaction for Hierarchical graph (reversible)
+0: H + O2 = O + OH
+1: O + H2 = H + OH
 ```
 
 We initialize the  `BipartiteRSGraph` object by passing the  `ReactoinSystem` object in it, and plot the bipartite graph of the whole system using `plot_system`.
