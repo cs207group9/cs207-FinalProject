@@ -50,10 +50,9 @@ class RSGraph():
     
     EXAMPLE
     ========
-    >>>rs = ReactionSystem(reactions)
-    >>>graph = RSGraph(rs)
-    >>>graph.plot()   # Displays a graph with customized setting on a jupyter notebook without saving to pdf
-    
+    >>> rs = ReactionSystem(reactions)
+    >>> graph = RSGraph(rs)
+    >>> graph.plot()   # Displays a graph with customized setting on a jupyter notebook without saving to pdf
     """
     
     def __init__(self, reaction_sys, format="pdf",style=None):
@@ -168,10 +167,9 @@ class BipartiteRSGraph(RSGraph):
 
     EXAMPLES
     ========
-    >>>rs = ReactionSystem(reactions)
-    >>>b_graph = BipartiteRSGraph(rs)
-    >>>b_graph.plot_system(method='jupyter') 
-
+    >>> rs = ReactionSystem(reactions)
+    >>> b_graph = BipartiteRSGraph(rs)
+    >>> b_graph.plot_system(method='jupyter') 
     
     """
     
@@ -257,8 +255,6 @@ class HierarchicalRSGraph(RSGraph):
     >>> rs = ReactionSystem([Reaction(), Reaction()])
     >>> h_graph = HierarchicalRSGraph(rs)
     >>> h_graph.plot_system(method='jupyter')   # Displays on a jupyter notebook without saving to pdf
-
-    
     """
     
            
