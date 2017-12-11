@@ -153,6 +153,10 @@ Now `species` is a list of species names, and `reactions_info` is another list o
 ```
 reactions = [Reaction(**info) for info in reaction_info]
 ```
+We also provide a wrap-up `Reaction_Creator` for users to get reaction system object efficiently. The start and end equations could be specified.
+```
+Reaction_Creator(path_xml, path_sql, start = None, end = None)
+```
 
 ## Example Data
 Along with the package there are two additional files of example data - one is `nasa_thermo_all.sqlite`, the database containing all the nasa coefficients, and the other is `rxns_reversible.xml`, the `.xml` file of some reactions and species. Users may access them by:
