@@ -11,41 +11,37 @@ Group 9: Camilo Fosco, Baptiste Lemaire, Jiejun Lu, Yiqi Xie
 
 ## Problem Solving
 
-This project aims to calculate reaction coefficients for a set of M chemical reactions involving N species. The reactions are of the form:  
-
-<p align="center">
-  <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Equation1.png">
-</p>
-
-where <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Si.png"> represents the species, <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/nuP.png"> is the stoichiometric coefficient matrix for reactants, and 
-<img width="16" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/nuPP.png"> is the stoichiometric matrix for products. To calculate the reaction coefficients, we use the following equation:
-
-<p align="center">
-  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Equation2.png">
-</p>
-
-were <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omega.png">, the progress rate, is:
-
-<p align="center">
-  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omegaDef.png">
-</p>
-
-For a reversible reaction, we want to solve:
+This project aims to derive and evalutate the evolutionary equation for a set of M chemical reactions involving N species. The reactions are of the form: 
 
 <p align="center">
   <img width="310" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_1.png">
 </p>
 
-And <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/kj.png"> is the forward reaction rate coefficient. This coefficient can be obtained in multiple ways. Implemented coefficients are:
+where <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Si.png"> represents the species, <img width="13" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/nuP.png"> is the stoichiometric coefficient matrix for reactants, and 
+<img width="16" height="15" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/nuPP.png"> is the stoichiometric matrix for products. Here we put a double sided arrow in between to indicate that in general we allow the reactions to be reversible. 
+
+To calculate the reaction rates, we use the following formula:
+<p align="center">
+  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_2.png">
+</p>
+
+were <img width="13" height="8" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/omega.png">, the progress rate, is:
+<p align="center">
+  <img width="240" height="50" src="https://github.com/cs207group9/cs207-FinalProject/blob/master/pic/Eq_Rev_3.png">
+</p>
+
+`kf` and `kb` denote for the forward reaction rate coefficient and the backward reaction rate coefficient, respectively. Their ratio should be fixed as the equilibrium constant. For irreversible reactions, the equilibrium constant is theoretically very large so that one can mannually set `kb=0`. The forward coefficient `kf` can be obtained in multiple ways. Implemented forward coefficients are:
 - Constant coefficient
 - Coefficient for Arrhenius reaction
 - Coefficient for modified Arrhenius reaction
+
+Note that the relation between reaction rate `f` and concentration `x` is quite simple. We can derive their jacobian mannually if we want.
 
 ## Required modules
 
 To run this library, you will need to download and install (if not installed yet) the following modules:
 
-```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz ``` .
+```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz``` .
 
 You can download and install these modules by using the following commande:
 
