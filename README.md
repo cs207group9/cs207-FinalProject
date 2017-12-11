@@ -220,7 +220,7 @@ Build undirected edges/line (u,v) if u and v are reactants in an equation.
 Build directed edges/arrow (u,v) if v is u’s product in an equation.
 
 <p align="center">
-![Alt text](pic/demo2.png?raw=true "Title")
+  <img src="pic/demo2.png"/>
 </p>
 
 ```
