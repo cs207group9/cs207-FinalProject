@@ -7,6 +7,7 @@ before_install:
     - pip install more-itertools
     - pip install scipy
     - pip install matplotlib
+    - pip install graphviz
 script:
     - py.test
 after_success:
