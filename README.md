@@ -162,7 +162,7 @@ import chemkin_CS207_G9
 BASE_DIR = os.path.dirname(os.path.abspath(chemkin_CS207_G9.data.__file__))
 
 path_xml = os.path.join(BASE_DIR, 'rxns_reversible.xml') # path to the .xml file
-path_sql = os.path.join(BASE_DIR, 'nasa_thermo.sqlite')  # path to the .sqlite file
+path_sql = os.path.join(BASE_DIR, 'nasa_thermo_all.sqlite')  # path to the .sqlite file
 ```
 Then `path_xml` and `path_sql` can be fed to the above `xml2dict` object and `CoeffQuery` object directly.
 
