@@ -47,7 +47,7 @@ For practice, we built several classes to read in the reaction information and c
 
 To run this library, you will need to download and install (if not installed yet) the following modules:
 
-```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz, moviepy, imageio``` .
+```numpy, xml, sqlite3, copy, more_itertools, scipy, matplotlib, graphviz, moviepy, imageio, pydotplus``` .
 
 You can download and install these modules by using the following commande:
 
