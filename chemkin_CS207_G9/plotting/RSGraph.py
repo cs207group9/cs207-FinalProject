@@ -135,20 +135,20 @@ class RSGraph():
         else:
             self.top.view(filename=path)
     
-    def plot_reactions(self, method = 'jupyter', path = "", idxs = []):
-        raise NotImplementedError
-        
-    def plot_system(self,method='pdf',path=""):
-        raise NotImplementedError
-        
-    def save_evolution_mp4(self,system,reactions,timesteps=5, path = ""):
-        raise NotImplementedError
-        
-    def set_edges(self, reaction, color):
-        raise NotImplementedError
-        
-    def save_mp4(self,imgs, path):
-        raise NotImplementedError
+#    def plot_reactions(self, method = 'jupyter', path = "", idxs = []):
+#        raise NotImplementedError
+#        
+#    def plot_system(self,method='pdf',path=""):
+#        raise NotImplementedError
+#        
+#    def save_evolution_mp4(self,system,reactions,timesteps=5, path = ""):
+#        raise NotImplementedError
+#        
+#    def set_edges(self, reaction, color):
+#        raise NotImplementedError
+#        
+#    def save_mp4(self,imgs, path):
+#        raise NotImplementedError
 
         
 class BipartiteRSGraph(RSGraph):
