@@ -325,7 +325,7 @@ plt.show()
 Our library is structured as followed:
 
 ``` python
-chemkin_CS207_G9/
+**chemkin_CS207_G9/**
 	__init__.py
 	auxiliary/
 		__init__.py
