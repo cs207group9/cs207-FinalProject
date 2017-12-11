@@ -153,6 +153,11 @@ Now `species` is a list of species names, and `reactions_info` is another list o
 ```
 reactions = [Reaction(**info) for info in reaction_info]
 ```
+We also provide a wrap-up `Reaction_Creator` for users to get reaction system object efficiently. The start and end equations could be specified.
+```
+from chemkin_CS207_G9.parser.Reaction_Creator import Reaction_Creator
+Reaction_Creator(path_xml, path_sql, start = None, end = None)
+```
 
 ## Example Data
 Along with the package there are two additional files of example data - one is `nasa_thermo_all.sqlite`, the database containing all the nasa coefficients, and the other is `rxns_reversible.xml`, the `.xml` file of some reactions and species. Users may access them by:
@@ -196,14 +201,13 @@ Set edges to be dashed if the equation is reversible, otherwise filled.
 From this graph, we could recompute the reaction equations.
 
 <p align="center">
-  <img src="Illustrations/demo1.png"/>
+  <img width="460" height="460" src="Illustrations/b_graph.jpg"/>
 </p>
 
 ```
-Example 1: Reaction System for Birpartite graph (irreversible)
-#1: A + B = C
-#2: C + D = A
-#3: A + D = B
+Example 1: Reaction for Bipartite graph (reversible)
+0: H + O2 = O + OH
+1: O + H2 = H + OH
 ```
 
 We initialize the  `BipartiteRSGraph` object by passing the  `ReactoinSystem` object in it, and plot the bipartite graph of the whole system using `plot_system`.
@@ -301,7 +305,7 @@ plt.show()
   <img src="Illustrations/conc_rate_evo.png"/>
 </p>
 
-The functions generate the legends automatically. The users may specify the species of interest, the scale of the y-axis, and other plotting parameters of matplotlib curves.
+Both functions essentially call `matplotlib` functions to make the plot. The legends are generated automatically. Users may specify the species of interest, the scale of the y-axis, and other plotting parameters of matplotlib curves.
 
 ## Modified Arrhenius Curves
 We also provide a function to help visualize the shape of modifiefied Arrhenius curves in relation to `b`:
@@ -324,14 +328,17 @@ plt.show()
 
 Our library is structured as followed:
 
-``` 
-chemkin_CS207_G9/
+``` python
+**chemkin_CS207_G9/**
 	__init__.py
 	auxiliary/
 		__init__.py
 		check_and_response.py
+			Classes: ValueCheck
 		mathematical_science.py
+			Classes: MathModel
 		useful_structure.py
+			Classes: PartialLockedDict
 	data/
 		__init__.py
 		nasa_thermo_all.sqlite
@@ -340,19 +347,29 @@ chemkin_CS207_G9/
 	math/
 		__init__.py
 		ode_solver.py
+			Classes: solve_ivp, SemiImplicitExtrapolation, DenseOutput
 	parser/
 		__init__.py
 		database_query.py
+			Classes: CoeffQuery
+		Reaction_Creator.py
+			Classes: Reaction_Creator
 		xml2dict.py
+			Classes: xml2dict
 	plotting/
 		__init__.py
 		NonNetworkPlot.py
+			Functions: plot_concentration, plot_reaction_rate, plot_modified_arrhenius 
 		RSGraph.py
+			Classes: RSGraph, BipartiteRSGraph, HierarchicalRSGraph
 	reaction/
 		__init__.py
 		CoeffLaw.py
+			Classes: Constant, Arrhenius, modArrhenius, BackwardLaw
 		Reaction.py
+			Classes: Reaction
 		ReactionSystem.py
+			Classes: ReactionSystem
 						
 ```
 
