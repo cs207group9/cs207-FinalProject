@@ -271,7 +271,7 @@ chemkin_CS207_G9/
 
 ## Contribution
 
-We acknowledge that out version is perfectible and we strongly encourage our users to make new suggestions.
+We acknowledge that our version is perfectible and we strongly encourage our users to make new suggestions.
 
 If a user wants to contribute to our package, contribution is possible by following these steps:
 
