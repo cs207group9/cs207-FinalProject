@@ -1,5 +1,6 @@
 from chemkin_CS207_G9.plotting.NonNetworkPlot import *
 import matplotlib
+import matplotlib.plt as plt
 matplotlib.use('Agg')
 
 from chemkin_CS207_G9.parser.xml2dict import xml2dict
@@ -29,13 +30,16 @@ rs = ReactionSystem(
     initial_concs=concentrations, initial_T=temperature)
 
 def test_plot_concentration():
-    plot_concentration(rs, np.arange(0,1e-13,1e-15))
+    ax = plt.subplot()
+    plot_concentration(rs, np.arange(0,1e-13,1e-15), ax=ax)
     assert( rs.get_concs()==concentrations )
 
 def test_plot_reaction_rate():
-    plot_reaction_rate(rs, np.arange(0,1e-13,1e-15))
+    ax = plt.subplot()
+    plot_reaction_rate(rs, np.arange(0,1e-13,1e-15), ax=ax)
     assert( rs.get_concs()==concentrations )
 
 def test_plot_modified_arrhenius():
-    plot_modified_arrhenius(np.arange(0.01,2,0.01), np.arange(-2,2,1))
+    ax = plt.subplot()
+    plot_modified_arrhenius(np.arange(0.01,2,0.01), np.arange(-2,2,1), ax=ax)
     assert( True )
