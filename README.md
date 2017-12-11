@@ -286,7 +286,9 @@ plot_reaction_rate(
     reac_sys, time_grid, ax=axes[1], alpha=0.7)
 plt.show()
 ```
-![Alt text](pic/conc_rate_evo.png?raw=true "Title")
+<p align="center">
+  <img src="Illustrations/conc_rate_evo.png"/>
+</p>
 
 The functions generate the legends automatically. The users may specify the species of interest, the scale of the y-axis, and other plotting parameters of matplotlib curves.
 
@@ -303,7 +305,9 @@ fig, ax = plt.subplots(figsize=(8,6))
 plot_modified_arrhenius(T_grid, b_grid, ax=ax)
 plt.show()
 ```
-![Alt text](pic/modarr.png?raw=true "Title")
+<p align="center">
+  <img src="Illustrations/modarr.png"/>
+</p>
 
 # Organization
 
