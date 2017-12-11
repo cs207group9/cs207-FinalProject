@@ -41,5 +41,5 @@ def test_plot_reaction_rate():
     assert( rs.get_concs()==concentrations )
 
 def test_plot_modified_arrhenius():
-    plot_modified_arrhenius(np.arange(0.01,2,0.01), np.arange(-2,2,1), ax=axes[3])
+    plot_modified_arrhenius(np.arange(0.01,2,0.01), np.arange(-2,2,1), ax=axes[2])
     assert( True )
