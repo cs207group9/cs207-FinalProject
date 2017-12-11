@@ -84,7 +84,7 @@ The fastest way to check the coverage of our library is to run the following com
 
 As can be seen on the screenshot below, **our test coverage is 94%**.
 
-![Test Coverage](/TestCoverage.png "Test Coverage")
+![Test Coverage](pic/TestCoverage.png "Test Coverage")
 
 ## Basic Usage and Examples
 
